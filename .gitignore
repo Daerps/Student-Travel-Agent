@@ -37,6 +37,7 @@ wheels/
 data/rag_knowledge/
 data/preferences/*.json
 !data/preferences/.gitkeep
+data/models/bge-small-zh-v1.5/model.safetensors
 
 # Logs
 *.log
