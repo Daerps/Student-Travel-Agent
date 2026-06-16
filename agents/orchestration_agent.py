@@ -19,6 +19,7 @@ from typing import Optional, Union, List, Dict, Any
 import json
 import logging
 import asyncio
+from utils.langsmith_tracing import start_trace
 
 logger = logging.getLogger(__name__)
 
@@ -285,9 +286,29 @@ class OrchestrationAgent(AgentBase):
         Returns:
             执行结果
         """
+        agent_trace = start_trace(
+            f"agent.{agent_name}",
+            inputs={
+                "agent_name": agent_name,
+                "context": {
+                    "intents": context.get("intents", []),
+                    "key_entities": context.get("key_entities", {}),
+                    "rewritten_query": context.get("rewritten_query", ""),
+                },
+                "reason": reason,
+                "expected_output": expected_output,
+                "previous_agents": [item.get("agent_name") for item in previous_results],
+            },
+            metadata={"agent_name": agent_name},
+        )
+
         # 检查智能体是否注册
         if agent_name not in self.agent_registry:
             logger.warning(f"Agent not registered: {agent_name}")
+            agent_trace.end({
+                "status": "error",
+                "message": f"智能体未注册: {agent_name}",
+            })
             return {
                 "status": "error",
                 "message": f"智能体未注册: {agent_name}"
@@ -324,6 +345,12 @@ class OrchestrationAgent(AgentBase):
             # 如果有，说明智能体内部执行失败了
             if isinstance(result, dict) and "error" in result:
                 error_msg = result.get("error", "未知错误")
+                agent_trace.end({
+                    "status": "error",
+                    "agent_name": agent_name,
+                    "message": error_msg,
+                    "output": result,
+                })
                 return {
                     "status": "error",
                     "agent_name": agent_name,
@@ -331,14 +358,20 @@ class OrchestrationAgent(AgentBase):
                     "message": error_msg
                 }
 
-            return {
+            output = {
                 "status": "success",
                 "agent_name": agent_name,
                 "data": result
             }
+            agent_trace.end(output)
+            return output
 
         except Exception as e:
             logger.error(f"Agent execution failed: {agent_name}, error: {e}")
+            agent_trace.end_error(e, outputs={
+                "status": "error",
+                "agent_name": agent_name,
+            })
             # 返回友好的错误信息，但不中断流程
             return {
                 "status": "error",

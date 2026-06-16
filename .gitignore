@@ -33,6 +33,9 @@ wheels/
 # AgentScope
 .agentscope/
 
+# Local secrets
+local_secrets.json
+
 # Data
 data/rag_knowledge/
 data/preferences/*.json

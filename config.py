@@ -1,11 +1,30 @@
 """
 Configuration for the Aligo Multi-Agent System
 """
+import json
+import os
+from pathlib import Path
+
+
+def _load_local_secrets() -> dict:
+    """Load local secrets ignored by git. Environment variables still take priority."""
+    secrets_path = Path(__file__).with_name("local_secrets.json")
+    if not secrets_path.exists():
+        return {}
+    try:
+        with open(secrets_path, "r", encoding="utf-8-sig") as f:
+            data = json.load(f)
+            return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+_LOCAL_SECRETS = _load_local_secrets()
 
 # LLM Configuration
 LLM_CONFIG = {
-    "api_key": "sk-6d4ac4f3fe5a4ddd8ba1f009ddd77fa7",
-    "model_name": "deepseek-v4-flash",
+    "api_key": os.getenv("LLM_API_KEY", _LOCAL_SECRETS.get("llm_api_key", "")),
+    "model_name": "deepseek-v4-pro",
     "base_url": "https://api.deepseek.com",
     "temperature": 0.7,
     "max_tokens": 8192,
@@ -33,4 +52,13 @@ RESILIENCE_CONFIG = {
     "circuit_recovery_timeout_sec": 60.0,  # 熔断后多少秒进入半开
     "circuit_half_open_successes": 2,      # 半开状态下连续成功多少次后关闭
     "health_check_timeout_sec": 10.0,      # 健康检查请求超时（秒）
+}
+
+# LangSmith tracing：默认关闭；设置 LANGSMITH_TRACING=true 且配置 LANGSMITH_API_KEY 后启用。
+LANGSMITH_CONFIG = {
+    "enabled": os.getenv("LANGSMITH_TRACING", "true").lower() == "true",
+    "api_key": os.getenv("LANGSMITH_API_KEY", _LOCAL_SECRETS.get("langsmith_api_key", "")),
+    "project": os.getenv("LANGSMITH_PROJECT", "travel-agent-dev"),
+    "endpoint": os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"),
+    "max_payload_chars": int(os.getenv("LANGSMITH_MAX_PAYLOAD_CHARS", "3000")),
 }

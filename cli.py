@@ -31,6 +31,7 @@ from config import LLM_CONFIG, SYSTEM_CONFIG, RESILIENCE_CONFIG
 from context.memory_manager import MemoryManager
 from utils.circuit_breaker import CircuitBreaker, CircuitOpenError
 from utils.llm_resilience import retry_with_backoff, run_health_check as check_llm_health
+from utils.langsmith_tracing import start_trace
 from agents.intention_agent import IntentionAgent
 from agents.orchestration_agent import OrchestrationAgent
 # 移除其他智能体的导入，改用懒加载
@@ -153,12 +154,22 @@ class AligoCLI:
         """
         import time
         start_time = time.time()
+        query_trace = start_trace(
+            "cli.process_query",
+            inputs={"user_input": user_input},
+            metadata={
+                "user_id": self.user_id,
+                "session_id": self.session_id,
+                "query_length": len(user_input or ""),
+            },
+        )
 
         # ---------- 仅新增：熔断检查 ----------
         if self.circuit_breaker:
             try:
                 self.circuit_breaker.raise_if_open()
             except CircuitOpenError:
+                query_trace.end({"status": "circuit_open"})
                 self.console.print(
                     "\n[bold yellow]⚠ 服务暂时不可用，请稍后再试。[/bold yellow]\n",
                     style="dim"
@@ -197,12 +208,14 @@ class AligoCLI:
             except Exception as e:
                 if self.circuit_breaker:
                     self.circuit_breaker.record_failure()
+                query_trace.end_error(e, outputs={"stage": "intention_agent"})
                 raise
 
             # 3. 解析意图识别结果（原逻辑不变：解析失败则友好提示并 return）
             try:
                 intention_data = json.loads(intention_result.content)
             except json.JSONDecodeError:
+                query_trace.end({"status": "invalid_intention_json"})
                 self.console.print("❌ 无法理解您的需求，请重新描述", style="bold red")
                 return
 
@@ -225,6 +238,7 @@ class AligoCLI:
         except Exception as e:
             if self.circuit_breaker:
                 self.circuit_breaker.record_failure()
+            query_trace.end_error(e, outputs={"stage": "orchestration_agent"})
             raise
 
         # 6. 解析执行结果（原逻辑不变）
@@ -238,6 +252,12 @@ class AligoCLI:
         self.console.print()
         self._display_results(result_data)
         self.memory_manager.add_message("assistant", json.dumps(result_data, ensure_ascii=False))
+        query_trace.end({
+            "status": result_data.get("status", "unknown"),
+            "agents_executed": result_data.get("agents_executed", 0),
+            "called_agents": [item.get("agent_name") for item in result_data.get("results", [])],
+            "latency_sec": round(time.time() - start_time, 3),
+        })
 
     def _display_agents_called(self, result_data: dict):
         """显示调用的智能体列表"""

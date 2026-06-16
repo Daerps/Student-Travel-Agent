@@ -38,11 +38,7 @@
       "WebFetch(domain:www.langchain.com)",
       "WebFetch(domain:docs.agentscope.io)",
       "WebFetch(domain:agentscope.io)",
-      "WebFetch(domain:arxiv.org)",
-      "Read(//d/anaconda3/envs/travelagent/Library/ssl/**)",
-      "Read(//d/anaconda3/envs/travelagent/Scripts/**)",
-      "Bash(conda run *)",
-      "Bash(D:/anaconda3/envs/travelagent/python.exe *)"
+      "WebFetch(domain:arxiv.org)"
     ]
   }
 }

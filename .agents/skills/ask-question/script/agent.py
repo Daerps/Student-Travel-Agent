@@ -27,7 +27,6 @@ from pathlib import Path
 # Add project root to sys.path
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
-from utils.langsmith_tracing import start_trace
 
 _GRPC_MAX_MS = '2147483647'  # gRPC 使用的 int32 上限，约 24.8 天
 os.environ['GRPC_KEEPALIVE_TIME_MS'] = _GRPC_MAX_MS
@@ -228,20 +227,10 @@ class RAGKnowledgeAgent(AgentBase):
         if not self.initialized:
             return []
 
-        k = top_k or self.top_k
-        search_trace = start_trace(
-            "rag.search_knowledge",
-            inputs={
-                "query": query,
-                "top_k": k,
-                "collection_name": self.collection_name,
-            },
-            metadata={"agent_name": self.name},
-        )
-
         try:
             # 确保连接正常
             self._ensure_connection()
+            k = top_k or self.top_k
 
             # 生成查询向量
             query_embedding = self.embedding_model.encode(query).tolist()
@@ -273,24 +262,10 @@ class RAGKnowledgeAgent(AgentBase):
                     })
 
             logger.info(f"Retrieved {len(retrieved_docs)} documents for query: {query[:50]}")
-            search_trace.end({
-                "status": "success",
-                "document_count": len(retrieved_docs),
-                "documents": [
-                    {
-                        "title": doc.get("metadata", {}).get("title"),
-                        "source": doc.get("metadata", {}).get("source"),
-                        "distance": doc.get("distance"),
-                        "content_preview": doc.get("content", "")[:200],
-                    }
-                    for doc in retrieved_docs
-                ],
-            })
             return retrieved_docs
 
         except Exception as e:
             logger.error(f"Error searching knowledge: {e}")
-            search_trace.end_error(e, outputs={"status": "error", "query": query})
             return []
 
     async def reply(self, x: Optional[Union[Msg, List[Msg]]] = None) -> Msg:
@@ -357,28 +332,12 @@ class RAGKnowledgeAgent(AgentBase):
 
         # 如果有LLM，使用LLM生成答案
         if self.model:
-            generation_trace = start_trace(
-                "rag.generate_answer",
-                inputs={
-                    "query": user_query,
-                    "document_count": len(retrieved_docs),
-                    "documents": [
-                        {
-                            "title": doc.get("metadata", {}).get("title"),
-                            "source": doc.get("metadata", {}).get("source"),
-                            "distance": doc.get("distance"),
-                        }
-                        for doc in retrieved_docs
-                    ],
-                },
-                metadata={"agent_name": self.name},
-            )
             # 动态读取 Prompt 指令 (Progressive Disclosure)
             skill_instruction = self.skill_loader.get_skill_content("ask-question")
             if not skill_instruction:
                 skill_instruction = "请基于知识库中的信息回答用户的问题。"
 
-            prompt = f"""你是一个学生出差/旅游知识专家。请严格基于以下知识库中的信息回答用户的问题。
+            prompt = f"""你是一个商旅知识专家。请严格基于以下知识库中的信息回答用户的问题。
 
 【用户问题】
 {user_query}
@@ -440,14 +399,9 @@ class RAGKnowledgeAgent(AgentBase):
                             answer = json_obj.get("answer") or json_obj.get("content") or answer
                     except:
                         pass
-                generation_trace.end({
-                    "status": "success",
-                    "answer_preview": answer[:500] if isinstance(answer, str) else str(answer)[:500],
-                })
 
             except Exception as e:
                 logger.error(f"Error generating answer with LLM: {e}")
-                generation_trace.end_error(e, outputs={"status": "error", "query": user_query})
                 answer = f"知识库中找到相关信息，但生成答案时出错：{str(e)}"
         else:
             # 如果没有LLM，直接返回检索到的知识

@@ -16,3 +16,6 @@ rich==13.9.4
 
 # 网络搜索（DDGS）
 ddgs==9.10.0
+
+# Agent 链路追踪（可选，未配置 LANGSMITH_API_KEY 时自动不启用）
+langsmith>=0.1.0
