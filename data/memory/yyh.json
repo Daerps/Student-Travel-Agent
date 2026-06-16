@@ -1,0 +1,26 @@
+{
+  "user_id": "yyh",
+  "created_at": "2026-06-05T11:30:04.546210",
+  "updated_at": "2026-06-05T11:30:42.325140",
+  "preferences": [],
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "差旅的住宿和吃饭和交通费都是什么标准",
+      "timestamp": "2026-06-05T11:30:15.708286",
+      "session_id": "69f73b2b"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"status\": \"completed\", \"intention\": {\"intents\": [{\"type\": \"rag_knowledge\", \"confidence\": 0.95, \"description\": \"用户询问差旅费用标准，需要从知识库中获取住宿、餐饮、交通费用的具体规定。\", \"reason\": \"用户直接询问住宿、吃饭和交通费的标准，这类问题明确属于差旅政策知识查询，符合rag_knowledge的触发条件。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"差旅费用：住宿标准、餐饮标准、交通费标准\"}}, \"agents_executed\": 1, \"results\": [{\"agent_name\": \"rag_knowledge\", \"priority\": 1, \"status\": \"success\", \"data\": {\"status\": \"no_knowledge\", \"query\": \"公司差旅政策中，住宿、餐饮和交通费用的标准是什么？\", \"answer\": \"抱歉，我在知识库中没有找到相关信息。\", \"retrieved_documents\": []}}]}",
+      "timestamp": "2026-06-05T11:30:42.325130",
+      "session_id": "69f73b2b"
+    }
+  ],
+  "trip_history": [],
+  "statistics": {
+    "total_trips": 0,
+    "total_messages": 2,
+    "frequent_destinations": {}
+  }
+}
