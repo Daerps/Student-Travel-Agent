@@ -56,9 +56,11 @@ git init 会创建.git文件夹
 git add README.md （从零创建，如果有内容用git add .）
 git commit -m "first commit"
 git branch -M main 将当前所在的本地分支重命名为main，这里的都是表示本地名称
-git remote add origin https://github.com/Daerps/Trusted360.git 使用 HTTPS 地址。给本地仓库添加一个“远程地址”，并给它起个别名叫 origin
-或者git remote add origin git@github.com:Daerps/Trusted360.git 使用 SSH 地址（推荐，免重复输入密码）
-git push -u origin main 即git push -u [远程仓库] [本地分支名]。这里 -u 表示将本地分支与远程分支关联，之后只需 git push ，不需要后缀了。git push推送分支到远程。这样默认上传到的远程分支是和本地分支名称相同的，如果远程没有 main 分支，Git 会自动创建一个同名的远程分支。
+
+去远程仓库平台创建一个仓库
+git remote add origin https://github.com/Daerps/Student-Travel-Agent.git 使用 HTTPS 地址。给本地仓库添加一个“远程地址”，并给它起个别名叫 origin
+或者git remote add origin git@github.com:Daerps/Student-Travel-Agent.git 使用 SSH 地址（推荐，免重复输入密码）
+git push -u origin master 即git push -u [远程仓库] [本地分支名]。这里 -u 表示将本地分支与远程分支关联，之后只需 git push ，不需要后缀了。git push推送分支到远程。这样默认上传到的远程分支是和本地分支名称相同的，如果远程没有 main 分支，Git 会自动创建一个同名的远程分支。
 或者 git push -u origin master
 
 注意：可以git push origin <本地分支名>:<远程分支名>，即本地分支名和远程分支名可以不同，但在团队协作中，强烈建议保持本地和远程分支同名
@@ -69,7 +71,7 @@ git remote add origin https://github.com/Daerps/Trusted360.git
 git branch -M master
 git push -u origin master
 
-### 新分支
+### 创建新分支
 
 git checkout main 切换到主分支main，这里是指本地分支中名为main的
 git pull origin main 从远程仓库拉取最新代码并合并，这里的main是指远程仓库的分支
@@ -137,3 +139,47 @@ ssh-keygen -t ed25519 -C "你的邮箱"
 在 GitHub 上，点击头像 → Settings → SSH and GPG keys → New SSH key，粘贴公钥并保存。
 
 ssh -T git@github.com 如果看到 “Hi 用户名! You’ve successfully authenticated…”，说明配置成功。
+
+### 本地已有代码中途加入远程仓库
+
+当某人本地已有代码（未使用git），需要将修改合并到已有远程仓库时：
+
+#### 方法一：先提交本地，再合并远程（推荐）
+
+```bash
+git init
+git remote add origin <仓库地址>
+git fetch origin
+
+# 此时本地文件还是他自己的，没有被覆盖
+git add .
+git commit -m “他的本地修改”
+
+# 然后合并远程代码
+git merge origin/master
+```
+
+**关键原理：**
+
+- `git fetch` 只下载远程数据到本地缓存，**不改变本地文件**
+- `git add .` 把当前本地文件加入暂存区
+- `git commit` 把暂存区内容打包成本地提交
+- `git merge origin/master` 将远程代码合并到本地，如有冲突需手动解决
+
+#### 方法二：克隆后覆盖（更简单）
+
+```bash
+git clone <仓库地址>
+# 把他修改过的文件复制进去覆盖
+git add .
+git commit -m “他的修改”
+git push
+```
+
+**适用场景：** 修改的文件不多，手动复制覆盖更直观，冲突风险最小。
+
+#### 注意事项
+
+- 合并时可能产生冲突，需要手动解决后再 `git add` 和 `git commit`
+- 推荐使用 SSH 地址关联远程仓库，避免每次输入密码
+- 如果远程仓库有分支保护，需先推送到自己的分支再提 Pull Request
