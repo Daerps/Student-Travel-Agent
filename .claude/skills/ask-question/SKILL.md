@@ -10,7 +10,7 @@ description: Use this skill when the user asks questions about travel policies, 
 ## When to Use
 
 - 用户问「XX标准是多少」「如何报销」「航班延误怎么办」等
-- 需要基于企业/项目知识文档回答时
+- 需要基于学校/项目知识文档回答时
 
 ## Agent
 

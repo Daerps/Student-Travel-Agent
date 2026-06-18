@@ -4,6 +4,7 @@
 """
 import sys
 import os
+import hashlib
 import importlib.util
 from pathlib import Path
 from typing import List, Dict
@@ -80,6 +81,74 @@ def split_text(text: str, max_chars: int = 600, overlap: int = 100) -> List[str]
         
     return chunks
 
+def get_document_title(content: str, file_path: Path) -> str:
+    """
+    从 Markdown frontmatter、标题行或首个非空行中提取标题。
+    """
+    lines = content.splitlines()
+
+    if lines and lines[0].strip() == "---":
+        for line in lines[1:40]:
+            stripped = line.strip()
+            if stripped == "---":
+                break
+            if stripped.startswith("title:"):
+                return stripped.split(":", 1)[1].strip().strip('"').strip("'") or file_path.stem
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped or stripped == "---":
+            continue
+        if stripped.startswith("#"):
+            return stripped.lstrip("#").strip() or file_path.stem
+        return stripped
+
+    return file_path.stem
+
+def get_document_profile(file_path: Path) -> Dict[str, str]:
+    """
+    根据文件名给文档打粗粒度类别标签，便于后续查看来源。
+    """
+    name = file_path.stem.lower()
+    suffix = file_path.suffix.lower().lstrip(".")
+
+    category = "同济差旅知识"
+    status = "current"
+
+    category_mapping = [
+        ("trip_planning", "规划前检查"),
+        ("reimbursement_materials", "报销材料流程"),
+        ("transport_and_hotel", "交通住宿预订"),
+        ("business_travel_faq", "差旅FAQ"),
+        ("emergency_handling", "异常处理"),
+        ("reimbursement_system", "报销系统流程"),
+        ("city_travel", "城市出行经验"),
+        ("green_and_cost", "低碳节约建议"),
+        ("travel_expense_management", "国内差旅制度"),
+        ("reimbursement_handbook", "报销手册"),
+        ("conference_expense", "会议费制度"),
+        ("research_travel", "科研差旅制度"),
+        ("overseas_lodging", "出国经费标准表"),
+        ("overseas_travel", "因公出国制度"),
+        ("foreign_affairs", "外事审批事项"),
+        ("eight_point", "负面规则"),
+        ("historical_overseas", "历史出国制度"),
+    ]
+
+    for key, value in category_mapping:
+        if key in name:
+            category = value
+            break
+
+    if "historical" in name or "2018" in name or "修正" in file_path.stem:
+        status = "historical_or_superseded_candidate"
+
+    return {
+        "category": category,
+        "format": suffix,
+        "status": status,
+    }
+
 def load_documents_from_directory(directory_path: str) -> List[Dict]:
     """
     从指定目录加载所有文档
@@ -91,39 +160,31 @@ def load_documents_from_directory(directory_path: str) -> List[Dict]:
         print(f"❌ 文档目录不存在: {directory_path}")
         return documents
 
-    # 获取所有.txt文件并排序
-    doc_files = sorted(doc_dir.glob("*.txt"))
+    # 获取所有可入库文本文件并排序。PDF 保留为原始依据，不在运行时直接解析。
+    supported_suffixes = {".txt", ".md"}
+    doc_files = sorted(
+        file_path for file_path in doc_dir.iterdir()
+        if file_path.is_file() and file_path.suffix.lower() in supported_suffixes
+    )
 
     if not doc_files:
-        print(f"❌ 未找到任何文档文件 (.txt)")
+        print("❌ 未找到任何文档文件 (.txt/.md)")
         return documents
 
-    # 定义类别映射（根据文件名判断）
-    category_mapping = {
-        "travel_standards": "差旅规定",
-        "reimbursement_policy": "报销规定",
-        "booking_guide": "预订指南",
-        "faq": "FAQ",
-        "emergency_procedures": "应急指南",
-        "platform_guide": "平台指南",
-        "city_specific_tips": "城市指南",
-        "environmental_initiatives": "环保倡议"
-    }
-
     total_chunks = 0
+    seen_content_hashes = set()
 
     for file_path in doc_files:
         try:
-            # 从文件名提取编号作为doc_id (如: 01_travel_standards.txt -> doc_001)
+            # 从文件名提取编号作为 doc_id；非数字文件直接使用文件名，保证不同文件 ID 前缀不同。
             filename_parts = file_path.stem.split('_', 1)
             if len(filename_parts) >= 2:
                 doc_num = filename_parts[0]
-                doc_key = filename_parts[1] if len(filename_parts) > 1 else ""
             else:
                 doc_num = file_path.stem
-                doc_key = ""
 
-            base_doc_id = f"doc_{doc_num}"
+            safe_stem = "".join(ch if ch.isalnum() else "_" for ch in file_path.stem)
+            base_doc_id = f"doc_{safe_stem}"
 
             # 读取文件内容
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -133,16 +194,15 @@ def load_documents_from_directory(directory_path: str) -> List[Dict]:
                 print(f"   ⚠️  跳过空文件: {file_path.name}")
                 continue
 
-            # 提取标题（第一行）
-            lines = content.split('\n')
-            title = lines[0].strip() if lines else file_path.stem
+            content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+            if content_hash in seen_content_hashes:
+                print(f"   ⚠️  跳过重复内容文件: {file_path.name}")
+                continue
+            seen_content_hashes.add(content_hash)
 
-            # 根据文件名确定类别
-            category = "商旅知识"
-            for key, cat in category_mapping.items():
-                if key in doc_key:
-                    category = cat
-                    break
+            # 提取标题（第一行）
+            title = get_document_title(content, file_path)
+            profile = get_document_profile(file_path)
 
             # --- 文档切分逻辑 ---
             chunks = split_text(content, max_chars=600, overlap=100)
@@ -155,18 +215,25 @@ def load_documents_from_directory(directory_path: str) -> List[Dict]:
                     "id": doc_id,
                     "content": chunk_content,
                     "metadata": {
-                        "category": category,
+                        "category": profile["category"],
+                        "format": profile["format"],
+                        "status": profile["status"],
                         "title": f"{title} (Part {i+1})",
-                        "source": "商旅知识库文档",
+                        "source": "同济差旅知识库文档",
                         "file_path": str(file_path),
-                        "version": "2024版",
-                        "parent_doc": file_path.name
+                        "parent_doc": file_path.name,
+                        "chunk_index": i + 1,
+                        "chunk_count": len(chunks),
                     }
                 }
                 documents.append(document)
             
             total_chunks += len(chunks)
-            print(f"   ✓ 加载文档: {file_path.name} -> {len(chunks)} chunks")
+            print(
+                f"   ✓ 加载文档: {file_path.name} "
+                f"[{profile['format']}/{profile['category']}] "
+                f"-> {len(chunks)} chunks"
+            )
 
         except Exception as e:
             print(f"   ❌ 加载文件失败 {file_path.name}: {e}")

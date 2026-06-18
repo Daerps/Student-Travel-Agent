@@ -129,7 +129,20 @@ class RAGKnowledgeAgent(AgentBase):
 
         self.initialized = True
         self._milvus_db_path = milvus_db_path  # 保存路径用于重连
+        self._load_collection()
         logger.info("RAG Knowledge Agent (Milvus Lite) initialized successfully")
+
+    def _load_collection(self):
+        """确保 collection 处于可检索状态。"""
+        if not hasattr(self, "milvus_client"):
+            return
+
+        try:
+            if self.milvus_client.has_collection(self.collection_name):
+                self.milvus_client.load_collection(self.collection_name)
+                logger.debug(f"Milvus collection loaded: {self.collection_name}")
+        except Exception as e:
+            logger.warning(f"Failed to load Milvus collection {self.collection_name}: {e}")
 
     def _ensure_connection(self):
         """确保 Milvus 连接正常，如果需要则重新创建客户端"""
@@ -152,6 +165,8 @@ class RAGKnowledgeAgent(AgentBase):
             except Exception as reconnect_error:
                 logger.error(f"Failed to reconnect Milvus: {reconnect_error}")
                 raise
+
+        self._load_collection()
 
     def add_documents(self, documents: List[Dict[str, str]]) -> Dict:
         """
@@ -198,6 +213,11 @@ class RAGKnowledgeAgent(AgentBase):
                 collection_name=self.collection_name,
                 data=data_to_insert
             )
+            try:
+                self.milvus_client.flush(self.collection_name)
+            except Exception as flush_error:
+                logger.debug(f"Milvus flush skipped or failed: {flush_error}")
+            self._load_collection()
 
             # 获取总数
             stats = self.milvus_client.get_collection_stats(self.collection_name)
@@ -242,6 +262,7 @@ class RAGKnowledgeAgent(AgentBase):
         try:
             # 确保连接正常
             self._ensure_connection()
+            self._load_collection()
 
             # 生成查询向量
             query_embedding = self.embedding_model.encode(query).tolist()
