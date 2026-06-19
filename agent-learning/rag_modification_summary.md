@@ -234,4 +234,3 @@ python ".claude\skills\ask-question\script\init_knowledge_base.py"
 business_travel_knowledge
 ```
 
-名称还没改，但内容已经从示例商旅知识转向同济差旅/报销知识。

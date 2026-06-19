@@ -106,11 +106,6 @@ async def test_rag_agent():
             "expected": ["首都", "大兴"]
         },
         {
-            "name": "平台功能查询",
-            "query": "阿里商旅平台有哪些功能？",
-            "expected": ["申请", "预订"]
-        },
-        {
             "name": "环保建议查询",
             "query": "出差怎么做到环保？",
             "expected": ["高铁", "公共交通"]

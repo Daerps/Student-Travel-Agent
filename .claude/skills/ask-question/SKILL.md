@@ -1,6 +1,6 @@
 ---
 name: ask-question
-description: Use this skill when the user asks questions about travel policies, reimbursement, booking guides, city information, or any travel-related questions. Triggers when user asks "XX标准是多少", "如何XX", "XX怎么办", or any question format. This skill uses RAGKnowledgeAgent to retrieve answers from the knowledge base.
+description: Use this skill when the user asks questions about travel policies, reimbursement, booking guides, city information, or any travel-related questions. Triggers when user asks "XX标准是多少", "如何XX", "XX怎么办", or any question format. When the user mentions a specific company, group, client organization, institution, office, park, or business destination, and the question is related to business travel, reimbursement, standards, procedures, or travel policy, this skill should also be triggered. This skill uses RAGKnowledgeAgent to retrieve answers from the knowledge base.
 ---
 
 # Ask Travel Question (RAG 知识库问答)
@@ -9,7 +9,7 @@ description: Use this skill when the user asks questions about travel policies, 
 
 ## When to Use
 
-- 用户问「XX标准是多少」「如何报销」「航班延误怎么办」等
+- 用户问「XX标准是多少」「如何报销」「航班延误怎么办」「目的地为集团/公司」等等
 - 需要基于学校/项目知识文档回答时
 
 ## Agent

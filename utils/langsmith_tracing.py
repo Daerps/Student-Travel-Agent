@@ -52,7 +52,7 @@ def _configure_env() -> Dict[str, Any]:
 
 
 def _max_chars() -> int:
-    return int(_get_config().get("max_payload_chars", 3000))
+    return int(_get_config().get("max_payload_chars", 10000))
 
 
 def sanitize_payload(value: Any, max_chars: Optional[int] = None, depth: int = 0) -> Any:

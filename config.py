@@ -1,5 +1,5 @@
 """
-Configuration for the Aligo Multi-Agent System
+Configuration for the  Multi-Agent System
 """
 import json
 import os

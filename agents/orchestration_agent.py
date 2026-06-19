@@ -32,6 +32,7 @@ class OrchestrationAgent(AgentBase):
         name: str = "OrchestrationAgent",
         agent_registry: Dict[str, AgentBase] = None,
         memory_manager = None,
+        model = None,
         **kwargs
     ):
         """
@@ -41,11 +42,13 @@ class OrchestrationAgent(AgentBase):
             name: 智能体名称
             agent_registry: 子智能体注册表 {agent_name: agent_instance}
             memory_manager: 记忆管理器
+            model: 用于最终结果融合的LLM模型
         """
         super().__init__()
         self.name = name
         self.agent_registry = agent_registry or {}
         self.memory_manager = memory_manager
+        self.model = model
 
     def register_agent(self, agent_name: str, agent: AgentBase):
         """注册子智能体"""
@@ -138,6 +141,9 @@ class OrchestrationAgent(AgentBase):
 
         # 聚合结果
         final_result = self._aggregate_results(results, intention_data)
+        final_display = await self._synthesize_final_display(intention_data, final_result)
+        if final_display:
+            final_result["final_display"] = final_display
 
         # 更新记忆
         if self.memory_manager:
@@ -421,6 +427,235 @@ class OrchestrationAgent(AgentBase):
             aggregated["errors"] = len(errors)
 
         return aggregated
+
+    async def _synthesize_final_display(
+        self,
+        intention_data: Dict[str, Any],
+        aggregated: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        使用LLM生成最终展示元数据。
+
+        主行程仍由 CLI 使用 Rich 原生格式展示；LLM 只负责提炼开场、
+        补充建议、政策提醒、风险和待确认信息。
+        """
+        if not self.model:
+            return None
+
+        results = aggregated.get("results", [])
+        plan_result = next(
+            (
+                item for item in results
+                if item.get("agent_name") == "itinerary_planning"
+                and item.get("status") == "success"
+            ),
+            None
+        )
+        if not plan_result:
+            return None
+
+        supporting_results = [
+            item for item in results
+            if item.get("agent_name") != "itinerary_planning"
+        ]
+
+        synthesis_trace = start_trace(
+            "orchestration.final_synthesis",
+            inputs={
+                "intention": intention_data,
+                "plan_agent": self._compact_for_synthesis(plan_result),
+                "supporting_agents": self._compact_for_synthesis(supporting_results),
+            },
+            metadata={
+                "agent_name": self.name,
+                "supporting_agent_count": len(supporting_results),
+            },
+        )
+
+        prompt = f"""你是一个旅行/差旅助手的最终回复生成器。
+
+你会收到多个子智能体的输出：
+- itinerary_planning：主行程方案，会由程序单独用Rich格式展示，你不要重写主行程。
+- rag_knowledge：学校差旅、报销、合规规定，只能提炼成提醒。
+- memory_query：用户历史偏好或历史记录，只能提炼成个性化参考。
+- information_query：天气、交通、开放时间、来源链接等事实，只能提炼成事实补充。
+- event_collection：事项提取和缺失字段，只能提炼成待确认信息。
+- preference：用户偏好更新，只能提炼成一句偏好说明。
+
+你的目标：
+为Rich终端界面生成展示元数据。不要生成完整行程正文，不要输出Markdown全文。
+
+重要约束：
+1. 必须只输出合法JSON。
+2. 不要解释你如何融合多个智能体。
+3. 不要把各agent的回答逐段粘贴。
+4. 不要输出多个版本的方案。
+5. 不要重写 itinerary_planning 的 daily_plans、车次、时间线和景点顺序。
+6. 不要新增与主行程冲突的车次、景点顺序、酒店区域或日期。
+7. 其他agent的内容只提炼为补充建议、合规提醒、风险提示、缺失信息提醒。
+8. 如果辅助信息和主行程冲突，以主行程为准；如果涉及学校制度，以RAG制度提醒为准。
+9. 如果信息不足，不要阻止回答，但要自然提醒用户确认。
+10. 每个列表项都要短、具体、可执行。
+
+输出JSON格式：
+{{
+  "opening": "1-2句话概括本次规划依据和核心安排，不要超过120字。",
+  "sections": [
+    {{
+      "title": "补充提醒",
+      "items": ["结合辅助agent提炼出的出行建议，最多4条"]
+    }},
+    {{
+      "title": "差旅与报销提醒",
+      "items": ["学校制度、票据、标准、不可报销事项等，最多5条"]
+    }},
+    {{
+      "title": "需要确认",
+      "items": ["仍需用户确认的信息，最多4条"]
+    }}
+  ],
+  "closing": "一句自然收尾，可为空。"
+}}
+
+【用户意图】
+{json.dumps(self._compact_for_synthesis(intention_data), ensure_ascii=False, indent=2)}
+
+【主行程 itinerary_planning】
+{json.dumps(self._compact_for_synthesis(plan_result), ensure_ascii=False, indent=2)}
+
+【辅助agent结果】
+{json.dumps(self._compact_for_synthesis(supporting_results), ensure_ascii=False, indent=2)}
+
+请严格输出JSON，不要输出Markdown，不要输出代码块。"""
+
+        try:
+            response = await self.model([
+                {
+                    "role": "system",
+                    "content": "你是一个严格的多智能体结果提炼器，只输出合法JSON。"
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ])
+            final_text = await self._extract_model_text(response)
+            final_text = self._clean_json_text(final_text)
+
+            if not final_text:
+                synthesis_trace.end({
+                    "status": "empty_output",
+                    "final_display": {},
+                })
+                return None
+
+            try:
+                final_display = json.loads(final_text)
+            except json.JSONDecodeError as parse_error:
+                synthesis_trace.end_error(parse_error, outputs={
+                    "status": "invalid_json",
+                    "raw_output": final_text,
+                })
+                return None
+
+            synthesis_trace.end({
+                "status": "success",
+                "final_display": final_display,
+            })
+            return final_display
+        except Exception as e:
+            logger.warning(f"Final synthesis failed: {e}")
+            synthesis_trace.end_error(e, outputs={"status": "error"})
+            return None
+
+    async def _extract_model_text(self, response: Any) -> str:
+        """提取AgentScope模型的文本输出，兼容异步生成器。"""
+        text = ""
+        if hasattr(response, "__aiter__"):
+            async for chunk in response:
+                if isinstance(chunk, str):
+                    text = chunk
+                elif hasattr(chunk, "content"):
+                    if isinstance(chunk.content, str):
+                        text = chunk.content
+                    elif isinstance(chunk.content, list):
+                        for item in chunk.content:
+                            if isinstance(item, dict) and item.get("type") == "text":
+                                text = item.get("text", "")
+        elif hasattr(response, "text"):
+            text = response.text
+        elif hasattr(response, "content"):
+            text = response.content
+        elif isinstance(response, dict) and "content" in response:
+            text = response["content"]
+        else:
+            text = str(response) if response else ""
+        return text or ""
+
+    def _clean_json_text(self, text: str) -> str:
+        """清理模型可能包裹的JSON代码块。"""
+        text = (text or "").strip()
+        if text.startswith("```json"):
+            text = text[len("```json"):]
+        elif text.startswith("```"):
+            text = text[3:]
+
+        if text.endswith("```"):
+            text = text[:-3]
+
+        return text.strip()
+
+    def _clean_markdown_text(self, text: str) -> str:
+        """清理模型可能包裹的markdown代码块。"""
+        text = (text or "").strip()
+        if text.startswith("```markdown"):
+            text = text[len("```markdown"):]
+        elif text.startswith("```md"):
+            text = text[len("```md"):]
+        elif text.startswith("```"):
+            text = text[3:]
+
+        if text.endswith("```"):
+            text = text[:-3]
+
+        return text.strip()
+
+    def _compact_for_synthesis(self, value: Any, max_chars: int = 2500, depth: int = 0) -> Any:
+        """压缩传给最终融合LLM的上下文，避免辅助结果过长。"""
+        if depth > 5:
+            return "<max-depth>"
+
+        if isinstance(value, dict):
+            compacted = {}
+            for key, item in value.items():
+                key_str = str(key)
+                # retrieved_documents 往往很长，保留元数据和前段内容即可。
+                compacted[key_str] = self._compact_for_synthesis(
+                    item,
+                    max_chars=1200 if key_str in {"content", "answer", "summary"} else max_chars,
+                    depth=depth + 1,
+                )
+            return compacted
+
+        if isinstance(value, list):
+            limited = value[:8]
+            output = [
+                self._compact_for_synthesis(item, max_chars=max_chars, depth=depth + 1)
+                for item in limited
+            ]
+            if len(value) > len(limited):
+                output.append(f"<truncated {len(value) - len(limited)} items>")
+            return output
+
+        if isinstance(value, str):
+            if len(value) > max_chars:
+                return value[:max_chars] + f"... <truncated {len(value) - max_chars} chars>"
+            return value
+
+        if isinstance(value, (int, float, bool)) or value is None:
+            return value
+
+        return self._compact_for_synthesis(str(value), max_chars=max_chars, depth=depth + 1)
 
     def _update_memory(self, intention_data: Dict[str, Any], results: List[Dict]):
         """

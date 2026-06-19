@@ -19,6 +19,7 @@ from typing import Optional, Union, List
 import json
 import logging
 from utils.skill_loader import SkillLoader
+from utils.langsmith_tracing import start_trace
 
 logger = logging.getLogger(__name__)
 
@@ -212,6 +213,24 @@ class IntentionAgent(AgentBase):
 请开始分析，直接输出JSON：
 """
 
+        intent_trace = start_trace(
+            "agent.intention_recognition",
+            inputs={
+                "user_query": user_query,
+                "context": context_str,
+                "available_agents": list(skill_mapping.values()),
+            },
+            metadata={
+                "agent_name": self.name,
+                "history_items": len(self.conversation_history),
+                "prompt_chars": len(prompt),
+            },
+        )
+        llm_trace = None
+        trace_error = None
+        parse_status = "not_started"
+        text = ""
+
         # 调用LLM进行意图识别
         try:
             # 构建符合OpenAI格式的messages
@@ -219,10 +238,15 @@ class IntentionAgent(AgentBase):
                 {"role": "system", "content": "你是一个高级意图识别专家。只输出JSON格式的结果，不要输出其他文本。"},
                 {"role": "user", "content": prompt}
             ]
+            llm_trace = start_trace(
+                "agent.intention_recognition.llm",
+                inputs={"messages": messages},
+                metadata={"agent_name": self.name},
+                run_type="llm",
+            )
             response = await self.model(messages)
 
             # 获取响应文本 - 处理异步生成器
-            text = ""
             if hasattr(response, '__aiter__'):
                 # 异步生成器，需要迭代获取内容
                 async for chunk in response:
@@ -244,6 +268,12 @@ class IntentionAgent(AgentBase):
             else:
                 text = str(response) if response else ""
 
+            if llm_trace is not None:
+                llm_trace.end({
+                    "raw_output": text,
+                    "raw_output_chars": len(text),
+                })
+
             # 清理文本
             text = text.strip()
             if text.startswith('```json'):
@@ -257,6 +287,7 @@ class IntentionAgent(AgentBase):
             # 解析JSON
             try:
                 result = json.loads(text)
+                parse_status = "direct_json"
             except json.JSONDecodeError as e1:
                 # 如果直接解析失败，尝试提取JSON
                 start_idx = text.find('{')
@@ -266,14 +297,20 @@ class IntentionAgent(AgentBase):
                     json_str = text[start_idx:end_idx+1]
                     try:
                         result = json.loads(json_str)
+                        parse_status = "extracted_json"
                     except json.JSONDecodeError as e2:
                         logger.error(f"JSON parse failed. Text sample: {json_str[:100]}")
+                        parse_status = "failed"
                         raise ValueError(f"Failed to parse JSON. Error: {e2}")
                 else:
+                    parse_status = "failed"
                     raise ValueError(f"No JSON found in response. Parse error: {e1}")
 
         except Exception as e:
             logger.error(f"Intent recognition failed: {e}")
+            trace_error = e
+            if llm_trace is not None and not llm_trace.ended:
+                llm_trace.end_error(e, outputs={"stage": "llm_or_parse"})
             # 返回默认结果
             result = {
                 "reasoning": f"意图识别出错，使用默认策略。错误: {str(e)}",
@@ -296,6 +333,23 @@ class IntentionAgent(AgentBase):
                     }
                 ]
             }
+
+        trace_outputs = {
+            "status": "fallback" if trace_error else "success",
+            "parse_status": parse_status,
+            "raw_output": text,
+            "intents": result.get("intents", []),
+            "agent_schedule": result.get("agent_schedule", []),
+            "scheduled_agents": [
+                item.get("agent_name")
+                for item in result.get("agent_schedule", [])
+                if isinstance(item, dict)
+            ],
+        }
+        if trace_error is not None:
+            intent_trace.end_error(trace_error, outputs=trace_outputs)
+        else:
+            intent_trace.end(trace_outputs)
 
         # 将结果转换为JSON字符串，因为Msg的content必须是字符串
         return Msg(name=self.name, content=json.dumps(result, ensure_ascii=False), role="assistant")

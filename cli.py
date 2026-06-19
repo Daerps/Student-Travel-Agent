@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Aligo 商旅助手 - CLI 交互界面
+学生出差助手 - CLI 交互界面
 使用 Rich 库实现美观的终端交互
 """
 import asyncio
@@ -37,8 +37,7 @@ from agents.orchestration_agent import OrchestrationAgent
 # 移除其他智能体的导入，改用懒加载
 
 
-class AligoCLI:
-    """Aligo 商旅助手 CLI"""
+class Student_CLI:
 
     def __init__(self):
         """初始化 CLI"""
@@ -54,7 +53,7 @@ class AligoCLI:
 
     def print_banner(self):
         """打印欢迎横幅"""
-        self.console.print("\n[bold cyan]🌏 Aligo 商旅助手[/bold cyan] - 让差旅更简单\n", style="bold")
+        self.console.print("\n[bold cyan]🌏 学生差旅助手[/bold cyan] - 让差旅更简单\n", style="bold")
 
     def print_help(self):
         """打印帮助信息"""
@@ -135,7 +134,8 @@ class AligoCLI:
             self.orchestrator = OrchestrationAgent(
                 name="OrchestrationAgent",
                 agent_registry=lazy_registry,
-                memory_manager=self.memory_manager
+                memory_manager=self.memory_manager,
+                model=self.model
             )
 
             # 熔断器（连接与可用性）
@@ -289,6 +289,20 @@ class AligoCLI:
         """显示执行结果 - 确保永远有回复"""
         self.console.print()
 
+        final_display = result_data.get("final_display")
+        if isinstance(final_display, dict) and self._display_final_display(result_data, final_display):
+            self.console.print()
+            return
+
+        final_answer = result_data.get("final_answer")
+        if isinstance(final_answer, str) and final_answer.strip():
+            if self._contains_markdown_table(final_answer):
+                self.console.print(final_answer)
+            else:
+                self.console.print(Markdown(final_answer))
+            self.console.print()
+            return
+
         # 获取结果列表
         results = result_data.get("results", [])
 
@@ -312,6 +326,88 @@ class AligoCLI:
                 self.console.print("✓ 已处理您的请求。", style="green")
 
         self.console.print()
+
+    def _display_final_display(self, result_data: dict, final_display: dict) -> bool:
+        """使用Rich原生组件展示最终融合结果。"""
+        results = result_data.get("results", [])
+        plan_result = next(
+            (
+                item for item in results
+                if item.get("agent_name") == "itinerary_planning"
+                and item.get("status") == "success"
+            ),
+            None
+        )
+        if not plan_result:
+            return False
+
+        opening = final_display.get("opening", "")
+        if isinstance(opening, str) and opening.strip():
+            self.console.print(Panel(
+                opening.strip(),
+                title="[bold cyan]行程概览[/bold cyan]",
+                border_style="cyan",
+                padding=(1, 2),
+            ))
+            self.console.print()
+
+        shown = self._generate_human_response([plan_result])
+
+        sections = final_display.get("sections", [])
+        if isinstance(sections, list):
+            for section in sections:
+                if not isinstance(section, dict):
+                    continue
+
+                title = str(section.get("title", "")).strip()
+                items = section.get("items", [])
+                if not title or not isinstance(items, list):
+                    continue
+
+                cleaned_items = [
+                    str(item).strip()
+                    for item in items
+                    if str(item).strip()
+                ]
+                if not cleaned_items:
+                    continue
+
+                body = "\n".join(f"• {item}" for item in cleaned_items)
+                border_style = self._section_border_style(title)
+                self.console.print(Panel(
+                    body,
+                    title=f"[bold]{title}[/bold]",
+                    border_style=border_style,
+                    padding=(1, 2),
+                ))
+                shown = True
+
+        closing = final_display.get("closing", "")
+        if isinstance(closing, str) and closing.strip():
+            self.console.print(f"\n[dim]{closing.strip()}[/dim]")
+            shown = True
+
+        return shown
+
+    def _section_border_style(self, title: str) -> str:
+        """根据分区标题选择Rich边框颜色。"""
+        if "报销" in title or "差旅" in title or "合规" in title:
+            return "green"
+        if "确认" in title or "风险" in title:
+            return "yellow"
+        return "blue"
+
+    def _contains_markdown_table(self, text: str) -> bool:
+        """判断文本是否包含Markdown表格，避免Rich表格渲染截断长内容。"""
+        lines = [line.strip() for line in text.splitlines()]
+        for index in range(len(lines) - 1):
+            current = lines[index]
+            next_line = lines[index + 1]
+            if current.startswith("|") and current.endswith("|"):
+                stripped = next_line.replace("|", "").replace("-", "").replace(":", "").strip()
+                if not stripped:
+                    return True
+        return False
 
     async def _get_long_term_summary(self, user_input: str = "") -> str:
         """
@@ -840,7 +936,7 @@ def main():
     """主函数"""
     if len(sys.argv) > 1 and sys.argv[1].strip().lower() == "health":
         exit(run_health_check_standalone())
-    cli = AligoCLI()
+    cli = Student_CLI()
     asyncio.run(cli.run())
 
 
