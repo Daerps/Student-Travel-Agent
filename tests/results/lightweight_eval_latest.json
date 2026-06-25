@@ -1,0 +1,422 @@
+{
+  "project": "travel agent",
+  "mode": "offline_lightweight",
+  "generated_at": "2026-06-24 22:43:51",
+  "evaluations": [
+    {
+      "metric": "skill_plugin_discovery",
+      "passed": true,
+      "skill_count": 6,
+      "skills": [
+        "ask-question",
+        "event-collection",
+        "memory-query",
+        "plan-trip",
+        "preference",
+        "query-info"
+      ],
+      "avg_scan_ms": 0.241,
+      "min_scan_ms": 0.214,
+      "max_scan_ms": 0.388
+    },
+    {
+      "metric": "memory_persistence_and_preference_write",
+      "passed": true,
+      "passed_checks": 7,
+      "total_checks": 7,
+      "accuracy": "100.0%",
+      "checks": [
+        {
+          "name": "short_term_keeps_20_messages",
+          "passed": true
+        },
+        {
+          "name": "long_term_keeps_all_24_messages",
+          "passed": true
+        },
+        {
+          "name": "preference_replace_transport",
+          "passed": true
+        },
+        {
+          "name": "preference_append_hotel_brand",
+          "passed": true
+        },
+        {
+          "name": "preference_replace_home_location",
+          "passed": true
+        },
+        {
+          "name": "trip_history_persisted",
+          "passed": true
+        },
+        {
+          "name": "frequent_destination_stats",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "metric": "rag_source_document_keyword_coverage",
+      "passed": true,
+      "document_count": 17,
+      "total_chars": 114959,
+      "passed_cases": 8,
+      "total_cases": 8,
+      "coverage": "100.0%",
+      "results": [
+        {
+          "name": "住宿标准/住宿费",
+          "expected_keywords": [
+            "住宿",
+            "标准"
+          ],
+          "found_keywords": [
+            "住宿",
+            "标准"
+          ],
+          "passed": true
+        },
+        {
+          "name": "报销材料",
+          "expected_keywords": [
+            "发票",
+            "报销"
+          ],
+          "found_keywords": [
+            "发票",
+            "报销"
+          ],
+          "passed": true
+        },
+        {
+          "name": "航班延误",
+          "expected_keywords": [
+            "延误",
+            "凭证"
+          ],
+          "found_keywords": [
+            "延误",
+            "凭证"
+          ],
+          "passed": true
+        },
+        {
+          "name": "会议费/会务",
+          "expected_keywords": [
+            "会议",
+            "报销"
+          ],
+          "found_keywords": [
+            "会议",
+            "报销"
+          ],
+          "passed": true
+        },
+        {
+          "name": "因公出国",
+          "expected_keywords": [
+            "因公",
+            "出国"
+          ],
+          "found_keywords": [
+            "因公",
+            "出国"
+          ],
+          "passed": true
+        },
+        {
+          "name": "八项规定",
+          "expected_keywords": [
+            "八项规定"
+          ],
+          "found_keywords": [
+            "八项规定"
+          ],
+          "passed": true
+        },
+        {
+          "name": "北京城市出行",
+          "expected_keywords": [
+            "北京",
+            "首都"
+          ],
+          "found_keywords": [
+            "北京",
+            "首都"
+          ],
+          "passed": true
+        },
+        {
+          "name": "青岛城市出行",
+          "expected_keywords": [
+            "青岛"
+          ],
+          "found_keywords": [
+            "青岛"
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "metric": "keyword_intent_baseline",
+      "case_count": 20,
+      "exact_match": "85.0%",
+      "expected_subset_hit": "90.0%",
+      "exact_count": 17,
+      "expected_subset_count": 18,
+      "note": "This is a simple keyword baseline, not the LLM IntentionAgent result.",
+      "rows": [
+        {
+          "query": "我要从上海去青岛出差两天",
+          "expected": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "predicted": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "下周一去北京参加会议，帮我安排行程",
+          "expected": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "predicted": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我喜欢住汉庭，以后优先安排",
+          "expected": [
+            "preference"
+          ],
+          "predicted": [
+            "preference"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我还喜欢如家",
+          "expected": [
+            "preference"
+          ],
+          "predicted": [
+            "preference"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我搬家到苏州了",
+          "expected": [
+            "preference"
+          ],
+          "predicted": [
+            "preference"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "上海明天天气怎么样",
+          "expected": [
+            "information_query"
+          ],
+          "predicted": [
+            "information_query"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "帮我查一下杭州限行",
+          "expected": [
+            "information_query"
+          ],
+          "predicted": [
+            "information_query"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "北京住宿标准是多少",
+          "expected": [
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "rag_knowledge"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "差旅费怎么报销",
+          "expected": [
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "rag_knowledge"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "航班延误怎么办",
+          "expected": [
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "rag_knowledge"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我之前去过哪些地方",
+          "expected": [
+            "memory_query"
+          ],
+          "predicted": [
+            "memory_query"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我上次去青岛是什么时候",
+          "expected": [
+            "memory_query"
+          ],
+          "predicted": [
+            "memory_query"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我有什么出行偏好",
+          "expected": [
+            "memory_query"
+          ],
+          "predicted": [
+            "memory_query",
+            "preference"
+          ],
+          "exact": false,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我从上海去青岛参加国信项目，不知道几天",
+          "expected": [
+            "event_collection",
+            "itinerary_planning",
+            "memory_query",
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "exact": false,
+          "expected_subset_hit": false
+        },
+        {
+          "query": "从天津去北京，我喜欢住全季，查天气并规划",
+          "expected": [
+            "event_collection",
+            "information_query",
+            "itinerary_planning",
+            "preference"
+          ],
+          "predicted": [
+            "event_collection",
+            "information_query",
+            "itinerary_planning",
+            "preference"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "同济会议费报销需要什么材料",
+          "expected": [
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "rag_knowledge"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "我想去信阳一日游",
+          "expected": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "predicted": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "帮我看看青岛国信集团附近住哪里合适",
+          "expected": [
+            "event_collection",
+            "itinerary_planning",
+            "rag_knowledge"
+          ],
+          "predicted": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "exact": false,
+          "expected_subset_hit": false
+        },
+        {
+          "query": "我改成靠窗座位",
+          "expected": [
+            "preference"
+          ],
+          "predicted": [
+            "preference"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        },
+        {
+          "query": "今天有什么新闻",
+          "expected": [
+            "information_query"
+          ],
+          "predicted": [
+            "information_query"
+          ],
+          "exact": true,
+          "expected_subset_hit": true
+        }
+      ]
+    },
+    {
+      "metric": "storage_implementation_scan",
+      "postgresql_code_present": false,
+      "redis_code_present": false,
+      "milvus_code_present": true,
+      "json_memory_files_present": true
+    }
+  ],
+  "elapsed_sec": 0.085
+}

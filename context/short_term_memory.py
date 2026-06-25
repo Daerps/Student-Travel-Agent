@@ -5,6 +5,7 @@
 from typing import List, Dict, Any
 from datetime import datetime
 import logging
+from utils.redis_client import dumps, key_for, loads
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,14 @@ class ShortTermMemory:
     - 用于上下文理解
     """
 
-    def __init__(self, max_turns: int = 10):
+    def __init__(
+        self,
+        max_turns: int = 10,
+        user_id: str = None,
+        session_id: str = None,
+        redis_client=None,
+        redis_ttl: int = 3600,
+    ):
         """
         初始化短期记忆
 
@@ -26,6 +34,17 @@ class ShortTermMemory:
         """
         self.max_turns = max_turns
         self.messages: List[Dict[str, Any]] = []
+        self.redis_client = redis_client
+        self.redis_ttl = redis_ttl
+        self.redis_key = key_for("short_term", user_id, session_id) if user_id and session_id else None
+
+    def _redis_available(self) -> bool:
+        return self.redis_client is not None and bool(self.redis_key)
+
+    def _trim_local(self):
+        max_messages = self.max_turns * 2
+        if len(self.messages) > max_messages:
+            self.messages = self.messages[-max_messages:]
 
     def add_message(self, role: str, content: str, metadata: Dict = None):
         """
@@ -44,12 +63,22 @@ class ShortTermMemory:
         }
 
         self.messages.append(message)
+        max_messages = self.max_turns * 2
 
         # 自动淘汰旧消息（保持 max_turns 轮对话）
         # 每轮 = 2条消息（用户 + 助手）
         max_messages = self.max_turns * 2
         if len(self.messages) > max_messages:
             self.messages = self.messages[-max_messages:]
+
+        if self._redis_available():
+            try:
+                self.redis_client.rpush(self.redis_key, dumps(message))
+                self.redis_client.ltrim(self.redis_key, -max_messages, -1)
+                if self.redis_ttl:
+                    self.redis_client.expire(self.redis_key, self.redis_ttl)
+            except Exception as e:
+                logger.debug(f"Failed to write short-term memory to Redis: {e}")
 
         logger.debug(f"Added message to short-term memory: {role}")
 
@@ -63,6 +92,19 @@ class ShortTermMemory:
         Returns:
             最近的消息列表
         """
+        if self._redis_available():
+            try:
+                if n_turns is None:
+                    raw_messages = self.redis_client.lrange(self.redis_key, 0, -1)
+                else:
+                    raw_messages = self.redis_client.lrange(self.redis_key, -(n_turns * 2), -1)
+                messages = [loads(item, default={}) for item in raw_messages]
+                messages = [msg for msg in messages if isinstance(msg, dict) and msg]
+                if messages:
+                    return messages
+            except Exception as e:
+                logger.debug(f"Failed to read short-term memory from Redis: {e}")
+
         if n_turns is None:
             return self.messages.copy()
 
@@ -94,6 +136,11 @@ class ShortTermMemory:
     def clear(self):
         """清空短期记忆"""
         self.messages = []
+        if self._redis_available():
+            try:
+                self.redis_client.delete(self.redis_key)
+            except Exception as e:
+                logger.debug(f"Failed to clear short-term Redis memory: {e}")
         logger.info("Short-term memory cleared")
 
     def get_statistics(self) -> Dict[str, Any]:

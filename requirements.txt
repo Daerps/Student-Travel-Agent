@@ -10,6 +10,8 @@ requests==2.32.3
 # RAG 与向量库（pymilvus[milvus_lite] 用于本地 .db 连接）
 pymilvus[milvus_lite]==2.6.9
 sentence-transformers==5.2.3
+jieba==0.42.1
+redis>=5.0.0
 
 # CLI 界面
 rich==13.9.4

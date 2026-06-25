@@ -7,6 +7,8 @@ from .short_term_memory import ShortTermMemory
 from .long_term_memory import LongTermMemory
 import logging
 import json
+import hashlib
+from utils.redis_client import get_json, get_redis_client, get_redis_config, key_for, set_json
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +33,23 @@ class MemoryManager:
         self.user_id = user_id
         self.session_id = session_id
         self.llm_model = llm_model
+        self.redis_config = get_redis_config()
+        self.redis_client = get_redis_client()
 
         # 初始化两层记忆
-        self.short_term = ShortTermMemory(max_turns=10)
-        self.long_term = LongTermMemory(user_id, storage_path)
+        self.short_term = ShortTermMemory(
+            max_turns=10,
+            user_id=user_id,
+            session_id=session_id,
+            redis_client=self.redis_client,
+            redis_ttl=self.redis_config.get("short_term_ttl", 3600),
+        )
+        self.long_term = LongTermMemory(
+            user_id,
+            storage_path,
+            redis_client=self.redis_client,
+            redis_ttl=self.redis_config.get("preference_ttl", 86400),
+        )
 
         logger.info(f"Memory manager initialized for user {user_id}, session {session_id}")
 
@@ -182,6 +197,20 @@ class MemoryManager:
 
         trip_str = "\n".join(trip_text) if trip_text else "（无行程记录）"
 
+        summary_payload = {
+            "history": history_text,
+            "trips": trip_text,
+            "max_messages": max_messages,
+        }
+        summary_hash = hashlib.sha256(
+            json.dumps(summary_payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ).hexdigest()
+        summary_cache_key = key_for("summary", self.user_id, max_messages, summary_hash)
+        cached_summary = get_json(self.redis_client, summary_cache_key, default=None)
+        if isinstance(cached_summary, str):
+            logger.info("Loaded long-term memory summary from Redis cache")
+            return cached_summary
+
         # 使用LLM总结
         summarization_prompt = f"""请总结以下历史信息中的关键内容，包括：
 1. 用户的旅行偏好和习惯
@@ -221,7 +250,15 @@ class MemoryManager:
                 summary = str(response)
 
             logger.info(f"Generated long-term memory summary ({len(summary)} chars)")
-            return summary.strip()
+            clean_summary = summary.strip()
+            if clean_summary:
+                set_json(
+                    self.redis_client,
+                    summary_cache_key,
+                    clean_summary,
+                    ttl=self.redis_config.get("summary_ttl", 1800),
+                )
+            return clean_summary
 
         except Exception as e:
             logger.error(f"Failed to generate long-term summary: {e}")

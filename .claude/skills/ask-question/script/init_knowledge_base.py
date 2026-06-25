@@ -6,6 +6,7 @@ import sys
 import os
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
 from typing import List, Dict
 
@@ -215,6 +216,7 @@ def load_documents_from_directory(directory_path: str) -> List[Dict]:
                     "id": doc_id,
                     "content": chunk_content,
                     "metadata": {
+                        "chunk_uid": doc_id,
                         "category": profile["category"],
                         "format": profile["format"],
                         "status": profile["status"],
@@ -240,6 +242,17 @@ def load_documents_from_directory(directory_path: str) -> List[Dict]:
             continue
 
     return documents
+
+
+def save_chunks_manifest(documents: List[Dict], output_path: Path) -> None:
+    """Save chunk text and metadata for BM25 keyword retrieval."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "chunk_count": len(documents),
+        "chunks": documents,
+    }
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
 
 
 def main():
@@ -293,6 +306,10 @@ def main():
         # 从文件加载文档
         print(f"3. 从 {documents_dir} 加载文档...")
         documents = load_documents_from_directory(str(documents_dir))
+        chunks_manifest_path = knowledge_base_path / "chunks.json"
+        save_chunks_manifest(documents, chunks_manifest_path)
+        print(f"BM25 chunks manifest: {chunks_manifest_path}")
+        print()
 
         if not documents:
             print("❌ 未加载到任何文档")

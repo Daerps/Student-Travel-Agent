@@ -8,6 +8,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 import logging
+from utils.redis_client import delete_keys, get_json, key_for, set_json
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +21,13 @@ class LongTermMemory:
     - 统计信息
     """
 
-    def __init__(self, user_id: str, storage_path: str = "data/memory"):
+    def __init__(
+        self,
+        user_id: str,
+        storage_path: str = "data/memory",
+        redis_client=None,
+        redis_ttl: int = 86400,
+    ):
         """
         初始化长期记忆
 
@@ -31,6 +38,9 @@ class LongTermMemory:
         self.user_id = user_id
         self.storage_path = storage_path
         self.db_path = os.path.join(storage_path, f"{user_id}.json")
+        self.redis_client = redis_client
+        self.redis_ttl = redis_ttl
+        self.preference_cache_key = key_for("preferences", user_id)
 
         # 确保存储目录存在
         Path(storage_path).mkdir(parents=True, exist_ok=True)
@@ -138,6 +148,28 @@ class LongTermMemory:
         except Exception as e:
             logger.error(f"Failed to save long-term memory: {e}")
 
+    def _preferences_as_dict(self) -> Dict[str, Any]:
+        result = {}
+        for pref in self.data.get("preferences", []):
+            if isinstance(pref, dict):
+                result[pref.get("type")] = pref.get("value")
+        return result
+
+    def _get_cached_preferences(self) -> Optional[Dict[str, Any]]:
+        cached = get_json(self.redis_client, self.preference_cache_key, default=None)
+        return cached if isinstance(cached, dict) else None
+
+    def _set_cached_preferences(self):
+        set_json(
+            self.redis_client,
+            self.preference_cache_key,
+            self._preferences_as_dict(),
+            ttl=self.redis_ttl,
+        )
+
+    def _delete_cached_preferences(self):
+        delete_keys(self.redis_client, [self.preference_cache_key])
+
     def save_preference(self, pref_type: str, value: Any):
         """
         保存用户偏好（列表格式）
@@ -161,6 +193,7 @@ class LongTermMemory:
             preferences.append({"type": pref_type, "value": value})
 
         self._save()
+        self._set_cached_preferences()
         logger.info(f"Saved preference: {pref_type} = {value}")
 
     def get_preference(self, pref_type: str = None) -> Any:
@@ -173,20 +206,13 @@ class LongTermMemory:
         Returns:
             偏好值或偏好字典
         """
-        preferences = self.data["preferences"]
+        cached = self._get_cached_preferences()
+        if cached is not None:
+            return cached if pref_type is None else cached.get(pref_type)
 
-        if pref_type is None:
-            # 返回字典格式，方便调用方使用
-            result = {}
-            for pref in preferences:
-                result[pref.get("type")] = pref.get("value")
-            return result
-        else:
-            # 查找特定类型的偏好
-            for pref in preferences:
-                if pref.get("type") == pref_type:
-                    return pref.get("value")
-            return None
+        result = self._preferences_as_dict()
+        self._set_cached_preferences()
+        return result if pref_type is None else result.get(pref_type)
 
     def add_hotel_brand(self, brand: str):
         """添加酒店品牌偏好（追加到列表）"""
@@ -211,6 +237,7 @@ class LongTermMemory:
             preferences.append({"type": "hotel_brands", "value": [brand]})
 
         self._save()
+        self._set_cached_preferences()
         logger.info(f"Added hotel brand preference: {brand}")
 
     def add_airline(self, airline: str):
@@ -236,6 +263,7 @@ class LongTermMemory:
             preferences.append({"type": "airlines", "value": [airline]})
 
         self._save()
+        self._set_cached_preferences()
         logger.info(f"Added airline preference: {airline}")
 
     def add_chat_message(self, role: str, content: str, session_id: str = None):
@@ -356,3 +384,4 @@ class LongTermMemory:
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
             logger.warning(f"Deleted long-term memory file: {self.db_path}")
+        self._delete_cached_preferences()

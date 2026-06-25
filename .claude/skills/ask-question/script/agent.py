@@ -18,10 +18,14 @@ pip install milvus sentence-transformers
 """
 from agentscope.agent import AgentBase
 from agentscope.message import Msg
-from typing import Optional, Union, List, Dict
+from typing import Optional, Union, List, Dict, Any
+from collections import Counter
+import hashlib
 import json
 import logging
+import math
 import os
+import re
 from pathlib import Path
 
 # Add project root to sys.path
@@ -37,6 +41,13 @@ os.environ['GRPC_HTTP2_MIN_RECV_PING_INTERVAL_WITHOUT_DATA_MS'] = _GRPC_MAX_MS
 os.environ['GRPC_HTTP2_MIN_PING_INTERVAL_WITHOUT_DATA_MS'] = _GRPC_MAX_MS
 
 logger = logging.getLogger(__name__)
+
+try:
+    import jieba
+    JIEBA_AVAILABLE = True
+except ImportError:
+    jieba = None
+    JIEBA_AVAILABLE = False
 
 try:
     from pymilvus import MilvusClient, DataType
@@ -73,6 +84,14 @@ class RAGKnowledgeAgent(AgentBase):
         self.knowledge_base_path = Path(knowledge_base_path)
         self.collection_name = collection_name
         self.top_k = top_k
+        self.vector_top_n = int(kwargs.get("vector_top_n", max(top_k * 4, 10)))
+        self.bm25_top_n = int(kwargs.get("bm25_top_n", max(top_k * 4, 10)))
+        self.rrf_k = int(kwargs.get("rrf_k", 60))
+        self._bm25_documents = []
+        self._bm25_doc_freqs = []
+        self._bm25_doc_lens = []
+        self._bm25_idf = {}
+        self._bm25_avgdl = 0.0
         from utils.skill_loader import SkillLoader
         self.skill_loader = SkillLoader()
 
@@ -130,6 +149,7 @@ class RAGKnowledgeAgent(AgentBase):
         self.initialized = True
         self._milvus_db_path = milvus_db_path  # 保存路径用于重连
         self._load_collection()
+        self._load_bm25_corpus()
         logger.info("RAG Knowledge Agent (Milvus Lite) initialized successfully")
 
     def _load_collection(self):
@@ -143,6 +163,305 @@ class RAGKnowledgeAgent(AgentBase):
                 logger.debug(f"Milvus collection loaded: {self.collection_name}")
         except Exception as e:
             logger.warning(f"Failed to load Milvus collection {self.collection_name}: {e}")
+
+    def _load_bm25_corpus(self):
+        """Load chunk text for BM25. Prefer chunks.json, fall back to source files."""
+        self._bm25_documents = []
+        self._bm25_doc_freqs = []
+        self._bm25_doc_lens = []
+        self._bm25_idf = {}
+        self._bm25_avgdl = 0.0
+
+        documents = self._read_chunks_manifest()
+        if not documents:
+            documents = self._read_source_documents_as_chunks()
+
+        seen_keys = set()
+        doc_freq = Counter()
+        tokenized_docs = []
+
+        for doc in documents:
+            content = doc.get("content", "")
+            metadata = doc.get("metadata", {}) or {}
+            if isinstance(metadata, str):
+                try:
+                    metadata = json.loads(metadata)
+                except Exception:
+                    metadata = {}
+            if not content:
+                continue
+
+            key = self._document_key({"metadata": metadata, "content": content})
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+
+            tokens = self._tokenize_for_bm25(content)
+            if not tokens:
+                continue
+
+            token_counts = Counter(tokens)
+            tokenized_docs.append((token_counts, len(tokens)))
+            doc_freq.update(token_counts.keys())
+            self._bm25_documents.append({
+                "id": doc.get("id", key),
+                "content": content,
+                "metadata": metadata,
+            })
+
+        total_docs = len(self._bm25_documents)
+        if not total_docs:
+            logger.warning("BM25 corpus is empty; RAG retrieval will use vector search only")
+            return
+
+        self._bm25_doc_freqs = [item[0] for item in tokenized_docs]
+        self._bm25_doc_lens = [item[1] for item in tokenized_docs]
+        self._bm25_avgdl = sum(self._bm25_doc_lens) / max(total_docs, 1)
+        self._bm25_idf = {
+            token: math.log(1 + (total_docs - freq + 0.5) / (freq + 0.5))
+            for token, freq in doc_freq.items()
+        }
+        logger.info(f"BM25 corpus loaded: {total_docs} chunks")
+
+    def _read_chunks_manifest(self) -> List[Dict[str, Any]]:
+        manifest_path = self.knowledge_base_path / "chunks.json"
+        if not manifest_path.exists():
+            return []
+
+        try:
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            chunks = data.get("chunks", []) if isinstance(data, dict) else data
+            return chunks if isinstance(chunks, list) else []
+        except Exception as e:
+            logger.warning(f"Failed to load BM25 chunks manifest {manifest_path}: {e}")
+            return []
+
+    def _read_source_documents_as_chunks(self) -> List[Dict[str, Any]]:
+        documents_dir = self.knowledge_base_path.parent / "documents"
+        if not documents_dir.exists():
+            return []
+
+        documents = []
+        for file_path in sorted(documents_dir.iterdir()):
+            if not file_path.is_file() or file_path.suffix.lower() not in {".txt", ".md"}:
+                continue
+            try:
+                content = file_path.read_text(encoding="utf-8").strip()
+            except Exception as e:
+                logger.warning(f"Failed to read BM25 source document {file_path}: {e}")
+                continue
+            if not content:
+                continue
+
+            chunks = self._split_text_for_bm25(content)
+            title = self._extract_title(content, file_path)
+            safe_stem = "".join(ch if ch.isalnum() else "_" for ch in file_path.stem)
+            for index, chunk_content in enumerate(chunks, 1):
+                chunk_uid = f"doc_{safe_stem}_{index}"
+                documents.append({
+                    "id": chunk_uid,
+                    "content": chunk_content,
+                    "metadata": {
+                        "chunk_uid": chunk_uid,
+                        "title": f"{title} (Part {index})",
+                        "source": "source_documents",
+                        "file_path": str(file_path),
+                        "parent_doc": file_path.name,
+                        "chunk_index": index,
+                        "chunk_count": len(chunks),
+                    },
+                })
+        return documents
+
+    def _split_text_for_bm25(self, text: str, max_chars: int = 600, overlap: int = 100) -> List[str]:
+        paragraphs = []
+        current_para = []
+        for line in text.split("\n"):
+            if line.strip() == "":
+                if current_para:
+                    paragraphs.append("\n".join(current_para))
+                    current_para = []
+            else:
+                current_para.append(line)
+        if current_para:
+            paragraphs.append("\n".join(current_para))
+
+        chunks = []
+        current_chunk = ""
+        for para in paragraphs:
+            if len(current_chunk) + len(para) <= max_chars:
+                current_chunk += "\n\n" + para
+                continue
+
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+
+            if len(para) > max_chars:
+                remaining = para
+                while len(remaining) > max_chars:
+                    chunks.append(remaining[:max_chars])
+                    remaining = remaining[max_chars - overlap:]
+                current_chunk = remaining
+            else:
+                current_chunk = para
+
+        if current_chunk:
+            chunks.append(current_chunk.strip())
+        return chunks
+
+    def _extract_title(self, content: str, file_path: Path) -> str:
+        for line in content.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped == "---":
+                continue
+            if stripped.startswith("#"):
+                return stripped.lstrip("#").strip() or file_path.stem
+            if stripped.startswith("title:"):
+                return stripped.split(":", 1)[1].strip().strip('"').strip("'") or file_path.stem
+            return stripped
+        return file_path.stem
+
+    def _tokenize_for_bm25(self, text: str) -> List[str]:
+        tokens = []
+        for segment in re.findall(r"[\u4e00-\u9fff]+|[a-zA-Z0-9_]+", text.lower()):
+            if re.fullmatch(r"[\u4e00-\u9fff]+", segment):
+                if JIEBA_AVAILABLE:
+                    tokens.extend(jieba.cut_for_search(segment))
+                else:
+                    tokens.extend(segment)
+                    tokens.extend(segment[i:i + 2] for i in range(max(len(segment) - 1, 0)))
+            else:
+                tokens.append(segment)
+        return [token for token in tokens if token.strip()]
+
+    def _document_key(self, doc: Dict[str, Any]) -> str:
+        metadata = doc.get("metadata", {}) or {}
+        if isinstance(metadata, str):
+            try:
+                metadata = json.loads(metadata)
+            except Exception:
+                metadata = {}
+
+        chunk_uid = metadata.get("chunk_uid")
+        if chunk_uid:
+            return str(chunk_uid)
+
+        parent_doc = metadata.get("parent_doc")
+        chunk_index = metadata.get("chunk_index")
+        if parent_doc is not None and chunk_index is not None:
+            return f"{parent_doc}::{chunk_index}"
+
+        doc_id = doc.get("id")
+        if doc_id not in (None, ""):
+            return str(doc_id)
+
+        content = doc.get("content", "")
+        return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+    def _vector_search(self, query: str, limit: int) -> List[Dict[str, Any]]:
+        query_embedding = self.embedding_model.encode(query).tolist()
+        results = self.milvus_client.search(
+            collection_name=self.collection_name,
+            data=[query_embedding],
+            limit=limit,
+            output_fields=["id", "content", "metadata"],
+        )
+
+        retrieved_docs = []
+        if results and len(results) > 0:
+            for rank, hit in enumerate(results[0], 1):
+                metadata_str = hit.get("entity", {}).get("metadata", "{}")
+                try:
+                    metadata = json.loads(metadata_str)
+                except Exception:
+                    metadata = {}
+
+                retrieved_docs.append({
+                    "id": hit.get("entity", {}).get("id", ""),
+                    "content": hit.get("entity", {}).get("content", ""),
+                    "metadata": metadata,
+                    "distance": hit.get("distance", 0.0),
+                    "vector_rank": rank,
+                    "retrieval_sources": ["vector"],
+                })
+        return retrieved_docs
+
+    def _bm25_search(self, query: str, limit: int) -> List[Dict[str, Any]]:
+        if not self._bm25_documents:
+            return []
+
+        query_tokens = set(self._tokenize_for_bm25(query))
+        if not query_tokens:
+            return []
+
+        k1 = 1.5
+        b = 0.75
+        scores = []
+        avgdl = self._bm25_avgdl or 1.0
+
+        for index, doc_freqs in enumerate(self._bm25_doc_freqs):
+            doc_len = self._bm25_doc_lens[index]
+            score = 0.0
+            for token in query_tokens:
+                tf = doc_freqs.get(token, 0)
+                if not tf:
+                    continue
+                idf = self._bm25_idf.get(token, 0.0)
+                denominator = tf + k1 * (1 - b + b * doc_len / avgdl)
+                score += idf * (tf * (k1 + 1)) / denominator
+
+            if score > 0:
+                doc = dict(self._bm25_documents[index])
+                doc["bm25_score"] = score
+                scores.append(doc)
+
+        scores.sort(key=lambda item: item["bm25_score"], reverse=True)
+        for rank, doc in enumerate(scores[:limit], 1):
+            doc["bm25_rank"] = rank
+            doc["retrieval_sources"] = ["bm25"]
+        return scores[:limit]
+
+    def _rrf_fusion(
+        self,
+        vector_docs: List[Dict[str, Any]],
+        bm25_docs: List[Dict[str, Any]],
+        top_k: int,
+    ) -> List[Dict[str, Any]]:
+        fused = {}
+
+        def add_doc(doc: Dict[str, Any], source: str, rank: int):
+            key = self._document_key(doc)
+            if key not in fused:
+                fused[key] = dict(doc)
+                fused[key]["rrf_score"] = 0.0
+                fused[key]["retrieval_sources"] = set()
+            else:
+                existing = fused[key]
+                for field in ("distance", "bm25_score", "vector_rank", "bm25_rank"):
+                    if field in doc and field not in existing:
+                        existing[field] = doc[field]
+
+            fused[key]["rrf_score"] += 1.0 / (self.rrf_k + rank)
+            fused[key]["retrieval_sources"].add(source)
+
+        for rank, doc in enumerate(vector_docs, 1):
+            add_doc(doc, "vector", rank)
+        for rank, doc in enumerate(bm25_docs, 1):
+            add_doc(doc, "bm25", rank)
+
+        fused_docs = list(fused.values())
+        for doc in fused_docs:
+            doc["retrieval_sources"] = sorted(doc["retrieval_sources"])
+
+        fused_docs.sort(
+            key=lambda item: (
+                item.get("rrf_score", 0.0),
+                -min(item.get("vector_rank", 10**6), item.get("bm25_rank", 10**6)),
+            ),
+            reverse=True,
+        )
+        return fused_docs[:top_k]
 
     def _ensure_connection(self):
         """确保 Milvus 连接正常，如果需要则重新创建客户端"""
@@ -218,6 +537,7 @@ class RAGKnowledgeAgent(AgentBase):
             except Exception as flush_error:
                 logger.debug(f"Milvus flush skipped or failed: {flush_error}")
             self._load_collection()
+            self._load_bm25_corpus()
 
             # 获取总数
             stats = self.milvus_client.get_collection_stats(self.collection_name)
@@ -234,7 +554,7 @@ class RAGKnowledgeAgent(AgentBase):
             logger.error(f"Error adding documents: {e}")
             return {"status": "error", "message": str(e)}
 
-    def search_knowledge(self, query: str, top_k: Optional[int] = None) -> List[Dict]:
+    def _legacy_vector_search_knowledge(self, query: str, top_k: Optional[int] = None) -> List[Dict]:
         """
         检索知识库
 
@@ -302,6 +622,65 @@ class RAGKnowledgeAgent(AgentBase):
                         "title": doc.get("metadata", {}).get("title"),
                         "source": doc.get("metadata", {}).get("source"),
                         "distance": doc.get("distance"),
+                        "content_preview": doc.get("content", "")[:200],
+                    }
+                    for doc in retrieved_docs
+                ],
+            })
+            return retrieved_docs
+
+        except Exception as e:
+            logger.error(f"Error searching knowledge: {e}")
+            search_trace.end_error(e, outputs={"status": "error", "query": query})
+            return []
+
+    def search_knowledge(self, query: str, top_k: Optional[int] = None) -> List[Dict]:
+        """Hybrid retrieval: Milvus COSINE vector search + BM25 + RRF fusion."""
+        if not self.initialized:
+            return []
+
+        k = top_k or self.top_k
+        search_trace = start_trace(
+            "rag.search_knowledge",
+            inputs={
+                "query": query,
+                "top_k": k,
+                "collection_name": self.collection_name,
+                "retrieval_mode": "hybrid_vector_bm25_rrf",
+            },
+            metadata={"agent_name": self.name},
+        )
+
+        try:
+            self._ensure_connection()
+            self._load_collection()
+
+            vector_docs = self._vector_search(query, limit=max(self.vector_top_n, k))
+            bm25_docs = self._bm25_search(query, limit=max(self.bm25_top_n, k))
+            retrieved_docs = self._rrf_fusion(vector_docs, bm25_docs, top_k=k)
+
+            logger.info(
+                "Hybrid retrieval returned %s docs for query: %s "
+                "(vector_candidates=%s, bm25_candidates=%s)",
+                len(retrieved_docs),
+                query[:50],
+                len(vector_docs),
+                len(bm25_docs),
+            )
+            search_trace.end({
+                "status": "success",
+                "retrieval_mode": "hybrid_vector_bm25_rrf",
+                "document_count": len(retrieved_docs),
+                "vector_candidates": len(vector_docs),
+                "bm25_candidates": len(bm25_docs),
+                "documents": [
+                    {
+                        "title": doc.get("metadata", {}).get("title"),
+                        "source": doc.get("metadata", {}).get("source"),
+                        "distance": doc.get("distance"),
+                        "bm25_score": doc.get("bm25_score"),
+                        "rrf_score": doc.get("rrf_score"),
+                        "retrieval_sources": doc.get("retrieval_sources", []),
                         "content_preview": doc.get("content", "")[:200],
                     }
                     for doc in retrieved_docs
@@ -481,7 +860,11 @@ class RAGKnowledgeAgent(AgentBase):
             "retrieved_documents": [
                 {
                     "content": doc['content'][:200] + "..." if len(doc['content']) > 200 else doc['content'],
-                    "metadata": doc['metadata']
+                    "metadata": doc['metadata'],
+                    "retrieval_sources": doc.get("retrieval_sources", []),
+                    "distance": doc.get("distance"),
+                    "bm25_score": doc.get("bm25_score"),
+                    "rrf_score": doc.get("rrf_score")
                 }
                 for doc in retrieved_docs
             ]

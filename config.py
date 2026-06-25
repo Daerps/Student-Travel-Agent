@@ -38,6 +38,16 @@ SYSTEM_CONFIG = {
     "timeout": 60,  # Increased timeout for better stability
 }
 
+REDIS_CONFIG = {
+    "enabled": str(os.getenv("REDIS_ENABLED", _LOCAL_SECRETS.get("redis_enabled", "false"))).lower() == "true",
+    "url": os.getenv("REDIS_URL", _LOCAL_SECRETS.get("redis_url", "redis://localhost:6379/0")),
+    "key_prefix": os.getenv("REDIS_KEY_PREFIX", _LOCAL_SECRETS.get("redis_key_prefix", "travel_agent")),
+    "short_term_ttl": int(os.getenv("REDIS_SHORT_TERM_TTL", _LOCAL_SECRETS.get("redis_short_term_ttl", 3600))),
+    "summary_ttl": int(os.getenv("REDIS_SUMMARY_TTL", _LOCAL_SECRETS.get("redis_summary_ttl", 1800))),
+    "preference_ttl": int(os.getenv("REDIS_PREFERENCE_TTL", _LOCAL_SECRETS.get("redis_preference_ttl", 86400))),
+    "socket_timeout": float(os.getenv("REDIS_SOCKET_TIMEOUT", _LOCAL_SECRETS.get("redis_socket_timeout", 1.0))),
+}
+
 # RAG 知识库：嵌入模型（本地路径，无需连 HuggingFace）
 RAG_CONFIG = {
     "embedding_model": "data/models/bge-small-zh-v1.5",
