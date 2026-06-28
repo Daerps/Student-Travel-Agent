@@ -1,0 +1,4144 @@
+{
+  "generated_at": "2026-06-28 18:14:04",
+  "dataset": "D:\\Algorithm\\for study\\travel agent\\tests\\eval_dataset_100.json",
+  "rag_dataset": "D:\\Algorithm\\for study\\travel agent\\tests\\rag_evidence_review.json",
+  "rag_gold_field": "review_search_query",
+  "dataset_summary": {
+    "sample_count": 100,
+    "preference_eval_count": 20,
+    "rag_eval_count": 20,
+    "user_count": 8
+  },
+  "mode": "rag_review_reuse_previous_agent_eval",
+  "agent_eval": {
+    "status": "completed",
+    "mode": "intention_only_no_orchestration",
+    "intent": {
+      "success": 89,
+      "total": 100,
+      "success_rate": "89.0%",
+      "failed_cases": [
+        {
+          "id": "case_011",
+          "user_id": "u001",
+          "turn_id": 11,
+          "query": "参加完北京的会议后，我要去广州再住两天一晚，广州纯旅游，帮我规划。",
+          "gold_agents": [
+            "event_collection",
+            "itinerary_planning",
+            "memory_query"
+          ],
+          "pred_agents": [
+            "event_collection",
+            "preference",
+            "itinerary_planning"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 20.149
+        },
+        {
+          "id": "case_022",
+          "user_id": "u002",
+          "turn_id": 9,
+          "query": "刚才说的报销标准是啥来着，所以我这次去的话每天能报销多少？",
+          "gold_agents": [
+            "memory_query",
+            "rag_knowledge"
+          ],
+          "pred_agents": [
+            "rag_knowledge",
+            "event_collection"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 24.38
+        },
+        {
+          "id": "case_026",
+          "user_id": "u002",
+          "turn_id": 13,
+          "query": "总结一下我的所有行程，然后告诉我要准备些什么东西",
+          "gold_agents": [
+            "memory_query"
+          ],
+          "pred_agents": [
+            "information_query"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 4.753
+        },
+        {
+          "id": "case_033",
+          "user_id": "u003",
+          "turn_id": 7,
+          "query": "我到站后要等别人下班来接我，合肥南站附近有什么适合短暂停留的地方？",
+          "gold_agents": [
+            "information_query"
+          ],
+          "pred_agents": [
+            "rag_knowledge"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 21.681
+        },
+        {
+          "id": "case_047",
+          "user_id": "u004",
+          "turn_id": 8,
+          "query": "武汉站到光谷软件园交通怎么安排？",
+          "gold_agents": [
+            "information_query"
+          ],
+          "pred_agents": [
+            "preference",
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 15.369
+        },
+        {
+          "id": "case_060",
+          "user_id": "u005",
+          "turn_id": 8,
+          "query": "我之前说的那几个规定，有针对济南说什么吗，就是济南有啥规定？",
+          "gold_agents": [
+            "memory_query",
+            "rag_knowledge"
+          ],
+          "pred_agents": [
+            "rag_knowledge"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 10.119
+        },
+        {
+          "id": "case_062",
+          "user_id": "u005",
+          "turn_id": 10,
+          "query": "帮我做一个从上海去南昌参加项目验收的行程。",
+          "gold_agents": [
+            "event_collection",
+            "itinerary_planning",
+            "rag_knowledge"
+          ],
+          "pred_agents": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 20.773
+        },
+        {
+          "id": "case_071",
+          "user_id": "u006",
+          "turn_id": 7,
+          "query": "珠海下雨的话，有什么室内旅游项目嘛？",
+          "gold_agents": [
+            "information_query",
+            "itinerary_planning"
+          ],
+          "pred_agents": [
+            "information_query"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 15.623
+        },
+        {
+          "id": "case_076",
+          "user_id": "u006",
+          "turn_id": 12,
+          "query": "我上次发的那个去天津的行程，有没有什么在北京中转半天的出行方式",
+          "gold_agents": [
+            "memory_query",
+            "information_query",
+            "itinerary_planning"
+          ],
+          "pred_agents": [
+            "memory_query",
+            "event_collection",
+            "information_query"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 16.941
+        },
+        {
+          "id": "case_086",
+          "user_id": "u007",
+          "turn_id": 10,
+          "query": "福州附近是不是哪里有什么蓝月亮现象，是湖里的微生物发光导致的，那是哪，我第一天晚上准备去那，重新规划一下行程？",
+          "gold_agents": [
+            "information_query",
+            "itinerary_planning",
+            "event_collection"
+          ],
+          "pred_agents": [
+            "information_query",
+            "itinerary_planning"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 24.348
+        },
+        {
+          "id": "case_087",
+          "user_id": "u007",
+          "turn_id": 11,
+          "query": "所以帮我总结一下福州这次的行程。",
+          "gold_agents": [
+            "memory_query"
+          ],
+          "pred_agents": [
+            "event_collection",
+            "itinerary_planning"
+          ],
+          "intent_success": false,
+          "preference_eval": false,
+          "preference_success": null,
+          "error": null,
+          "latency_sec": 18.695
+        }
+      ]
+    },
+    "preference": {
+      "success": 20,
+      "total": 20,
+      "success_rate": "100.0%",
+      "failed_cases": []
+    },
+    "cache": {
+      "by_type": {
+        "preferences": {
+          "hits": 92,
+          "reads": 100,
+          "hit_rate": "92.0%"
+        },
+        "short_term": {
+          "hits": 92,
+          "reads": 100,
+          "hit_rate": "92.0%"
+        }
+      },
+      "overall": {
+        "hits": 184,
+        "reads": 200,
+        "hit_rate": "92.0%"
+      }
+    },
+    "case_results": [
+      {
+        "id": "case_001",
+        "user_id": "u001",
+        "turn_id": 1,
+        "query": "我以后出差优先给我安排汉庭。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 9.501
+      },
+      {
+        "id": "case_002",
+        "user_id": "u001",
+        "turn_id": 2,
+        "query": "如家也行吧，反正后面你安排。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 40.158
+      },
+      {
+        "id": "case_003",
+        "user_id": "u001",
+        "turn_id": 3,
+        "query": "算了都给我安排全季算了，这玩意住着舒服。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 9.121
+      },
+      {
+        "id": "case_004",
+        "user_id": "u001",
+        "turn_id": 4,
+        "query": "马上去北京，两个人，住宿费能给报多少啊？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge",
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 21.073
+      },
+      {
+        "id": "case_005",
+        "user_id": "u001",
+        "turn_id": 5,
+        "query": "住宿费报销需要准备哪些材料？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 12.624
+      },
+      {
+        "id": "case_006",
+        "user_id": "u001",
+        "turn_id": 6,
+        "query": "我这是会议啊，应该能报销，学校会议报销啥制度？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.413
+      },
+      {
+        "id": "case_007",
+        "user_id": "u001",
+        "turn_id": 7,
+        "query": "明天北京天气怎么样？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.114
+      },
+      {
+        "id": "case_008",
+        "user_id": "u001",
+        "turn_id": 8,
+        "query": "帮我规划一下下周从上海到北京两天一晚的出差行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 26.058
+      },
+      {
+        "id": "case_009",
+        "user_id": "u001",
+        "turn_id": 9,
+        "query": "我之前有去过杭州吗？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.278
+      },
+      {
+        "id": "case_010",
+        "user_id": "u001",
+        "turn_id": 10,
+        "query": "查一下开完会后立马去广州，广州什么天气。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 25.781
+      },
+      {
+        "id": "case_011",
+        "user_id": "u001",
+        "turn_id": 11,
+        "query": "参加完北京的会议后，我要去广州再住两天一晚，广州纯旅游，帮我规划。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning",
+          "memory_query"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 20.149
+      },
+      {
+        "id": "case_012",
+        "user_id": "u001",
+        "turn_id": 12,
+        "query": "广州站到小蛮腰地标大概要多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 15.544
+      },
+      {
+        "id": "case_013",
+        "user_id": "u001",
+        "turn_id": 13,
+        "query": "我之前去过哪些城市过了，先后顺序是什么？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.365
+      },
+      {
+        "id": "case_014",
+        "user_id": "u002",
+        "turn_id": 1,
+        "query": "我只能接受火车和高铁，我怕飞机，飞机容易出事故太吓人。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 11.185
+      },
+      {
+        "id": "case_015",
+        "user_id": "u002",
+        "turn_id": 2,
+        "query": "还有就是我想坐出行时间在晚上的班次最好，可以刚好睡觉",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 10.948
+      },
+      {
+        "id": "case_016",
+        "user_id": "u002",
+        "turn_id": 3,
+        "query": "以后你只需要考虑从上海出行的情况就行，我目前在上海工作，不要搞到其他城市了。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 7.876
+      },
+      {
+        "id": "case_017",
+        "user_id": "u002",
+        "turn_id": 4,
+        "query": "学校国内差旅的伙食补助费怎么算？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 8.915
+      },
+      {
+        "id": "case_018",
+        "user_id": "u002",
+        "turn_id": 5,
+        "query": "按学校文件的说法，我出行的话的，市内交通费标准是什么？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.553
+      },
+      {
+        "id": "case_019",
+        "user_id": "u002",
+        "turn_id": 6,
+        "query": "学校报销系统里差旅报销大概怎么提交？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 6.37
+      },
+      {
+        "id": "case_020",
+        "user_id": "u002",
+        "turn_id": 7,
+        "query": "帮我安排明天去宁波的当天往返。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.153
+      },
+      {
+        "id": "case_021",
+        "user_id": "u002",
+        "turn_id": 8,
+        "query": "详细叙述一下宁波明天的天气，最好能精确到具体时间。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.63
+      },
+      {
+        "id": "case_022",
+        "user_id": "u002",
+        "turn_id": 9,
+        "query": "刚才说的报销标准是啥来着，所以我这次去的话每天能报销多少？",
+        "gold_agents": [
+          "memory_query",
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge",
+          "event_collection"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 24.38
+      },
+      {
+        "id": "case_023",
+        "user_id": "u002",
+        "turn_id": 10,
+        "query": "我同学问我，从杭州东到西湖文化广场怎么走比较快？给我个方案",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 14.632
+      },
+      {
+        "id": "case_024",
+        "user_id": "u002",
+        "turn_id": 11,
+        "query": "我下个月去厦门参加项目交流，帮我做一个三天行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 18.049
+      },
+      {
+        "id": "case_025",
+        "user_id": "u002",
+        "turn_id": 12,
+        "query": "厦门北站到软件园二期大概要多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.992
+      },
+      {
+        "id": "case_026",
+        "user_id": "u002",
+        "turn_id": 13,
+        "query": "总结一下我的所有行程，然后告诉我要准备些什么东西",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 4.753
+      },
+      {
+        "id": "case_027",
+        "user_id": "u003",
+        "turn_id": 1,
+        "query": "我以后来问你的时候，默认以坐飞机进行规划。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 7.412
+      },
+      {
+        "id": "case_028",
+        "user_id": "u003",
+        "turn_id": 2,
+        "query": "记得给我安排东航。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 7.545
+      },
+      {
+        "id": "case_029",
+        "user_id": "u003",
+        "turn_id": 3,
+        "query": "酒店记得选离目标地点最近的，我起的比较晚，必须离的近",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 11.321
+      },
+      {
+        "id": "case_030",
+        "user_id": "u003",
+        "turn_id": 4,
+        "query": "我在申请会议，会议学校是能报销是吗",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.256
+      },
+      {
+        "id": "case_031",
+        "user_id": "u003",
+        "turn_id": 5,
+        "query": "会议费哪些情况不能报销？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 8.956
+      },
+      {
+        "id": "case_032",
+        "user_id": "u003",
+        "turn_id": 6,
+        "query": "帮我规划下个月1号开始的从南京到合肥的七日出差，是参加会议。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "memory_query",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 18.5
+      },
+      {
+        "id": "case_033",
+        "user_id": "u003",
+        "turn_id": 7,
+        "query": "我到站后要等别人下班来接我，合肥南站附近有什么适合短暂停留的地方？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 21.681
+      },
+      {
+        "id": "case_034",
+        "user_id": "u003",
+        "turn_id": 8,
+        "query": "把这个短暂停留的部分也加入规划中，再次给我一版完整旅游规划？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "memory_query",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 18.015
+      },
+      {
+        "id": "case_035",
+        "user_id": "u003",
+        "turn_id": 9,
+        "query": "合肥那七日的具体天气如何，我是第三天参展。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 10.714
+      },
+      {
+        "id": "case_036",
+        "user_id": "u003",
+        "turn_id": 10,
+        "query": "我下周去深圳两天，帮我排一个紧凑点的工作行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "memory_query",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 20.644
+      },
+      {
+        "id": "case_037",
+        "user_id": "u003",
+        "turn_id": 11,
+        "query": "深圳北到南山区科技园大概多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 18.213
+      },
+      {
+        "id": "case_038",
+        "user_id": "u003",
+        "turn_id": 12,
+        "query": "从上海去成都大概多久",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 13.016
+      },
+      {
+        "id": "case_039",
+        "user_id": "u003",
+        "turn_id": 13,
+        "query": "帮我查一下明天上海虹桥机场附近交通状况。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 6.98
+      },
+      {
+        "id": "case_040",
+        "user_id": "u004",
+        "turn_id": 1,
+        "query": "过段时间去无锡参加会议，给我看看下个月5号的高铁怎么样，只看高铁",
+        "gold_agents": [
+          "preference",
+          "information_query"
+        ],
+        "pred_agents": [
+          "memory_query",
+          "event_collection",
+          "preference",
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 23.257
+      },
+      {
+        "id": "case_041",
+        "user_id": "u004",
+        "turn_id": 2,
+        "query": "住宿预算尽量控制在中档水平，不要太豪华。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 9.704
+      },
+      {
+        "id": "case_042",
+        "user_id": "u004",
+        "turn_id": 3,
+        "query": "短程出行以地铁为主。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 8.231
+      },
+      {
+        "id": "case_043",
+        "user_id": "u004",
+        "turn_id": 4,
+        "query": "出国参加会议的时候，学校有啥规定吗？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 14.808
+      },
+      {
+        "id": "case_044",
+        "user_id": "u004",
+        "turn_id": 5,
+        "query": "需要什么审批材料吗？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.823
+      },
+      {
+        "id": "case_045",
+        "user_id": "u004",
+        "turn_id": 6,
+        "query": "帮我查一下武汉明天的天气和空气质量。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 10.566
+      },
+      {
+        "id": "case_046",
+        "user_id": "u004",
+        "turn_id": 7,
+        "query": "下周二从上海到武汉两天，帮我安排。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "preference",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.052
+      },
+      {
+        "id": "case_047",
+        "user_id": "u004",
+        "turn_id": 8,
+        "query": "武汉站到光谷软件园交通怎么安排？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "preference",
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 15.369
+      },
+      {
+        "id": "case_048",
+        "user_id": "u004",
+        "turn_id": 9,
+        "query": "我上一次安排的两天行程是去哪里？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 10.179
+      },
+      {
+        "id": "case_049",
+        "user_id": "u004",
+        "turn_id": 10,
+        "query": "重庆有机场吗，上海到重庆有航班吗？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 13.718
+      },
+      {
+        "id": "case_050",
+        "user_id": "u004",
+        "turn_id": 11,
+        "query": "我后天从上海去重庆开一天会，帮我排往返时间。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 22.748
+      },
+      {
+        "id": "case_051",
+        "user_id": "u004",
+        "turn_id": 12,
+        "query": "重庆北站到解放碑大概多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.896
+      },
+      {
+        "id": "case_052",
+        "user_id": "u004",
+        "turn_id": 13,
+        "query": "帮我查一下我之前有没有去过武汉，有的话之前的出行方案发给我。",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.248
+      },
+      {
+        "id": "case_053",
+        "user_id": "u005",
+        "turn_id": 1,
+        "query": "亚朵酒店怎么样，是不是比较好，我想住亚朵。",
+        "gold_agents": [
+          "preference",
+          "information_query"
+        ],
+        "pred_agents": [
+          "preference",
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 12.938
+      },
+      {
+        "id": "case_054",
+        "user_id": "u005",
+        "turn_id": 2,
+        "query": "如果没有亚朵，就帮我考虑全季。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 10.675
+      },
+      {
+        "id": "case_055",
+        "user_id": "u005",
+        "turn_id": 3,
+        "query": "哪些差旅相关费用不能报？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 13.577
+      },
+      {
+        "id": "case_056",
+        "user_id": "u005",
+        "turn_id": 4,
+        "query": "个人顺路旅游能放进学校差旅报销里吗？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.62
+      },
+      {
+        "id": "case_057",
+        "user_id": "u005",
+        "turn_id": 5,
+        "query": "学校差旅中航班延误产生的改签费怎么处理？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.273
+      },
+      {
+        "id": "case_058",
+        "user_id": "u005",
+        "turn_id": 6,
+        "query": "帮我安排从上海到济南的两天出差。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 19.667
+      },
+      {
+        "id": "case_059",
+        "user_id": "u005",
+        "turn_id": 7,
+        "query": "济南明天有说要下雨吗？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.009
+      },
+      {
+        "id": "case_060",
+        "user_id": "u005",
+        "turn_id": 8,
+        "query": "我之前说的那几个规定，有针对济南说什么吗，就是济南有啥规定？",
+        "gold_agents": [
+          "memory_query",
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 10.119
+      },
+      {
+        "id": "case_061",
+        "user_id": "u005",
+        "turn_id": 9,
+        "query": "济南西站到高新区怎么走？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 15.675
+      },
+      {
+        "id": "case_062",
+        "user_id": "u005",
+        "turn_id": 10,
+        "query": "帮我做一个从上海去南昌参加项目验收的行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning",
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 20.773
+      },
+      {
+        "id": "case_063",
+        "user_id": "u005",
+        "turn_id": 11,
+        "query": "南昌西站附近晚饭有什么选择？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 12.47
+      },
+      {
+        "id": "case_064",
+        "user_id": "u005",
+        "turn_id": 12,
+        "query": "把我最近说的几个城市，这三天的天气状况发给我？",
+        "gold_agents": [
+          "memory_query",
+          "information_query"
+        ],
+        "pred_agents": [
+          "memory_query",
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 19.962
+      },
+      {
+        "id": "case_065",
+        "user_id": "u006",
+        "turn_id": 1,
+        "query": "交通要直达，后续尽量给我直达的方案。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 10.726
+      },
+      {
+        "id": "case_066",
+        "user_id": "u006",
+        "turn_id": 2,
+        "query": "酒店尽量选有早餐的。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 7.359
+      },
+      {
+        "id": "case_067",
+        "user_id": "u006",
+        "turn_id": 3,
+        "query": "学校科研项目住宿费包干是什么意思？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.211
+      },
+      {
+        "id": "case_068",
+        "user_id": "u006",
+        "turn_id": 4,
+        "query": "学校住宿费上浮需要什么条件和审批？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 8.547
+      },
+      {
+        "id": "case_069",
+        "user_id": "u006",
+        "turn_id": 5,
+        "query": "学校外埠差旅报销一般需要哪些交通票据？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.485
+      },
+      {
+        "id": "case_070",
+        "user_id": "u006",
+        "turn_id": 6,
+        "query": "帮我规划一趟从广州到珠海的当天往返。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 32.451
+      },
+      {
+        "id": "case_071",
+        "user_id": "u006",
+        "turn_id": 7,
+        "query": "珠海下雨的话，有什么室内旅游项目嘛？",
+        "gold_agents": [
+          "information_query",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 15.623
+      },
+      {
+        "id": "case_072",
+        "user_id": "u006",
+        "turn_id": 8,
+        "query": "我之前是不是去安排过广州去北京的行程了？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 12.659
+      },
+      {
+        "id": "case_073",
+        "user_id": "u006",
+        "turn_id": 9,
+        "query": "广州南站到大学城需要多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 12.919
+      },
+      {
+        "id": "case_074",
+        "user_id": "u006",
+        "turn_id": 10,
+        "query": "我下周去天津做调研，帮我安排两天路线。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 14.06
+      },
+      {
+        "id": "case_075",
+        "user_id": "u006",
+        "turn_id": 11,
+        "query": "天津站附近有什么适合上午见面的地点？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 20.662
+      },
+      {
+        "id": "case_076",
+        "user_id": "u006",
+        "turn_id": 12,
+        "query": "我上次发的那个去天津的行程，有没有什么在北京中转半天的出行方式",
+        "gold_agents": [
+          "memory_query",
+          "information_query",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "memory_query",
+          "event_collection",
+          "information_query"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.941
+      },
+      {
+        "id": "case_077",
+        "user_id": "u007",
+        "turn_id": 1,
+        "query": "我需要住宿地点在地铁口附近的酒店。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 15.099
+      },
+      {
+        "id": "case_078",
+        "user_id": "u007",
+        "turn_id": 2,
+        "query": "我不能接受早上出行，上午不要安排出行。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 7.424
+      },
+      {
+        "id": "case_079",
+        "user_id": "u007",
+        "turn_id": 3,
+        "query": "学校会议不安排住宿时，综合定额怎么处理？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.07
+      },
+      {
+        "id": "case_080",
+        "user_id": "u007",
+        "turn_id": 4,
+        "query": "学校邀请专家参会的交通费能在会议费里报吗？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 8.256
+      },
+      {
+        "id": "case_081",
+        "user_id": "u007",
+        "turn_id": 5,
+        "query": "帮我安排从上海到长沙参加一天交流的行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "memory_query",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 32.556
+      },
+      {
+        "id": "case_082",
+        "user_id": "u007",
+        "turn_id": 6,
+        "query": "长沙明天最高气温多少？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.005
+      },
+      {
+        "id": "case_083",
+        "user_id": "u007",
+        "turn_id": 7,
+        "query": "我之前有去过长沙吗？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 10.464
+      },
+      {
+        "id": "case_084",
+        "user_id": "u007",
+        "turn_id": 8,
+        "query": "长沙南站到岳麓区大概要多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 12.778
+      },
+      {
+        "id": "case_085",
+        "user_id": "u007",
+        "turn_id": 9,
+        "query": "下周三还要从上海去福州开会，帮我规划三天安排。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "memory_query",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.175
+      },
+      {
+        "id": "case_086",
+        "user_id": "u007",
+        "turn_id": 10,
+        "query": "福州附近是不是哪里有什么蓝月亮现象，是湖里的微生物发光导致的，那是哪，我第一天晚上准备去那，重新规划一下行程？",
+        "gold_agents": [
+          "information_query",
+          "itinerary_planning",
+          "event_collection"
+        ],
+        "pred_agents": [
+          "information_query",
+          "itinerary_planning"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 24.348
+      },
+      {
+        "id": "case_087",
+        "user_id": "u007",
+        "turn_id": 11,
+        "query": "所以帮我总结一下福州这次的行程。",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": false,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 18.695
+      },
+      {
+        "id": "case_088",
+        "user_id": "u007",
+        "turn_id": 12,
+        "query": "福州站到三坊七巷附近需要多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.858
+      },
+      {
+        "id": "case_089",
+        "user_id": "u008",
+        "turn_id": 1,
+        "query": "酒店需要郊区那种人少的地方的，记得给我选高铁类。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 15.103
+      },
+      {
+        "id": "case_090",
+        "user_id": "u008",
+        "turn_id": 2,
+        "query": "算了，卧铺我也能接受。",
+        "gold_agents": [
+          "preference"
+        ],
+        "pred_agents": [
+          "preference"
+        ],
+        "intent_success": true,
+        "preference_eval": true,
+        "preference_success": true,
+        "error": null,
+        "latency_sec": 8.084
+      },
+      {
+        "id": "case_091",
+        "user_id": "u008",
+        "turn_id": 3,
+        "query": "学校出差实际发生住宿但没有住宿发票，还能报哪些费用？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 13.064
+      },
+      {
+        "id": "case_092",
+        "user_id": "u008",
+        "turn_id": 4,
+        "query": "学校外出证件遗失或者票据丢了怎么处理？",
+        "gold_agents": [
+          "rag_knowledge"
+        ],
+        "pred_agents": [
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 8.494
+      },
+      {
+        "id": "case_093",
+        "user_id": "u008",
+        "turn_id": 5,
+        "query": "帮我规划从上海去昆明参加两天研讨的行程。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.52
+      },
+      {
+        "id": "case_094",
+        "user_id": "u008",
+        "turn_id": 6,
+        "query": "昆明这周末天气怎么样？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 14.437
+      },
+      {
+        "id": "case_095",
+        "user_id": "u008",
+        "turn_id": 7,
+        "query": "我以前有没有去过云南？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 9.232
+      },
+      {
+        "id": "case_096",
+        "user_id": "u008",
+        "turn_id": 8,
+        "query": "昆明长水机场到市中心怎么走？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query",
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 11.08
+      },
+      {
+        "id": "case_097",
+        "user_id": "u008",
+        "turn_id": 9,
+        "query": "我下个月15号从上海去郑州一天，帮我安排时间。",
+        "gold_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "pred_agents": [
+          "event_collection",
+          "itinerary_planning"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 7.938
+      },
+      {
+        "id": "case_098",
+        "user_id": "u008",
+        "turn_id": 10,
+        "query": "郑州东站到高新区通勤多久？",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "information_query",
+          "rag_knowledge"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.483
+      },
+      {
+        "id": "case_099",
+        "user_id": "u008",
+        "turn_id": 11,
+        "query": "所以说我最近的马上要出行的是哪次，具体规划是哪个？",
+        "gold_agents": [
+          "memory_query"
+        ],
+        "pred_agents": [
+          "memory_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 16.917
+      },
+      {
+        "id": "case_100",
+        "user_id": "u008",
+        "turn_id": 12,
+        "query": "查一下郑州明天是否限行。",
+        "gold_agents": [
+          "information_query"
+        ],
+        "pred_agents": [
+          "rag_knowledge",
+          "information_query"
+        ],
+        "intent_success": true,
+        "preference_eval": false,
+        "preference_success": null,
+        "error": null,
+        "latency_sec": 13.177
+      }
+    ]
+  },
+  "rag_eval": {
+    "status": "completed",
+    "cluster_hit": {
+      "success": 16,
+      "total": 20,
+      "hit_rate": "80.0%"
+    },
+    "evidence_hit": {
+      "success": 18,
+      "total": 20,
+      "hit_rate": "90.0%"
+    },
+    "strict_hit": {
+      "success": 13,
+      "total": 20,
+      "hit_rate": "65.0%"
+    },
+    "failed_cases": [
+      {
+        "id": "case_018",
+        "user_id": "u002",
+        "turn_id": 5,
+        "query": "按学校文件的说法，我出行的话的，市内交通费标准是什么？",
+        "gold_cluster": 1,
+        "gold_evidence": "市内交通费标准涉及出差出行期间的公共交通、出租车等交通工具的费用限额与报销规定",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": false,
+        "strict_hit": false,
+        "max_similarity": 0.6832,
+        "best_doc": {
+          "rank": 2,
+          "parent_doc": "04_business_travel_faq_tongji.txt",
+          "chunk_index": 1,
+          "similarity": 0.6832
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.5806,
+            "chunk_index": 28,
+            "title": "同济大学财务报销培训 (Part 28)",
+            "distance": 0.3643273115158081,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n600.00\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n2000.00\n\n1832xxx\n\n136xxxxxxxx\n\n2019.1-2020.1\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n600.00\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n2000"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6832,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 19.272850916689464,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6818,
+            "chunk_index": 8,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 8)",
+            "distance": 0.39479053020477295,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（八）已由校外单位负担住宿费用的，不得在学校重复申请住宿费包干。\n\n## 第五章 伙食补助费\n\n### 第十七条\n\n伙食补助费是指对出差人员在因公出差期间给予的伙食补助费用。\n\n### 第十八条\n\n伙食补助费包干使用，按《同济大学差旅伙食补助费和市内交通费包干标准》（见附件 2）规定的标准以自然（日历）天数包干发放。学生出差，伙食补助费在本标准范围内由项目负责人确定。\n\n对于参加会议和培训，举办方承担伙食费用的，发放在途往返期间的伙食补助费；举办方不承担伙食费用的，按照出差自"
+          }
+        ]
+      },
+      {
+        "id": "case_019",
+        "user_id": "u002",
+        "turn_id": 6,
+        "query": "学校报销系统里差旅报销大概怎么提交？",
+        "gold_cluster": 2,
+        "gold_evidence": "差旅报销系统提交流程涉及报销单填报、审批节点流转、相关材料上传、发票验真、预算占用和提交后状态查询等常见环节。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": false,
+        "strict_hit": false,
+        "max_similarity": 0.6984,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 15,
+          "similarity": 0.6984
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.674,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.3337039351463318,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.5737,
+            "chunk_index": 3,
+            "title": "同济差旅与参会常见问题 (Part 3)",
+            "distance": null,
+            "bm25_score": 11.761112772768865,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q12: 境外票据怎么处理？\nA12: 应保留境外支出凭证，并说明支付人、收款人、事项、金额、币种等主要内容。必要时将主要内容译成中文。\n\n五、会议相关\n\nQ13: 参加会议和举办会议有什么区别？\nA13: 参加外单位会议产生的本人差旅费用，通常按差旅费或国际合作与交流费判断。学校主办或承办会议产生的住宿、伙食、会场、材料等费用，通常按会议费管理细则判断。\n\nQ14: 会议期间能安排旅游或参观吗？\nA14: 与会议无关的旅游、参观、景区门票、导游费、景区交通、高消费娱乐等不应"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6984,
+            "chunk_index": 15,
+            "title": "同济大学财务报销培训 (Part 15)",
+            "distance": 0.33726751804351807,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 住宿包干天数的计量：按实际出差天数减一天计算；出差当天来回的，\n\n不发放住宿费。\n\n- 支付方式：经财务处核定后，通过无现金支付系统分别支付给各实际出\n\n差人员，不得汇总支付给同一人。\n\n- 包干原则：同一出差审批单上的人员，须选用统一的出差政策；同一次\n\n出差，选择的出差政策不可改变。即：住宿费报销，可选择全部据实报\n\n销，或者选择全部包干。\n\n以下三类情况不适用住宿费包干:\n\n- 交纳会务费或注册费的会议差旅\n\n- 以自驾/租车(含出租车)方式出差\n\n- 无法提供来回"
+          }
+        ]
+      },
+      {
+        "id": "case_043",
+        "user_id": "u004",
+        "turn_id": 4,
+        "query": "出国参加会议的时候，学校有啥规定吗？",
+        "gold_cluster": 4,
+        "gold_evidence": "因公出国参加会议的相关规定涉及因公出国审批流程、差旅费报销标准、会议费综合定额、住宿费限额以及报销材料要求等事项",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.7747,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 32,
+          "similarity": 0.7747
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7747,
+            "chunk_index": 32,
+            "title": "同济大学报销手册（2026年3月） (Part 32)",
+            "distance": 0.44670093059539795,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（3）参会专家人员费用。会议举办者根据工作需要，可向邀请参会专家发放咨询费、讲课费、劳务费。\n4. 严禁各单位借会议名义组织会餐或安排宴请；严禁预存、套取会议费设立“小金库”；严禁在会议费中列支公务接待费。各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7567,
+            "chunk_index": 3,
+            "title": "同济差旅与参会常见问题 (Part 3)",
+            "distance": null,
+            "bm25_score": 14.236872921846079,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q12: 境外票据怎么处理？\nA12: 应保留境外支出凭证，并说明支付人、收款人、事项、金额、币种等主要内容。必要时将主要内容译成中文。\n\n五、会议相关\n\nQ13: 参加会议和举办会议有什么区别？\nA13: 参加外单位会议产生的本人差旅费用，通常按差旅费或国际合作与交流费判断。学校主办或承办会议产生的住宿、伙食、会场、材料等费用，通常按会议费管理细则判断。\n\nQ14: 会议期间能安排旅游或参观吗？\nA14: 与会议无关的旅游、参观、景区门票、导游费、景区交通、高消费娱乐等不应"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+            "cluster": 3,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6695,
+            "chunk_index": 6,
+            "title": "同济大学会议费管理细则（同济财〔2024〕6号） (Part 6)",
+            "distance": 0.4537092447280884,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活动；严禁以任何名义发放纪念品；不得额外配发洗漱用品。\n\n### 第二十条\n\n各单位应当加强对本单位会议举办活动和经费报销的内控管理，对违反会议费管理制度的人员进行严肃处理，自觉接受学校有关部门对会议举办活动"
+          }
+        ]
+      },
+      {
+        "id": "case_044",
+        "user_id": "u004",
+        "turn_id": 5,
+        "query": "需要什么审批材料吗？",
+        "gold_cluster": 4,
+        "gold_evidence": "审批材料涉及出差审批单、会议审批表、发票清单、费用明细、领导签批和报销申请单等必要文件内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.742,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 55,
+          "similarity": 0.742
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7221,
+            "chunk_index": 54,
+            "title": "同济大学报销手册（2026年3月） (Part 54)",
+            "distance": 0.4561281204223633,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（3）基建处、后勤管理与保障处、保卫处、信息化办公室等归口管理部门开具的工程建设项目资金支付审批表：审批表内容填写和审批流程正确、完整，工程监理（按合同）、工程造价监理（按合同）、使用单位经办人、归口管理部门经办人、分管处长、处长审批，其中30万元（含）以上的项目需报基建分管校领导审批。\n（4）履约保函（按合同）。\n（5）预付款保函（按合同）。\n（6）中标通知书复印件：20万元（含）以上项目提供。\n（7）同济大学预约报销单：单据内容填写完整并需经办人签字、负责人签字。\n2. "
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6958,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 14.41513530291367,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.742,
+            "chunk_index": 55,
+            "title": "同济大学报销手册（2026年3月） (Part 55)",
+            "distance": 0.4570416212081909,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "项目需提供。验收单中施工单位、使用单位及建设单位需就验收结果签署意见并签字盖章，如有监理和设计单位参与，亦需同时签署意见并签字盖章。\n（6）同济大学预约报销单：单据内容填写完整并需经办人签字、负责人签字。\n3. 工程审价后付款需提交的材料：\n（1）发票。\n（2）合同（可以复印件、只需提供关键页）。\n（3）基建处、后勤管理与保障处、保卫处、信息化办公室等归口管理部门开具的工程建设项目资金支付审批表：审批表内容填写和审批流程正确、完整，工程监理（按合同）、工程造价监理（按合同）、"
+          }
+        ]
+      },
+      {
+        "id": "case_055",
+        "user_id": "u005",
+        "turn_id": 3,
+        "query": "哪些差旅相关费用不能报？",
+        "gold_cluster": 5,
+        "gold_evidence": "差旅费不予报销情形涉及因私绕道旅游、个人消费、非公务活动支出、超标准住宿交通、礼品娱乐等范围及限制内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.757,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+          "chunk_index": 9,
+          "similarity": 0.757
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.757,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.29811906814575195,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "01_trip_planning_checklist.txt",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7556,
+            "chunk_index": 3,
+            "title": "同济差旅规划前检查清单 (Part 3)",
+            "distance": null,
+            "bm25_score": 14.399240946776384,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 不编造具体金额和制度条款，金额必须来自知识库正式制度。\n2. 不把个人旅游包装成公务差旅。\n3. 景区门票、导游费、与会议无关参观、娱乐活动等要提示自费或高风险。\n4. 如果用户要求顺便游玩，应把公务段和个人段分开。\n5. 如果缺少经费类型、人员身份、会议属性，要明确说明需要确认后才能判断报销口径。\n6. 输出中要区分行程建议和报销/合规提醒。\n\n五、推荐回答结构\n\n1. 行程理解：复述出发地、目的地、日期、任务类型。\n2. 需要确认：列出影响报销和规划的缺失信息。\n3"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7546,
+            "chunk_index": 3,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 3)",
+            "distance": 0.321863055229187,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（三）各二级单位对使用本单位经费的有关出差人员承担审批和监管责任，加强政策宣传，督促、审查出差人员合理、合规使用和报销差旅费。\n\n（四）财务处负责差旅费的会计核算和财务管理，制定和完善学校差旅费管理制度，依据有关财经法律法规、差旅费管理制度实施差旅费报销管理。\n\n### 第六条\n\n各二级单位应加强本单位人员管理，按照学校人事管理要求履行人员管理职责，领导干部出差按照组织部有关干部管理规定执行，相关出差审批材料由各二级单位自行保管备查。\n\n各二级单位要从严控制出差人数和天数；严"
+          }
+        ]
+      },
+      {
+        "id": "case_056",
+        "user_id": "u005",
+        "turn_id": 4,
+        "query": "个人顺路旅游能放进学校差旅报销里吗？",
+        "gold_cluster": [
+          5,
+          2
+        ],
+        "gold_evidence": "差旅费报销限制涉及因私顺路旅游、与公务无关支出、个人自理费用和不予报销情形。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.725,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+          "chunk_index": 9,
+          "similarity": 0.725
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6651,
+            "chunk_index": 13,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 13)",
+            "distance": 0.37033379077911377,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "出差人员不得向接待单位提出正常公务活动以外的要求，不得在出差期间接受违反规定用公款支付的宴请、游览和非工作需要的参观，不得接受礼品、礼金和土特产品等。\n\n### 第三十八条\n\n出差人员违反本办法规定，有下列行为之一的，依照有关法律法规和《同济大学教职员工处分暂行规定》追究相关人员的责任。\n\n（一）虚报出差天数、人数等信息冒领差旅费的。\n\n（二）擅自扩大差旅费开支范围和提高开支标准的。\n\n（三）差旅费已全部或部分由校外单位负担，重复报销差旅费的。\n\n（四）在差旅费中报销应由个人"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6481,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 19.46787495387722,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.725,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.3833850622177124,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          }
+        ]
+      },
+      {
+        "id": "case_092",
+        "user_id": "u008",
+        "turn_id": 4,
+        "query": "学校外出证件遗失或者票据丢了怎么处理？",
+        "gold_cluster": 6,
+        "gold_evidence": "出差票据遗失处理涉及遗失情况说明、替代凭证审批、证件丢失补办流程以及相关报销材料补充要求等内容。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.7313,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 10,
+          "similarity": 0.7313
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7313,
+            "chunk_index": 10,
+            "title": "同济大学报销手册（2026年3月） (Part 10)",
+            "distance": 0.4004722833633423,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 师生办理报销时一般不再需要粘贴原始单据，只要按顺序整理后用燕尾夹固定。\n2. 对于遇到有多张小纸型票据（租车票、火车票等）的情况（尤其10张以上），为避免错漏，建议仍按预约顺序粘贴。粘贴时采用A4大小空白粘贴纸，横向上方留出4cm左右的空间，采用四角平铺的方式粘贴，确保票面平整无折叠，票据之间不可相互覆盖、遮挡，不可超出A4纸粘贴单的边界。如利用废纸粘贴，请务必粘贴在空白一页，反面已有内容请打叉，以免机器误作扫描。所有票据请用胶水或浆糊粘贴，勿用订书钉装订。\n3. 面额"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6931,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 20.65194469166643,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "02_reimbursement_materials_workflow.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7247,
+            "chunk_index": 2,
+            "title": "同济差旅报销材料准备流程 (Part 2)",
+            "distance": 0.4268672466278076,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 城市间交通凭证：火车票、电子客票报销凭证、机票行程单、登机信息、订单记录、退票/改签/签转费用凭证，必要时保留延误或取消证明。\n2. 住宿凭证：住宿发票、酒店水单或明细、住宿日期、天数、人数、房间数、单价等信息。会议指定酒店超出标准时，要保留会议方指定或推荐酒店的证明。\n3. 市内交通和其他费用：出租车、网约车、地铁、公交、机场快线等凭证。自驾、租车、包车要保留合同、发票、审批或说明。境外凭证要记录支付人、收款人、事项、金额、币种，并准备中文说明。\n\n四、返回后整理材料"
+          }
+        ]
+      }
+    ],
+    "case_results": [
+      {
+        "id": "case_004",
+        "user_id": "u001",
+        "turn_id": 4,
+        "query": "马上去北京，两个人，住宿费能给报多少啊？",
+        "gold_cluster": 1,
+        "gold_evidence": "住宿费报销标准涉及北京地区差旅住宿费限额、两人同行住宿费计算、职级对应标准和报销上限规则等内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7401,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 17,
+          "similarity": 0.7401
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7379,
+            "chunk_index": 6,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 6)",
+            "distance": 0.4104801416397095,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "| 标准 | 对应人员 | 北京、上海、广州、深圳 | 其他城市 |\n|---|---|---:|---:|\n| 一类 | 院士及相当于院士的人员 | 1100 元 | 900 元 |\n| 二类 | 高级专业技术职务人员 | 900 元 | 750 元 |\n| 三类 | 其他人员 | 650 元 | 550 元 |\n\n2. 非科研类经费\n\n学校参照国家有关文件分地区制定《同济大学差旅住宿费限额标准明细表》（见附件 1）。\n\n#### （二）会议和培训住宿\n\n对于参加校外单位举"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7379,
+            "chunk_index": 6,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 6)",
+            "distance": null,
+            "bm25_score": 15.323806223860375,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "| 标准 | 对应人员 | 北京、上海、广州、深圳 | 其他城市 |\n|---|---|---:|---:|\n| 一类 | 院士及相当于院士的人员 | 1100 元 | 900 元 |\n| 二类 | 高级专业技术职务人员 | 900 元 | 750 元 |\n| 三类 | 其他人员 | 650 元 | 550 元 |\n\n2. 非科研类经费\n\n学校参照国家有关文件分地区制定《同济大学差旅住宿费限额标准明细表》（见附件 1）。\n\n#### （二）会议和培训住宿\n\n对于参加校外单位举"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7401,
+            "chunk_index": 17,
+            "title": "同济大学财务报销培训 (Part 17)",
+            "distance": 0.41173315048217773,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 住宿费：举办方统一安排住宿且费用自理的，如住宿费标准超出限额标准，凭会议和培训通知等举办\n\n方出具的有效证明，据实报销住宿费（在有多个选项酒店的情况下应选择不超标准的酒店）。国内会\n\n议指定酒店住宿标准较高，若另行订酒店，能证明标准低于指定酒店的，可全额报销。\n\n- 伙食补助费：举办方承担伙食费用的，仅发放在途期间；举办方不承担伙食费用的，按照出差自然天\n\n数发放。\n\n- 市内交通费补助：仅发放在途期间。确实在会议期间发生必要的市内交通费用的，可凭票实报实销。\n\n---\n"
+          }
+        ]
+      },
+      {
+        "id": "case_005",
+        "user_id": "u001",
+        "turn_id": 5,
+        "query": "住宿费报销需要准备哪些材料？",
+        "gold_cluster": 2,
+        "gold_evidence": "住宿费报销材料涉及住宿发票、酒店水单、住宿明细、住宿日期、天数、房间数和金额信息等内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7313,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 17,
+          "similarity": 0.7313
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7313,
+            "chunk_index": 17,
+            "title": "同济大学财务报销培训 (Part 17)",
+            "distance": 0.31131017208099365,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 住宿费：举办方统一安排住宿且费用自理的，如住宿费标准超出限额标准，凭会议和培训通知等举办\n\n方出具的有效证明，据实报销住宿费（在有多个选项酒店的情况下应选择不超标准的酒店）。国内会\n\n议指定酒店住宿标准较高，若另行订酒店，能证明标准低于指定酒店的，可全额报销。\n\n- 伙食补助费：举办方承担伙食费用的，仅发放在途期间；举办方不承担伙食费用的，按照出差自然天\n\n数发放。\n\n- 市内交通费补助：仅发放在途期间。确实在会议期间发生必要的市内交通费用的，可凭票实报实销。\n\n---\n"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "01_trip_planning_checklist.txt",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6769,
+            "chunk_index": 3,
+            "title": "同济差旅规划前检查清单 (Part 3)",
+            "distance": null,
+            "bm25_score": 16.155820075344867,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 不编造具体金额和制度条款，金额必须来自知识库正式制度。\n2. 不把个人旅游包装成公务差旅。\n3. 景区门票、导游费、与会议无关参观、娱乐活动等要提示自费或高风险。\n4. 如果用户要求顺便游玩，应把公务段和个人段分开。\n5. 如果缺少经费类型、人员身份、会议属性，要明确说明需要确认后才能判断报销口径。\n6. 输出中要区分行程建议和报销/合规提醒。\n\n五、推荐回答结构\n\n1. 行程理解：复述出发地、目的地、日期、任务类型。\n2. 需要确认：列出影响报销和规划的缺失信息。\n3"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "02_reimbursement_materials_workflow.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7093,
+            "chunk_index": 1,
+            "title": "同济差旅报销材料准备流程 (Part 1)",
+            "distance": 0.3277627229690552,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "同济差旅报销材料准备流程\n\n定位：本文件是操作型知识，用于把同济正式制度转化为用户可执行的报销准备步骤。具体材料名称、时限、审批要求以同济大学报销手册、差旅费管理细则、会议费管理细则和因公出国经费规则为准。\n\n一、报销判断的第一步\n\n1. 判断费用属于哪类业务：国内差旅费、市内差旅费、会议费、国际合作与交流费、国内公务接待费或业务接待费、个人旅游或私人事务费用。\n2. 判断是否一事一报：不同事由不要混在一张报销单里；不同时间段、不同出差任务通常要分开说明；参会差旅和举办会议费"
+          }
+        ]
+      },
+      {
+        "id": "case_006",
+        "user_id": "u001",
+        "turn_id": 6,
+        "query": "我这是会议啊，应该能报销，学校会议报销啥制度？",
+        "gold_cluster": [
+          2,
+          3
+        ],
+        "gold_evidence": "需要查询学校会议费管理细则中关于会议认定条件、报销标准、审批流程、报销材料清单及不予报销情形的规定。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7965,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+          "chunk_index": 6,
+          "similarity": 0.7965
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+            "cluster": 3,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7965,
+            "chunk_index": 6,
+            "title": "同济大学会议费管理细则（同济财〔2024〕6号） (Part 6)",
+            "distance": 0.3709760904312134,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活动；严禁以任何名义发放纪念品；不得额外配发洗漱用品。\n\n### 第二十条\n\n各单位应当加强对本单位会议举办活动和经费报销的内控管理，对违反会议费管理制度的人员进行严肃处理，自觉接受学校有关部门对会议举办活动"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6541,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 17.125323953893858,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7462,
+            "chunk_index": 8,
+            "title": "同济大学财务报销培训 (Part 8)",
+            "distance": 0.37854886054992676,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 1. 会议类型\n\n04\n\n会议费\n\n会议包括国内业务会议、国内管理会议、在华举办国际会议，会议举办者根据会议内容和性质\n\n选择相应的会议类型，报所在二级单位审批确定。\n\n- 2. 报销注意事项\n\n举办会议应预先提交会议审批表，由二级单位主要负责人审批。会议费预算需列明会议\n\n名称、会议类别、主要内容、时间、地点、代表人数、工作人员数、所需经费预算总额\n\n及列支渠道等。其中科研项目会议审批表可由项目负责人审批。\n\n对于按照成本补偿原则确需向参会人员收取费用的学术论坛等，各二"
+          }
+        ]
+      },
+      {
+        "id": "case_017",
+        "user_id": "u002",
+        "turn_id": 4,
+        "query": "学校国内差旅的伙食补助费怎么算？",
+        "gold_cluster": [
+          1,
+          2
+        ],
+        "gold_evidence": "国内差旅伙食补助费计算涉及自然天数、出差地伙食补助标准、途中午餐补助情形以及自理用餐等费用核定规则。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7048,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+          "chunk_index": 8,
+          "similarity": 0.7048
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7048,
+            "chunk_index": 8,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 8)",
+            "distance": 0.30683767795562744,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（八）已由校外单位负担住宿费用的，不得在学校重复申请住宿费包干。\n\n## 第五章 伙食补助费\n\n### 第十七条\n\n伙食补助费是指对出差人员在因公出差期间给予的伙食补助费用。\n\n### 第十八条\n\n伙食补助费包干使用，按《同济大学差旅伙食补助费和市内交通费包干标准》（见附件 2）规定的标准以自然（日历）天数包干发放。学生出差，伙食补助费在本标准范围内由项目负责人确定。\n\n对于参加会议和培训，举办方承担伙食费用的，发放在途往返期间的伙食补助费；举办方不承担伙食费用的，按照出差自"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7048,
+            "chunk_index": 8,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 8)",
+            "distance": null,
+            "bm25_score": 19.817724316058605,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "（八）已由校外单位负担住宿费用的，不得在学校重复申请住宿费包干。\n\n## 第五章 伙食补助费\n\n### 第十七条\n\n伙食补助费是指对出差人员在因公出差期间给予的伙食补助费用。\n\n### 第十八条\n\n伙食补助费包干使用，按《同济大学差旅伙食补助费和市内交通费包干标准》（见附件 2）规定的标准以自然（日历）天数包干发放。学生出差，伙食补助费在本标准范围内由项目负责人确定。\n\n对于参加会议和培训，举办方承担伙食费用的，发放在途往返期间的伙食补助费；举办方不承担伙食费用的，按照出差自"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6176,
+            "chunk_index": 26,
+            "title": "同济大学报销手册（2026年3月） (Part 26)",
+            "distance": 0.3684695363044739,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "按标准发放伙食费补助，租车/包车期间的市内交通费补助不再发放。\n11. 自驾只限校内教师，学生不得自驾或租车驾驶。车辆应为教师本人名下车辆或正式租赁的车辆，不得使用其他合作单位或私人朋友提供的车辆。\n12. 根据《同济大学预付款管理细则》（同济财〔2024〕5号）规定，国内差旅原则上应按照《同济大学货币资金管理办法》有关规定结算，不预借费用。学生因实习、竞赛等集体外出，需提供费用开支预算明细清单，经所在单位审核，在标准限额内可预借差旅费。\n13. 非科研经费中单位组织的差旅费"
+          }
+        ]
+      },
+      {
+        "id": "case_018",
+        "user_id": "u002",
+        "turn_id": 5,
+        "query": "按学校文件的说法，我出行的话的，市内交通费标准是什么？",
+        "gold_cluster": 1,
+        "gold_evidence": "市内交通费标准涉及出差出行期间的公共交通、出租车等交通工具的费用限额与报销规定",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": false,
+        "strict_hit": false,
+        "max_similarity": 0.6832,
+        "best_doc": {
+          "rank": 2,
+          "parent_doc": "04_business_travel_faq_tongji.txt",
+          "chunk_index": 1,
+          "similarity": 0.6832
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.5806,
+            "chunk_index": 28,
+            "title": "同济大学财务报销培训 (Part 28)",
+            "distance": 0.3643273115158081,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n600.00\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n2000.00\n\n1832xxx\n\n136xxxxxxxx\n\n2019.1-2020.1\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n600.00\n\n2020 1A 67xx\n\n5001.2.2.3021101\n\nXX学院XXX报公共交通费\n\n2000"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6832,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 19.272850916689464,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6818,
+            "chunk_index": 8,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 8)",
+            "distance": 0.39479053020477295,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（八）已由校外单位负担住宿费用的，不得在学校重复申请住宿费包干。\n\n## 第五章 伙食补助费\n\n### 第十七条\n\n伙食补助费是指对出差人员在因公出差期间给予的伙食补助费用。\n\n### 第十八条\n\n伙食补助费包干使用，按《同济大学差旅伙食补助费和市内交通费包干标准》（见附件 2）规定的标准以自然（日历）天数包干发放。学生出差，伙食补助费在本标准范围内由项目负责人确定。\n\n对于参加会议和培训，举办方承担伙食费用的，发放在途往返期间的伙食补助费；举办方不承担伙食费用的，按照出差自"
+          }
+        ]
+      },
+      {
+        "id": "case_019",
+        "user_id": "u002",
+        "turn_id": 6,
+        "query": "学校报销系统里差旅报销大概怎么提交？",
+        "gold_cluster": 2,
+        "gold_evidence": "差旅报销系统提交流程涉及报销单填报、审批节点流转、相关材料上传、发票验真、预算占用和提交后状态查询等常见环节。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": false,
+        "strict_hit": false,
+        "max_similarity": 0.6984,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 15,
+          "similarity": 0.6984
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.674,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.3337039351463318,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.5737,
+            "chunk_index": 3,
+            "title": "同济差旅与参会常见问题 (Part 3)",
+            "distance": null,
+            "bm25_score": 11.761112772768865,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q12: 境外票据怎么处理？\nA12: 应保留境外支出凭证，并说明支付人、收款人、事项、金额、币种等主要内容。必要时将主要内容译成中文。\n\n五、会议相关\n\nQ13: 参加会议和举办会议有什么区别？\nA13: 参加外单位会议产生的本人差旅费用，通常按差旅费或国际合作与交流费判断。学校主办或承办会议产生的住宿、伙食、会场、材料等费用，通常按会议费管理细则判断。\n\nQ14: 会议期间能安排旅游或参观吗？\nA14: 与会议无关的旅游、参观、景区门票、导游费、景区交通、高消费娱乐等不应"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6984,
+            "chunk_index": 15,
+            "title": "同济大学财务报销培训 (Part 15)",
+            "distance": 0.33726751804351807,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 住宿包干天数的计量：按实际出差天数减一天计算；出差当天来回的，\n\n不发放住宿费。\n\n- 支付方式：经财务处核定后，通过无现金支付系统分别支付给各实际出\n\n差人员，不得汇总支付给同一人。\n\n- 包干原则：同一出差审批单上的人员，须选用统一的出差政策；同一次\n\n出差，选择的出差政策不可改变。即：住宿费报销，可选择全部据实报\n\n销，或者选择全部包干。\n\n以下三类情况不适用住宿费包干:\n\n- 交纳会务费或注册费的会议差旅\n\n- 以自驾/租车(含出租车)方式出差\n\n- 无法提供来回"
+          }
+        ]
+      },
+      {
+        "id": "case_030",
+        "user_id": "u003",
+        "turn_id": 4,
+        "query": "我在申请会议，会议学校是能报销是吗",
+        "gold_cluster": [
+          3,
+          2
+        ],
+        "gold_evidence": "会议费报销条件涉及会议事由、审批流程、预算列支、会议类型和合规性要求等关键内容。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7879,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 8,
+          "similarity": 0.7879
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7879,
+            "chunk_index": 8,
+            "title": "同济大学财务报销培训 (Part 8)",
+            "distance": 0.37008917331695557,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 1. 会议类型\n\n04\n\n会议费\n\n会议包括国内业务会议、国内管理会议、在华举办国际会议，会议举办者根据会议内容和性质\n\n选择相应的会议类型，报所在二级单位审批确定。\n\n- 2. 报销注意事项\n\n举办会议应预先提交会议审批表，由二级单位主要负责人审批。会议费预算需列明会议\n\n名称、会议类别、主要内容、时间、地点、代表人数、工作人员数、所需经费预算总额\n\n及列支渠道等。其中科研项目会议审批表可由项目负责人审批。\n\n对于按照成本补偿原则确需向参会人员收取费用的学术论坛等，各二"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.625,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 20.463745781279986,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7788,
+            "chunk_index": 9,
+            "title": "同济大学财务报销培训 (Part 9)",
+            "distance": 0.395039439201355,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "#### （二）常见经济业务报销介绍\n\n---\n\n04\n\n会议费\n\n- 2. 报销注意事项\n\n会议费开支实行综合定额控制（见下表），各项费用之间可以调剂使用。超支部分不予\n\n报销。特殊情况报主管校领导审批。不安排住宿的会议，住宿费不能调剂使用；不安排\n\n就餐的会议，伙食费不能调剂使用。\n\n会议类别\n\n住宿费\n\n伙食费\n\n其他费用\n\n合计\n\n国内业务会议\n\n500\n\n150\n\n100\n\n750\n\n国内管理会议\n\n340\n\n130\n\n80\n\n550\n\n在华举办国际会议\n\n700\n"
+          }
+        ]
+      },
+      {
+        "id": "case_031",
+        "user_id": "u003",
+        "turn_id": 5,
+        "query": "会议费哪些情况不能报销？",
+        "gold_cluster": [
+          3,
+          2
+        ],
+        "gold_evidence": "会议费不予报销情形涉及超标准支出、超范围支出、与会议无关消费、宴请娱乐和旅游参观等限制",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7463,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 9,
+          "similarity": 0.7463
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7463,
+            "chunk_index": 9,
+            "title": "同济大学财务报销培训 (Part 9)",
+            "distance": 0.29444730281829834,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "#### （二）常见经济业务报销介绍\n\n---\n\n04\n\n会议费\n\n- 2. 报销注意事项\n\n会议费开支实行综合定额控制（见下表），各项费用之间可以调剂使用。超支部分不予\n\n报销。特殊情况报主管校领导审批。不安排住宿的会议，住宿费不能调剂使用；不安排\n\n就餐的会议，伙食费不能调剂使用。\n\n会议类别\n\n住宿费\n\n伙食费\n\n其他费用\n\n合计\n\n国内业务会议\n\n500\n\n150\n\n100\n\n750\n\n国内管理会议\n\n340\n\n130\n\n80\n\n550\n\n在华举办国际会议\n\n700\n"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "01_trip_planning_checklist.txt",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7214,
+            "chunk_index": 3,
+            "title": "同济差旅规划前检查清单 (Part 3)",
+            "distance": null,
+            "bm25_score": 15.678661601002064,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 不编造具体金额和制度条款，金额必须来自知识库正式制度。\n2. 不把个人旅游包装成公务差旅。\n3. 景区门票、导游费、与会议无关参观、娱乐活动等要提示自费或高风险。\n4. 如果用户要求顺便游玩，应把公务段和个人段分开。\n5. 如果缺少经费类型、人员身份、会议属性，要明确说明需要确认后才能判断报销口径。\n6. 输出中要区分行程建议和报销/合规提醒。\n\n五、推荐回答结构\n\n1. 行程理解：复述出发地、目的地、日期、任务类型。\n2. 需要确认：列出影响报销和规划的缺失信息。\n3"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.717,
+            "chunk_index": 8,
+            "title": "同济大学财务报销培训 (Part 8)",
+            "distance": 0.31133586168289185,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "- 1. 会议类型\n\n04\n\n会议费\n\n会议包括国内业务会议、国内管理会议、在华举办国际会议，会议举办者根据会议内容和性质\n\n选择相应的会议类型，报所在二级单位审批确定。\n\n- 2. 报销注意事项\n\n举办会议应预先提交会议审批表，由二级单位主要负责人审批。会议费预算需列明会议\n\n名称、会议类别、主要内容、时间、地点、代表人数、工作人员数、所需经费预算总额\n\n及列支渠道等。其中科研项目会议审批表可由项目负责人审批。\n\n对于按照成本补偿原则确需向参会人员收取费用的学术论坛等，各二"
+          }
+        ]
+      },
+      {
+        "id": "case_043",
+        "user_id": "u004",
+        "turn_id": 4,
+        "query": "出国参加会议的时候，学校有啥规定吗？",
+        "gold_cluster": 4,
+        "gold_evidence": "因公出国参加会议的相关规定涉及因公出国审批流程、差旅费报销标准、会议费综合定额、住宿费限额以及报销材料要求等事项",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.7747,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 32,
+          "similarity": 0.7747
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7747,
+            "chunk_index": 32,
+            "title": "同济大学报销手册（2026年3月） (Part 32)",
+            "distance": 0.44670093059539795,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（3）参会专家人员费用。会议举办者根据工作需要，可向邀请参会专家发放咨询费、讲课费、劳务费。\n4. 严禁各单位借会议名义组织会餐或安排宴请；严禁预存、套取会议费设立“小金库”；严禁在会议费中列支公务接待费。各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7567,
+            "chunk_index": 3,
+            "title": "同济差旅与参会常见问题 (Part 3)",
+            "distance": null,
+            "bm25_score": 14.236872921846079,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q12: 境外票据怎么处理？\nA12: 应保留境外支出凭证，并说明支付人、收款人、事项、金额、币种等主要内容。必要时将主要内容译成中文。\n\n五、会议相关\n\nQ13: 参加会议和举办会议有什么区别？\nA13: 参加外单位会议产生的本人差旅费用，通常按差旅费或国际合作与交流费判断。学校主办或承办会议产生的住宿、伙食、会场、材料等费用，通常按会议费管理细则判断。\n\nQ14: 会议期间能安排旅游或参观吗？\nA14: 与会议无关的旅游、参观、景区门票、导游费、景区交通、高消费娱乐等不应"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+            "cluster": 3,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6695,
+            "chunk_index": 6,
+            "title": "同济大学会议费管理细则（同济财〔2024〕6号） (Part 6)",
+            "distance": 0.4537092447280884,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活动；严禁以任何名义发放纪念品；不得额外配发洗漱用品。\n\n### 第二十条\n\n各单位应当加强对本单位会议举办活动和经费报销的内控管理，对违反会议费管理制度的人员进行严肃处理，自觉接受学校有关部门对会议举办活动"
+          }
+        ]
+      },
+      {
+        "id": "case_044",
+        "user_id": "u004",
+        "turn_id": 5,
+        "query": "需要什么审批材料吗？",
+        "gold_cluster": 4,
+        "gold_evidence": "审批材料涉及出差审批单、会议审批表、发票清单、费用明细、领导签批和报销申请单等必要文件内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.742,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 55,
+          "similarity": 0.742
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7221,
+            "chunk_index": 54,
+            "title": "同济大学报销手册（2026年3月） (Part 54)",
+            "distance": 0.4561281204223633,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（3）基建处、后勤管理与保障处、保卫处、信息化办公室等归口管理部门开具的工程建设项目资金支付审批表：审批表内容填写和审批流程正确、完整，工程监理（按合同）、工程造价监理（按合同）、使用单位经办人、归口管理部门经办人、分管处长、处长审批，其中30万元（含）以上的项目需报基建分管校领导审批。\n（4）履约保函（按合同）。\n（5）预付款保函（按合同）。\n（6）中标通知书复印件：20万元（含）以上项目提供。\n（7）同济大学预约报销单：单据内容填写完整并需经办人签字、负责人签字。\n2. "
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6958,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 14.41513530291367,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.742,
+            "chunk_index": 55,
+            "title": "同济大学报销手册（2026年3月） (Part 55)",
+            "distance": 0.4570416212081909,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "项目需提供。验收单中施工单位、使用单位及建设单位需就验收结果签署意见并签字盖章，如有监理和设计单位参与，亦需同时签署意见并签字盖章。\n（6）同济大学预约报销单：单据内容填写完整并需经办人签字、负责人签字。\n3. 工程审价后付款需提交的材料：\n（1）发票。\n（2）合同（可以复印件、只需提供关键页）。\n（3）基建处、后勤管理与保障处、保卫处、信息化办公室等归口管理部门开具的工程建设项目资金支付审批表：审批表内容填写和审批流程正确、完整，工程监理（按合同）、工程造价监理（按合同）、"
+          }
+        ]
+      },
+      {
+        "id": "case_055",
+        "user_id": "u005",
+        "turn_id": 3,
+        "query": "哪些差旅相关费用不能报？",
+        "gold_cluster": 5,
+        "gold_evidence": "差旅费不予报销情形涉及因私绕道旅游、个人消费、非公务活动支出、超标准住宿交通、礼品娱乐等范围及限制内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.757,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+          "chunk_index": 9,
+          "similarity": 0.757
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.757,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.29811906814575195,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "01_trip_planning_checklist.txt",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7556,
+            "chunk_index": 3,
+            "title": "同济差旅规划前检查清单 (Part 3)",
+            "distance": null,
+            "bm25_score": 14.399240946776384,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 不编造具体金额和制度条款，金额必须来自知识库正式制度。\n2. 不把个人旅游包装成公务差旅。\n3. 景区门票、导游费、与会议无关参观、娱乐活动等要提示自费或高风险。\n4. 如果用户要求顺便游玩，应把公务段和个人段分开。\n5. 如果缺少经费类型、人员身份、会议属性，要明确说明需要确认后才能判断报销口径。\n6. 输出中要区分行程建议和报销/合规提醒。\n\n五、推荐回答结构\n\n1. 行程理解：复述出发地、目的地、日期、任务类型。\n2. 需要确认：列出影响报销和规划的缺失信息。\n3"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7546,
+            "chunk_index": 3,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 3)",
+            "distance": 0.321863055229187,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（三）各二级单位对使用本单位经费的有关出差人员承担审批和监管责任，加强政策宣传，督促、审查出差人员合理、合规使用和报销差旅费。\n\n（四）财务处负责差旅费的会计核算和财务管理，制定和完善学校差旅费管理制度，依据有关财经法律法规、差旅费管理制度实施差旅费报销管理。\n\n### 第六条\n\n各二级单位应加强本单位人员管理，按照学校人事管理要求履行人员管理职责，领导干部出差按照组织部有关干部管理规定执行，相关出差审批材料由各二级单位自行保管备查。\n\n各二级单位要从严控制出差人数和天数；严"
+          }
+        ]
+      },
+      {
+        "id": "case_056",
+        "user_id": "u005",
+        "turn_id": 4,
+        "query": "个人顺路旅游能放进学校差旅报销里吗？",
+        "gold_cluster": [
+          5,
+          2
+        ],
+        "gold_evidence": "差旅费报销限制涉及因私顺路旅游、与公务无关支出、个人自理费用和不予报销情形。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.725,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+          "chunk_index": 9,
+          "similarity": 0.725
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6651,
+            "chunk_index": 13,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 13)",
+            "distance": 0.37033379077911377,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "出差人员不得向接待单位提出正常公务活动以外的要求，不得在出差期间接受违反规定用公款支付的宴请、游览和非工作需要的参观，不得接受礼品、礼金和土特产品等。\n\n### 第三十八条\n\n出差人员违反本办法规定，有下列行为之一的，依照有关法律法规和《同济大学教职员工处分暂行规定》追究相关人员的责任。\n\n（一）虚报出差天数、人数等信息冒领差旅费的。\n\n（二）擅自扩大差旅费开支范围和提高开支标准的。\n\n（三）差旅费已全部或部分由校外单位负担，重复报销差旅费的。\n\n（四）在差旅费中报销应由个人"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6481,
+            "chunk_index": 1,
+            "title": "同济差旅与参会常见问题 (Part 1)",
+            "distance": null,
+            "bm25_score": 19.46787495387722,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "同济差旅与参会常见问题\n\n定位：本文件是面向用户的问答型知识，用于把正式制度转成容易理解的回答。遇到金额、标准、审批权限时，应回到同济正式制度文件。\n\n一、出差和个人旅游怎么区分？\n\nQ1: 我去外地参会，顺便玩一天，可以一起报销吗？\nA1: 应拆分公务段和个人段。参加会议产生的必要交通、住宿等费用按学校制度判断；个人游玩、景区门票、导游费、与会议无关交通和住宿通常不能作为学校报销依据。\n\nQ2: 我可以提前一天出发或延后一天返回吗？\nA2: 如果是公务需要，例如会议签到、交"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.725,
+            "chunk_index": 9,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 9)",
+            "distance": 0.3833850622177124,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "因项目任务等原因需要长期出差的，超过 14 天（不含 14 天）的出差时间段，市内交通费包干标准减半执行，也可选择凭票实报实销。\n\n### 第二十三条\n\n已由校外单位负担市内交通费用或使用学校公务车辆的，不得在学校重复报销市内交通费。\n\n## 第七章 报销管理\n\n### 第二十四条\n\n出差人员应当严格按规定开支差旅费，财务处应当严格按规定审核差旅费开支，对不符合审批手续及规定的费用不予报销。\n\n### 第二十五条\n\n差旅费报销应与出差项目匹配，不同性质的项目经费不得混用、挤占"
+          }
+        ]
+      },
+      {
+        "id": "case_057",
+        "user_id": "u005",
+        "turn_id": 5,
+        "query": "学校差旅中航班延误产生的改签费怎么处理？",
+        "gold_cluster": [
+          6,
+          2,
+          1
+        ],
+        "gold_evidence": "差旅费管理细则中因航班延误产生的改签费处理需要查询改签费报销条件、审批材料、因公出差限制以及不予报销情形等内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7873,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "05_emergency_handling_playbook.txt",
+          "chunk_index": 1,
+          "similarity": 0.7873
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "05_emergency_handling_playbook.txt",
+            "cluster": 6,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7873,
+            "chunk_index": 1,
+            "title": "差旅异常与应急处理指南 (Part 1)",
+            "distance": 0.3039548397064209,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "差旅异常与应急处理指南\n\n定位：本文件是操作型知识，用于指导助手在航班延误、取消、误机、酒店问题、证件遗失等场景下给出步骤化建议。报销可行性以学校制度和财务审核为准。\n\n一、航班延误\n\n1. 先确认信息：向航空公司、机场或官方 App 确认延误原因和预计起飞时间；判断是否影响会议签到、报告、调研或返程。\n2. 再调整行程：延误较短时通知相关方并继续等待；延误较长时比较改签其他航班、高铁、顺延行程的可行性；重要会议或任务不要只等航空公司安排，要主动评估替代交通。\n3. 保留凭证"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7743,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 28.05578911823045,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7743,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": 0.3487342596054077,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          }
+        ]
+      },
+      {
+        "id": "case_067",
+        "user_id": "u006",
+        "turn_id": 3,
+        "query": "学校科研项目住宿费包干是什么意思？",
+        "gold_cluster": [
+          1,
+          2
+        ],
+        "gold_evidence": "学校科研项目住宿费包干制的含义涉及差旅住宿费包干标准、适用范围、包干结算方式和与实报实销差异等内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7665,
+        "best_doc": {
+          "rank": 3,
+          "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+          "chunk_index": 2,
+          "similarity": 0.7665
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7572,
+            "chunk_index": 1,
+            "title": "同济大学科研差旅住宿费标准包干及上浮实施细则（同济财内〔2021〕16号） (Part 1)",
+            "distance": 0.33503782749176025,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "# 同济大学科研差旅住宿费标准包干及上浮实施细则（同济财内〔2021〕16号）\n\n来源：同济大学财务处  \n原文链接：https://tjcwc.tongji.edu.cn/index.php?classid=9718&newsid=18219&t=show  \n发表时间：2021-10-11\n\n## 一、住宿费包干\n\n### 1. 选择住宿费包干的基本要求\n\n出差人提出申请，由常驻地出发回到常驻地，并对出差人员、出差天数、出差地点的真实性和合法合规性作出承诺。\n\n经项目负责"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6269,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 23.802070226003433,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7665,
+            "chunk_index": 2,
+            "title": "同济大学科研差旅住宿费标准包干及上浮实施细则（同济财内〔2021〕16号） (Part 2)",
+            "distance": 0.35228848457336426,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "### 4. 选用住宿费包干的原则\n\n同一出差审批单上的人员，须选用统一的出差政策。\n\n同一次出差，选择的出差政策不可改变。\n\n住宿费报销可以选择全部据实报销，或者选择全部包干。\n\n### 5. 包干对象\n\n包干对象为校内师生。\n\n校外人员不可包干。\n\n### 6. 住宿包干天数的计量\n\n住宿包干天数按实际出差天数减一天计算。\n\n出差当天来回的，不发放住宿费。\n\n### 7. 支付方式\n\n经财务处核定后，通过无现金支付系统分别支付给各实际出差人员，原则上不得汇总支付给同一人。"
+          }
+        ]
+      },
+      {
+        "id": "case_068",
+        "user_id": "u006",
+        "turn_id": 4,
+        "query": "学校住宿费上浮需要什么条件和审批？",
+        "gold_cluster": [
+          1,
+          2
+        ],
+        "gold_evidence": "住宿费上浮条件与审批要求涉及职务级别、住宿地点、旺季浮动、事前审批流程、审批权限和补充说明材料等规定。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7605,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+          "chunk_index": 3,
+          "similarity": 0.7605
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7605,
+            "chunk_index": 3,
+            "title": "同济大学科研差旅住宿费标准包干及上浮实施细则（同济财内〔2021〕16号） (Part 3)",
+            "distance": 0.27392393350601196,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "住宿费上浮对象为校内教职工。\n\n### 3. 上浮限额\n\n住宿费上浮在规定标准的 130% 限额内据实报销。\n\n### 4. 审批要求\n\n确因工作事项紧急超过学校规定标准的，通过学校协同办公系统提交申请。\n\n申请由二级单位负责人或项目组其他成员（本校教职工）审批。\n\n## 附件一：科研项目住宿费包干标准"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6474,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 22.152430709826245,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_research_travel_lodging_package_and_uplift_rules_2021.md",
+            "cluster": 1,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6785,
+            "chunk_index": 2,
+            "title": "同济大学科研差旅住宿费标准包干及上浮实施细则（同济财内〔2021〕16号） (Part 2)",
+            "distance": 0.4002372622489929,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "### 4. 选用住宿费包干的原则\n\n同一出差审批单上的人员，须选用统一的出差政策。\n\n同一次出差，选择的出差政策不可改变。\n\n住宿费报销可以选择全部据实报销，或者选择全部包干。\n\n### 5. 包干对象\n\n包干对象为校内师生。\n\n校外人员不可包干。\n\n### 6. 住宿包干天数的计量\n\n住宿包干天数按实际出差天数减一天计算。\n\n出差当天来回的，不发放住宿费。\n\n### 7. 支付方式\n\n经财务处核定后，通过无现金支付系统分别支付给各实际出差人员，原则上不得汇总支付给同一人。"
+          }
+        ]
+      },
+      {
+        "id": "case_069",
+        "user_id": "u006",
+        "turn_id": 5,
+        "query": "学校外埠差旅报销一般需要哪些交通票据？",
+        "gold_cluster": 2,
+        "gold_evidence": "外埠差旅报销交通票据要求涉及城市间交通费票据如火车票、飞机票、长途汽车票，以及外地市内交通票据如出租车票、公交地铁票，并对应提供原始凭证、乘车日期、起止地点和实际出行人等信息。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.774,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 23,
+          "similarity": 0.774
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.774,
+            "chunk_index": 23,
+            "title": "同济大学报销手册（2026年3月） (Part 23)",
+            "distance": 0.29395627975463867,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 同济大学预约报销单。\n2. 相关票据、清单和支付记录。与出差事项无关联的外地业务费发票一律不予报销，单笔业务金额1000元（不含）以上需提供支付记录。相关票据包括：\n（1）交通票据：“航空运输电子客票行程单”（或机票发票和订单）、火车票、汽车票、意外险发票、汽油费发票、过路过桥费票据、停车费票据、租车费发票等。其中租车费发票需提供对应的租车合同、协议或要素齐全（至少含起止地点、起止时间、车型、车牌号、金额、乘车人数等）的格式化订单。\n（2）住宿票据：发票应注明住宿天数、"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "01_trip_planning_checklist.txt",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6865,
+            "chunk_index": 3,
+            "title": "同济差旅规划前检查清单 (Part 3)",
+            "distance": null,
+            "bm25_score": 16.22108073660246,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 不编造具体金额和制度条款，金额必须来自知识库正式制度。\n2. 不把个人旅游包装成公务差旅。\n3. 景区门票、导游费、与会议无关参观、娱乐活动等要提示自费或高风险。\n4. 如果用户要求顺便游玩，应把公务段和个人段分开。\n5. 如果缺少经费类型、人员身份、会议属性，要明确说明需要确认后才能判断报销口径。\n6. 输出中要区分行程建议和报销/合规提醒。\n\n五、推荐回答结构\n\n1. 行程理解：复述出发地、目的地、日期、任务类型。\n2. 需要确认：列出影响报销和规划的缺失信息。\n3"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6615,
+            "chunk_index": 22,
+            "title": "同济大学报销手册（2026年3月） (Part 22)",
+            "distance": 0.2972264289855957,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 同济大学预约报销单。\n2. 发票。\n3. 支付记录：单笔业务1000元（不含）以上提供。\n4. 材料（办公用品）/图书验收单：采购金额2万元（含）以上，需通过采招办采购管理系统办理验收手续。\n5. 合同（原件）：除校内核算承担水电煤气等燃料动力费外，其他金额在5万元（含）以上的燃料动力费，必须签订采购合同，由采招办审核并加盖“同济大学采购合同专用章”。\n\n#### 燃料动力费注意事项\n\n对无法单独计量的燃料动力费支出：如单位对燃料动力费无法\n\n做到单独计量，应确保其原始"
+          }
+        ]
+      },
+      {
+        "id": "case_079",
+        "user_id": "u007",
+        "turn_id": 3,
+        "query": "学校会议不安排住宿时，综合定额怎么处理？",
+        "gold_cluster": [
+          3,
+          2
+        ],
+        "gold_evidence": "会议费综合定额在不安排住宿的情况下涉及住宿费扣减规则、伙食费调整依据、综合定额重新核定方法以及费用调剂与执行标准等内容。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.8311,
+        "best_doc": {
+          "rank": 2,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 30,
+          "similarity": 0.8311
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.8311,
+            "chunk_index": 31,
+            "title": "同济大学报销手册（2026年3月） (Part 31)",
+            "distance": 0.34925705194473267,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（1）综合定额中的其他费用包括会场费、交通费、文件印刷费、办公文具，医药费等。\n（2）综合定额中各项费用之间可调剂使用。不安排住宿的会议，综合定额按照扣除住宿费后的定额标准执行，住宿费不能调剂使用；不安排就餐的会议，综合定额按照扣除伙食费后的定额标准执行，伙食费不能调剂使用。无校外代表的会议，确有用餐需要的，可安排客饭，客饭标准为不超过50元/人·餐。\n（3）各类会议应按照定额控制标准执行，超支部分不予报销。特殊情况报主分管校领导审批。\n（4）会议费综合定额标准根据物价等因素"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.8311,
+            "chunk_index": 30,
+            "title": "同济大学报销手册（2026年3月） (Part 30)",
+            "distance": null,
+            "bm25_score": 20.562412853157436,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "（1）综合定额中的其他费用包括会场费、交通费、文件印刷费、办公文具，医药费等。\n（2）综合定额中各项费用之间可调剂使用。不安排住宿的会议，综合定额按照扣除住宿费后的定额标准执行，住宿费不能调剂使用；不安排就餐的会议，综合定额按照扣除伙食费后的定额标准执行，伙食费不能调剂使用。无校外代表的会议，确有用餐需要的，可安排客饭，客饭标准为不超过50元/人·餐。\n（3）各类会议应按照定额控制标准执行，超支部分不予报销。特殊情况报主分管校领导审批。\n（4）会议费综合定额标准根据物价等因素"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+            "cluster": 3,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.78,
+            "chunk_index": 4,
+            "title": "同济大学会议费管理细则（同济财〔2024〕6号） (Part 4)",
+            "distance": 0.3817126750946045,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（二）各类会议应按照定额控制标准执行，超支部分不予报销。特殊情况报分管校领导审批。\n\n（三）不安排住宿的会议，综合定额按照扣除住宿费后的定额标准执行，住宿费不能调剂使用；不安排就餐的会议，综合定额按照扣除伙食费后的定额标准执行，伙食费不能调剂使用。无校外代表的会议，确有用餐需要的，可安排客饭，客饭标准为不超过50元/人餐。\n\n（四）会议费综合定额标准根据物价等因素进行动态调整。\n\n### 第十五条\n\n下列因举办会议产生的费用，可不计入会议费综合控制定额，从相应的支出科目中据实"
+          }
+        ]
+      },
+      {
+        "id": "case_080",
+        "user_id": "u007",
+        "turn_id": 4,
+        "query": "学校邀请专家参会的交通费能在会议费里报吗？",
+        "gold_cluster": [
+          3,
+          2
+        ],
+        "gold_evidence": "会议费报销范围涉及特邀专家城市间交通费、会议代表交通费列支渠道、差旅费与会议费区分、对应报销材料要求以及会议费管理细则中的相关条款内容",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.8237,
+        "best_doc": {
+          "rank": 2,
+          "parent_doc": "财务报销培训.md",
+          "chunk_index": 9,
+          "similarity": 0.8237
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "tongji_conference_expense_management_rules_2024.md",
+            "cluster": 3,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7649,
+            "chunk_index": 3,
+            "title": "同济大学会议费管理细则（同济财〔2024〕6号） (Part 3)",
+            "distance": 0.3922744393348694,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "使用财政专项经费、纵向科研经费和其他实行预算控制的经费召开会议的，应在经费批准的会议费预算额度和标准内开支会议费。\n\n对于按照成本补偿原则确需向参会人员收取费用的学术论坛、研讨会等会议项目，各单位可适当向参会人员收取会议费，并报财务处审核立项。\n\n### 第九条\n\n各单位召开会议应当改进会议形式，充分运用电视电话、网络视频等现代信息技术手段，降低会议成本，提高会议效率。\n\n### 第十条\n\n会议优先安排在学校内部会议室、宾馆及礼堂等场所。\n\n无校外代表参加的会议，原则上在学校"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "财务报销培训.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.8237,
+            "chunk_index": 9,
+            "title": "同济大学财务报销培训 (Part 9)",
+            "distance": null,
+            "bm25_score": 20.679675520974975,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "#### （二）常见经济业务报销介绍\n\n---\n\n04\n\n会议费\n\n- 2. 报销注意事项\n\n会议费开支实行综合定额控制（见下表），各项费用之间可以调剂使用。超支部分不予\n\n报销。特殊情况报主管校领导审批。不安排住宿的会议，住宿费不能调剂使用；不安排\n\n就餐的会议，伙食费不能调剂使用。\n\n会议类别\n\n住宿费\n\n伙食费\n\n其他费用\n\n合计\n\n国内业务会议\n\n500\n\n150\n\n100\n\n750\n\n国内管理会议\n\n340\n\n130\n\n80\n\n550\n\n在华举办国际会议\n\n700\n"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7539,
+            "chunk_index": 32,
+            "title": "同济大学报销手册（2026年3月） (Part 32)",
+            "distance": 0.3936043381690979,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "（3）参会专家人员费用。会议举办者根据工作需要，可向邀请参会专家发放咨询费、讲课费、劳务费。\n4. 严禁各单位借会议名义组织会餐或安排宴请；严禁预存、套取会议费设立“小金库”；严禁在会议费中列支公务接待费。各单位办会应遵守中央“八项规定”精神；不得安排高档套房；会议用餐严格控制菜品种类、数量和份量，严禁提供高档菜肴和香烟；不得使用会议费购置电脑、复印机、打印机、传真机等固定资产以及开支与本次会议无关的其他费用；不得组织会议代表旅游和与会议无关的参观；严禁组织高消费娱乐、健身活"
+          }
+        ]
+      },
+      {
+        "id": "case_091",
+        "user_id": "u008",
+        "turn_id": 3,
+        "query": "学校出差实际发生住宿但没有住宿发票，还能报哪些费用？",
+        "gold_cluster": [
+          5,
+          2
+        ],
+        "gold_evidence": "住宿费报销缺失住宿发票情形涉及住宿费不予报销、城市间交通费、伙食补助费、市内交通费、差旅报销材料要求及可报销费用范围等查询要点。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": true,
+        "evidence_hit": true,
+        "strict_hit": true,
+        "max_similarity": 0.7737,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 25,
+          "similarity": 0.7737
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7737,
+            "chunk_index": 25,
+            "title": "同济大学报销手册（2026年3月） (Part 25)",
+            "distance": 0.3433208465576172,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "天）。以准点离开常驻地、准点到达常驻地计算。不可抗力造成非正常情况的，提供相关说明及证据后可沿用包干政策。\n（3）选用住宿费包干的原则：同一次出差，选择的出差政策需选用统一的出差报销政策。即：住宿费报销，可选择全部据实报销，或者选择全部包干。\n（4）包干对象：校内师生。校外人员不可包干。\n（5）住宿包干天数的计量：按实际出差天数减1天计算；出差当天来回的，不发放住宿费。\n（6）包干标准：按《同济大学差旅住宿费限额标准明细表》规定的标准包干发放。如出差时间跨旺季和非旺季，一律按"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "02_reimbursement_materials_workflow.txt",
+            "cluster": 2,
+            "cluster_hit": true,
+            "evidence_hit": true,
+            "strict_hit": true,
+            "similarity": 0.7592,
+            "chunk_index": 2,
+            "title": "同济差旅报销材料准备流程 (Part 2)",
+            "distance": null,
+            "bm25_score": 17.285303581835805,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "1. 城市间交通凭证：火车票、电子客票报销凭证、机票行程单、登机信息、订单记录、退票/改签/签转费用凭证，必要时保留延误或取消证明。\n2. 住宿凭证：住宿发票、酒店水单或明细、住宿日期、天数、人数、房间数、单价等信息。会议指定酒店超出标准时，要保留会议方指定或推荐酒店的证明。\n3. 市内交通和其他费用：出租车、网约车、地铁、公交、机场快线等凭证。自驾、租车、包车要保留合同、发票、审批或说明。境外凭证要记录支付人、收款人、事项、金额、币种，并准备中文说明。\n\n四、返回后整理材料"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "tongji_travel_expense_management_rules_2024_revised_2026.md",
+            "cluster": 1,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7516,
+            "chunk_index": 6,
+            "title": "同济大学差旅费管理细则（同济财〔2024〕13号，2026年2月28日修正） (Part 6)",
+            "distance": 0.3594653606414795,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "| 标准 | 对应人员 | 北京、上海、广州、深圳 | 其他城市 |\n|---|---|---:|---:|\n| 一类 | 院士及相当于院士的人员 | 1100 元 | 900 元 |\n| 二类 | 高级专业技术职务人员 | 900 元 | 750 元 |\n| 三类 | 其他人员 | 650 元 | 550 元 |\n\n2. 非科研类经费\n\n学校参照国家有关文件分地区制定《同济大学差旅住宿费限额标准明细表》（见附件 1）。\n\n#### （二）会议和培训住宿\n\n对于参加校外单位举"
+          }
+        ]
+      },
+      {
+        "id": "case_092",
+        "user_id": "u008",
+        "turn_id": 4,
+        "query": "学校外出证件遗失或者票据丢了怎么处理？",
+        "gold_cluster": 6,
+        "gold_evidence": "出差票据遗失处理涉及遗失情况说明、替代凭证审批、证件丢失补办流程以及相关报销材料补充要求等内容。",
+        "threshold": 0.7,
+        "top_k": 3,
+        "cluster_hit": false,
+        "evidence_hit": true,
+        "strict_hit": false,
+        "max_similarity": 0.7313,
+        "best_doc": {
+          "rank": 1,
+          "parent_doc": "同济大学报销手册_2026年3月.md",
+          "chunk_index": 10,
+          "similarity": 0.7313
+        },
+        "retrieved_documents": [
+          {
+            "rank": 1,
+            "parent_doc": "同济大学报销手册_2026年3月.md",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7313,
+            "chunk_index": 10,
+            "title": "同济大学报销手册（2026年3月） (Part 10)",
+            "distance": 0.4004722833633423,
+            "bm25_score": null,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 师生办理报销时一般不再需要粘贴原始单据，只要按顺序整理后用燕尾夹固定。\n2. 对于遇到有多张小纸型票据（租车票、火车票等）的情况（尤其10张以上），为避免错漏，建议仍按预约顺序粘贴。粘贴时采用A4大小空白粘贴纸，横向上方留出4cm左右的空间，采用四角平铺的方式粘贴，确保票面平整无折叠，票据之间不可相互覆盖、遮挡，不可超出A4纸粘贴单的边界。如利用废纸粘贴，请务必粘贴在空白一页，反面已有内容请打叉，以免机器误作扫描。所有票据请用胶水或浆糊粘贴，勿用订书钉装订。\n3. 面额"
+          },
+          {
+            "rank": 2,
+            "parent_doc": "04_business_travel_faq_tongji.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": false,
+            "strict_hit": false,
+            "similarity": 0.6931,
+            "chunk_index": 2,
+            "title": "同济差旅与参会常见问题 (Part 2)",
+            "distance": null,
+            "bm25_score": 20.65194469166643,
+            "rrf_score": 0.01639344262295082,
+            "retrieval_sources": [
+              "bm25"
+            ],
+            "preview": "Q6: 航班延误、取消、改签费用怎么办？\nA6: 先保留航空公司通知、改签记录、退票费或改签费凭证、住宿和交通凭证。是否可报销取决于延误原因、任务需要、费用合理性和学校审核。\n\n三、住宿相关\n\nQ7: 酒店价格超过学校标准怎么办？\nA7: 不应直接默认可报销。需要判断是否会议指定酒店、当地旺季、工作事项紧急、科研横向项目上浮等特殊情况，并准备相应证明或审批。\n\nQ8: 会议指定酒店很贵，可以住吗？\nA8: 可以作为特殊情况判断，但需要保留会议通知、指定或推荐酒店说明、酒店价格"
+          },
+          {
+            "rank": 3,
+            "parent_doc": "02_reimbursement_materials_workflow.txt",
+            "cluster": 2,
+            "cluster_hit": false,
+            "evidence_hit": true,
+            "strict_hit": false,
+            "similarity": 0.7247,
+            "chunk_index": 2,
+            "title": "同济差旅报销材料准备流程 (Part 2)",
+            "distance": 0.4268672466278076,
+            "bm25_score": null,
+            "rrf_score": 0.016129032258064516,
+            "retrieval_sources": [
+              "vector"
+            ],
+            "preview": "1. 城市间交通凭证：火车票、电子客票报销凭证、机票行程单、登机信息、订单记录、退票/改签/签转费用凭证，必要时保留延误或取消证明。\n2. 住宿凭证：住宿发票、酒店水单或明细、住宿日期、天数、人数、房间数、单价等信息。会议指定酒店超出标准时，要保留会议方指定或推荐酒店的证明。\n3. 市内交通和其他费用：出租车、网约车、地铁、公交、机场快线等凭证。自驾、租车、包车要保留合同、发票、审批或说明。境外凭证要记录支付人、收款人、事项、金额、币种，并准备中文说明。\n\n四、返回后整理材料"
+          }
+        ]
+      }
+    ]
+  },
+  "elapsed_sec": 16.318
+}

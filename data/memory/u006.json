@@ -1,0 +1,158 @@
+{
+  "user_id": "u006",
+  "created_at": "2026-06-27T23:27:50.292290",
+  "updated_at": "2026-06-27T23:45:13.157187",
+  "preferences": [],
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "交通要直达，后续尽量给我直达的方案。",
+      "timestamp": "2026-06-27T23:42:31.239246",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"preference\"], \"intention\": {\"intents\": [{\"type\": \"preference\", \"confidence\": 0.95, \"description\": \"用户声明偏好：希望交通方案为直达，后续推荐优先提供直达方案。\", \"reason\": \"用户直接表达了个人对交通方式的偏好（直达），并明确要求后续遵循该偏好，属于偏好设置/更新类意图。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"preference: 交通方案优先直达\"}}}",
+      "timestamp": "2026-06-27T23:42:31.242869",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "酒店尽量选有早餐的。",
+      "timestamp": "2026-06-27T23:42:38.598116",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"preference\"], \"intention\": {\"intents\": [{\"type\": \"preference\", \"confidence\": 0.95, \"description\": \"用户声明偏好：酒店尽量选择有早餐的。\", \"reason\": \"用户明确使用“尽量选有早餐的”表达对未来酒店选择的偏好，属于个人偏好设置，与对话历史中的交通偏好设置一致。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"preference: 酒店尽量选有早餐\"}}}",
+      "timestamp": "2026-06-27T23:42:38.601930",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "学校科研项目住宿费包干是什么意思？",
+      "timestamp": "2026-06-27T23:42:49.805763",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"rag_knowledge\"], \"intention\": {\"intents\": [{\"type\": \"rag_knowledge\", \"confidence\": 0.98, \"description\": \"用户询问差旅住宿包干制的含义，属于企业政策或报销标准类知识查询。\", \"reason\": \"用户明确使用了“XX是什么意思”的提问句式，且术语“住宿费包干”是典型的差旅报销政策用语，符合rag_knowledge触发条件：用户询问与差旅政策、报销、标准相关的问题。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"术语：住宿费包干；场景：学校科研项目\"}}}",
+      "timestamp": "2026-06-27T23:42:49.810625",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "学校住宿费上浮需要什么条件和审批？",
+      "timestamp": "2026-06-27T23:42:58.353286",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"rag_knowledge\"], \"intention\": {\"intents\": [{\"type\": \"rag_knowledge\", \"confidence\": 0.98, \"description\": \"用户询问学校住宿费上浮的具体条件和审批要求，属于差旅政策知识查询。\", \"reason\": \"用户明确使用“需要什么条件和审批”的提问句式，且“住宿费上浮”是典型的差旅报销标准术语，与对话历史中rag_knowledge处理的知识查询场景完全一致。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"政策术语：住宿费上浮；适用场景：学校；查询内容：条件、审批流程\"}}}",
+      "timestamp": "2026-06-27T23:42:58.357642",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "学校外埠差旅报销一般需要哪些交通票据？",
+      "timestamp": "2026-06-27T23:43:07.836440",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"rag_knowledge\"], \"intention\": {\"intents\": [{\"type\": \"rag_knowledge\", \"confidence\": 0.98, \"description\": \"用户询问学校外埠差旅报销所需的交通票据类型，属于差旅政策知识查询。\", \"reason\": \"问题以“一般需要哪些”的提问形式，要求获取规定性知识，且主题为差旅报销政策，符合rag_knowledge的触发条件；对话历史中类似问题均由rag_knowledge处理。\"}], \"key_entities\": {\"origin\": null, \"destination\": null, \"date\": null, \"duration\": null, \"other\": \"查询内容：外埠差旅报销交通票据要求；适用范围：学校\"}}}",
+      "timestamp": "2026-06-27T23:43:07.843933",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "帮我规划一趟从广州到珠海的当天往返。",
+      "timestamp": "2026-06-27T23:43:40.288843",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"event_collection\", \"itinerary_planning\"], \"intention\": {\"intents\": [{\"type\": \"itinerary_planning\", \"confidence\": 0.98, \"description\": \"用户请求规划从广州到珠海的当天往返行程，要求生成完整的交通与时间安排。\", \"reason\": \"query明确包含“规划一趟...往返”，并给出了出发地、目的地和时长，属于典型的行程规划请求。对话历史中存有直达交通偏好，需在规划时考虑。\"}], \"key_entities\": {\"origin\": \"广州\", \"destination\": \"珠海\", \"date\": null, \"duration\": \"当天往返\", \"other\": \"preference: 交通方案优先直达\"}}}",
+      "timestamp": "2026-06-27T23:43:40.294282",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "珠海下雨的话，有什么室内旅游项目嘛？",
+      "timestamp": "2026-06-27T23:43:55.914073",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"information_query\"], \"intention\": {\"intents\": [{\"type\": \"information_query\", \"confidence\": 0.95, \"description\": \"用户希望查询珠海下雨时的室内旅游项目信息，属于实时信息查询（天气和室内活动建议）。\", \"reason\": \"用户明确使用了“XX的话，有什么室内旅游项目嘛？”的询问句式，要求提供客观信息，且涉及天气条件（下雨），符合information_query的触发条件。\"}], \"key_entities\": {\"origin\": null, \"destination\": \"珠海\", \"date\": null, \"duration\": null, \"other\": \"条件：下雨；需求：室内旅游项目\"}}}",
+      "timestamp": "2026-06-27T23:43:55.917574",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "我之前是不是去安排过广州去北京的行程了？",
+      "timestamp": "2026-06-27T23:44:08.572504",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"memory_query\"], \"intention\": {\"intents\": [{\"type\": \"memory_query\", \"confidence\": 0.98, \"description\": \"用户询问自己过去是否曾经安排过（即是否存在历史行程记录）从广州到北京的行程，属于个人旅行历史的记忆查询。\", \"reason\": \"查询中明确使用了“我之前是不是...了？”的句式，并且目标对象是“安排过广州去北京的行程”，这直接指向个人历史行为记录，符合memory_query的触发条件。\"}], \"key_entities\": {\"origin\": \"广州\", \"destination\": \"北京\", \"date\": null, \"duration\": null, \"other\": \"询问是否存在历史行程安排记录\"}}}",
+      "timestamp": "2026-06-27T23:44:08.576583",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "广州南站到大学城需要多久？",
+      "timestamp": "2026-06-27T23:44:21.489366",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"information_query\"], \"intention\": {\"intents\": [{\"type\": \"information_query\", \"confidence\": 0.95, \"description\": \"用户询问从广州南站到大学城的交通耗时，属于实时交通信息查询。\", \"reason\": \"Query以“需要多久”提问，要求获取客观交通时长数据，且未涉及个人历史、行程规划或政策知识，与information_query的触发条件（查询天气/交通/一般信息）完全吻合。目的地“大学城”可推断为广州大学城，需联网获取公共交通方案及时长。\"}], \"key_entities\": {\"origin\": \"广州南站\", \"destination\": \"大学城（广州大学城）\", \"date\": null, \"duration\": null, \"other\": \"查询内容：交通时长\"}}}",
+      "timestamp": "2026-06-27T23:44:21.493761",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "我下周去天津做调研，帮我安排两天路线。",
+      "timestamp": "2026-06-27T23:44:35.550449",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"event_collection\", \"itinerary_planning\"], \"intention\": {\"intents\": [{\"type\": \"itinerary_planning\", \"confidence\": 0.98, \"description\": \"用户希望规划前往天津的两天调研行程，典型的行程规划请求。\", \"reason\": \"Query明确包含“安排两天路线”，并给出了目的地、时间和出行目的，符合itinerary_planning的触发条件。\"}, {\"type\": \"event_collection\", \"confidence\": 0.95, \"description\": \"需要提取用户行程中的关键信息，形成结构化事件，供行程规划使用。\", \"reason\": \"行程规划需要以清晰的事件信息为基础，用户提供了目的地、时间和目的，但缺乏出发地和具体日期，event_collection可以将模糊信息标准化。\"}], \"key_entities\": {\"origin\": null, \"destination\": \"天津\", \"date\": \"下周（2026年6月29日-7月5日中的某两天）\", \"duration\": \"两天\", \"other\": \"出行目的：调研\"}}}",
+      "timestamp": "2026-06-27T23:44:35.554445",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "天津站附近有什么适合上午见面的地点？",
+      "timestamp": "2026-06-27T23:44:56.211999",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"information_query\"], \"intention\": {\"intents\": [{\"type\": \"information_query\", \"confidence\": 0.95, \"description\": \"用户希望查询天津站附近适合上午见面的地点，属于通用信息查询（需联网搜索或地图推荐）。\", \"reason\": \"Query使用“有什么...的地点？”的询问句式，要求提供客观推荐信息，未涉及个人历史、明确行程规划或偏好记录，符合information_query的触发条件。\"}, {\"type\": \"itinerary_planning\", \"confidence\": 0.3, \"description\": \"该查询可能为后续行程规划提供地点输入，但当前并未直接请求规划。\", \"reason\": \"对话历史显示用户存在天津调研行程规划需求，当前问题可能隐含将推荐地点纳入行程的意图，但语义上仍以查询为主，故置信度较低。\"}], \"key_entities\": {\"origin\": null, \"destination\": \"天津\", \"date\": null, \"duration\": null, \"other\": \"地点要求：天津站附近；时间要求：适合上午见面；上下文：用户计划下周赴天津调研，可能用于安排途中会面\"}}}",
+      "timestamp": "2026-06-27T23:44:56.216234",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "user",
+      "content": "我上次发的那个去天津的行程，有没有什么在北京中转半天的出行方式",
+      "timestamp": "2026-06-27T23:45:13.152882",
+      "session_id": "eval_u006"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"intention_agents\": [\"memory_query\", \"event_collection\", \"information_query\"], \"intention\": {\"intents\": [{\"type\": \"memory_query\", \"confidence\": 0.98, \"description\": \"用户明确引用了自己过去发布的行程（“上次发的那个去天津的行程”），需要从记忆中检索该行程的具体内容，尤其是出发地和日期，以便后续查询。\", \"reason\": \"Query包含“我上次发的...”句式，直接指向个人历史记录，且该历史记录是完成当前请求的必要前提，符合memory_query的触发条件。\"}, {\"type\": \"information_query\", \"confidence\": 0.95, \"description\": \"用户核心问题是查询是否存在特定的出行方式（从某地出发，经北京中转半天到达天津），属于实时交通信息查询。\", \"reason\": \"Query明确询问“有没有什么...出行方式”，要求获取客观的交通方案信息，且涉及实际可操作的路线查询，需联网搜索，符合information_query的触发条件。\"}], \"key_entities\": {\"origin\": null, \"destination\": \"天津\", \"date\": null, \"duration\": \"半天（中转停留时间）\", \"other\": \"中转城市：北京；参考历史：用户先前规划的“下周去天津调研两天”的行程\"}}}",
+      "timestamp": "2026-06-27T23:45:13.157170",
+      "session_id": "eval_u006"
+    }
+  ],
+  "trip_history": [],
+  "statistics": {
+    "total_trips": 0,
+    "total_messages": 24,
+    "frequent_destinations": {}
+  }
+}

@@ -1,0 +1,1871 @@
+{
+  "name": "travel_agent_100_turn_eval",
+  "version": "2026-06-26",
+  "agent_mapping": {
+    "1": "event_collection",
+    "2": "itinerary_planning",
+    "3": "preference",
+    "4": "memory_query",
+    "5": "rag_knowledge",
+    "6": "information_query"
+  },
+  "rag_cluster_mapping": {
+    "1": "国内差旅制度类",
+    "2": "报销材料与系统流程类",
+    "3": "会议费制度类",
+    "4": "因公出国/出境类",
+    "5": "合规禁止事项类",
+    "6": "异常与辅助出行类"
+  },
+  "evaluation_notes": {
+    "intent_success_rule": "gold.required_agents 全部出现在 predicted agent_schedule 中即算意图识别成功，额外多调度不扣分。",
+    "preference_rule": "gold.preference.eval=true 的样本只判断是否触发偏好行为。",
+    "rag_rule": "gold.rag.eval=true 的样本调用系统真实混合检索 Top-K，再判断检索 chunk 与 gold_evidence 的语义相似度是否达到 similarity_threshold；gold_cluster 支持单值或数组，数组按 OR 判断。",
+    "cache_rule": "缓存命中率由运行时统计 Redis short_term/preferences/summary 的 hit/miss，不需要人工真值。",
+    "rag_gold_source": "当前 gold_evidence 已由 tests/rag_evidence_review.json 的 review_search_query 覆写，similarity_threshold=0.70。"
+  },
+  "samples": [
+    {
+      "id": "case_001",
+      "user_id": "u001",
+      "turn_id": 1,
+      "query": "我以后出差优先给我安排汉庭。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_002",
+      "user_id": "u001",
+      "turn_id": 2,
+      "query": "如家也行吧，反正后面你安排。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_003",
+      "user_id": "u001",
+      "turn_id": 3,
+      "query": "算了都给我安排全季算了，这玩意住着舒服。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_004",
+      "user_id": "u001",
+      "turn_id": 4,
+      "query": "马上去北京，两个人，住宿费能给报多少啊？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 1,
+          "gold_evidence": "北京出差住宿费报销一般由出差地点、人员类别、住宿费标准和可报销上限等信息组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_005",
+      "user_id": "u001",
+      "turn_id": 5,
+      "query": "住宿费报销需要准备哪些材料？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 2,
+          "gold_evidence": "住宿费报销材料一般由住宿发票、酒店水单或住宿明细、入住日期、住宿天数、房间数和金额信息等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_006",
+      "user_id": "u001",
+      "turn_id": 6,
+      "query": "我这是会议啊，应该能报销，学校会议报销啥制度？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            2,
+            3
+          ],
+          "gold_evidence": "学校会议报销制度一般由会议审批、会议通知、参会人员信息、会议费用范围和报销材料要求等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_007",
+      "user_id": "u001",
+      "turn_id": 7,
+      "query": "明天北京天气怎么样？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_008",
+      "user_id": "u001",
+      "turn_id": 8,
+      "query": "帮我规划一下下周从上海到北京两天一晚的出差行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_009",
+      "user_id": "u001",
+      "turn_id": 9,
+      "query": "我之前有去过杭州吗？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_010",
+      "user_id": "u001",
+      "turn_id": 10,
+      "query": "查一下开完会后立马去广州，广州什么天气。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_011",
+      "user_id": "u001",
+      "turn_id": 11,
+      "query": "参加完北京的会议后，我要去广州再住两天一晚，广州纯旅游，帮我规划。",
+      "gold": {
+        "required_agents": [
+          1,
+          2,
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_012",
+      "user_id": "u001",
+      "turn_id": 12,
+      "query": "广州站到小蛮腰地标大概要多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_013",
+      "user_id": "u001",
+      "turn_id": 13,
+      "query": "我之前去过哪些城市过了，先后顺序是什么？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_014",
+      "user_id": "u002",
+      "turn_id": 1,
+      "query": "我只能接受火车和高铁，我怕飞机，飞机容易出事故太吓人。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_015",
+      "user_id": "u002",
+      "turn_id": 2,
+      "query": "还有就是我想坐出行时间在晚上的班次最好，可以刚好睡觉",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_016",
+      "user_id": "u002",
+      "turn_id": 3,
+      "query": "以后你只需要考虑从上海出行的情况就行，我目前在上海工作，不要搞到其他城市了。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_017",
+      "user_id": "u002",
+      "turn_id": 4,
+      "query": "学校国内差旅的伙食补助费怎么算？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            1,
+            2
+          ],
+          "gold_evidence": "学校国内差旅伙食补助费一般由出差天数、人员身份、补助标准和经费负责人确认规则等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_018",
+      "user_id": "u002",
+      "turn_id": 5,
+      "query": "按学校文件的说法，我出行的话的，市内交通费标准是什么？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 1,
+          "gold_evidence": "学校差旅市内交通费标准一般由出差天数、目的地交通补助标准、人员身份和报销方式等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_019",
+      "user_id": "u002",
+      "turn_id": 6,
+      "query": "学校报销系统里差旅报销大概怎么提交？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 2,
+          "gold_evidence": "学校报销系统中差旅报销一般由业务类型、具体报销栏目、报销事由、票据附件和审批材料等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_020",
+      "user_id": "u002",
+      "turn_id": 7,
+      "query": "帮我安排明天去宁波的当天往返。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_021",
+      "user_id": "u002",
+      "turn_id": 8,
+      "query": "详细叙述一下宁波明天的天气，最好能精确到具体时间。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_022",
+      "user_id": "u002",
+      "turn_id": 9,
+      "query": "刚才说的报销标准是啥来着，所以我这次去的话每天能报销多少？",
+      "gold": {
+        "required_agents": [
+          4,
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_023",
+      "user_id": "u002",
+      "turn_id": 10,
+      "query": "我同学问我，从杭州东到西湖文化广场怎么走比较快？给我个方案",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_024",
+      "user_id": "u002",
+      "turn_id": 11,
+      "query": "我下个月去厦门参加项目交流，帮我做一个三天行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_025",
+      "user_id": "u002",
+      "turn_id": 12,
+      "query": "厦门北站到软件园二期大概要多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_026",
+      "user_id": "u002",
+      "turn_id": 13,
+      "query": "总结一下我的所有行程，然后告诉我要准备些什么东西",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_027",
+      "user_id": "u003",
+      "turn_id": 1,
+      "query": "我以后来问你的时候，默认以坐飞机进行规划。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_028",
+      "user_id": "u003",
+      "turn_id": 2,
+      "query": "记得给我安排东航。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_029",
+      "user_id": "u003",
+      "turn_id": 3,
+      "query": "酒店记得选离目标地点最近的，我起的比较晚，必须离的近",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_030",
+      "user_id": "u003",
+      "turn_id": 4,
+      "query": "我在申请会议，会议学校是能报销是吗",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            3,
+            2
+          ],
+          "gold_evidence": "学校会议费用是否能报销一般由会议申请审批、会议性质、经费来源、费用范围和票据材料等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_031",
+      "user_id": "u003",
+      "turn_id": 5,
+      "query": "会议费哪些情况不能报销？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            3,
+            2
+          ],
+          "gold_evidence": "会议费不能报销的情况一般由超标准支出、超范围支出、与会议无关消费、宴请娱乐和旅游参观等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_032",
+      "user_id": "u003",
+      "turn_id": 6,
+      "query": "帮我规划下个月1号开始的从南京到合肥的七日出差，是参加会议。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_033",
+      "user_id": "u003",
+      "turn_id": 7,
+      "query": "我到站后要等别人下班来接我，合肥南站附近有什么适合短暂停留的地方？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_034",
+      "user_id": "u003",
+      "turn_id": 8,
+      "query": "把这个短暂停留的部分也加入规划中，再次给我一版完整旅游规划？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_035",
+      "user_id": "u003",
+      "turn_id": 9,
+      "query": "合肥那七日的具体天气如何，我是第三天参展。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_036",
+      "user_id": "u003",
+      "turn_id": 10,
+      "query": "我下周去深圳两天，帮我排一个紧凑点的工作行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_037",
+      "user_id": "u003",
+      "turn_id": 11,
+      "query": "深圳北到南山区科技园大概多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_038",
+      "user_id": "u003",
+      "turn_id": 12,
+      "query": "从上海去成都大概多久",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_039",
+      "user_id": "u003",
+      "turn_id": 13,
+      "query": "帮我查一下明天上海虹桥机场附近交通状况。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_040",
+      "user_id": "u004",
+      "turn_id": 1,
+      "query": "过段时间去无锡参加会议，给我看看下个月5号的高铁怎么样，只看高铁",
+      "gold": {
+        "required_agents": [
+          3,
+          6
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_041",
+      "user_id": "u004",
+      "turn_id": 2,
+      "query": "住宿预算尽量控制在中档水平，不要太豪华。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_042",
+      "user_id": "u004",
+      "turn_id": 3,
+      "query": "短程出行以地铁为主。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_043",
+      "user_id": "u004",
+      "turn_id": 4,
+      "query": "出国参加会议的时候，学校有啥规定吗？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 4,
+          "gold_evidence": "学校因公出国参加会议规定一般由外事审批、出国任务、国际旅费、住宿费、伙食费和公杂费标准等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_044",
+      "user_id": "u004",
+      "turn_id": 5,
+      "query": "需要什么审批材料吗？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 4,
+          "gold_evidence": "因公出国会议审批材料一般由任务批件、外事审批、行程信息、证件签证材料、票据清单和费用说明等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_045",
+      "user_id": "u004",
+      "turn_id": 6,
+      "query": "帮我查一下武汉明天的天气和空气质量。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_046",
+      "user_id": "u004",
+      "turn_id": 7,
+      "query": "下周二从上海到武汉两天，帮我安排。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_047",
+      "user_id": "u004",
+      "turn_id": 8,
+      "query": "武汉站到光谷软件园交通怎么安排？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_048",
+      "user_id": "u004",
+      "turn_id": 9,
+      "query": "我上一次安排的两天行程是去哪里？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_049",
+      "user_id": "u004",
+      "turn_id": 10,
+      "query": "重庆有机场吗，上海到重庆有航班吗？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_050",
+      "user_id": "u004",
+      "turn_id": 11,
+      "query": "我后天从上海去重庆开一天会，帮我排往返时间。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_051",
+      "user_id": "u004",
+      "turn_id": 12,
+      "query": "重庆北站到解放碑大概多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_052",
+      "user_id": "u004",
+      "turn_id": 13,
+      "query": "帮我查一下我之前有没有去过武汉，有的话之前的出行方案发给我。",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_053",
+      "user_id": "u005",
+      "turn_id": 1,
+      "query": "亚朵酒店怎么样，是不是比较好，我想住亚朵。",
+      "gold": {
+        "required_agents": [
+          3,
+          6
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_054",
+      "user_id": "u005",
+      "turn_id": 2,
+      "query": "如果没有亚朵，就帮我考虑全季。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_055",
+      "user_id": "u005",
+      "turn_id": 3,
+      "query": "哪些差旅相关费用不能报？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 5,
+          "gold_evidence": "差旅中不能报销的费用一般由个人消费、旅游娱乐、宴请、与公务无关支出、超标准费用和缺少合规票据等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_056",
+      "user_id": "u005",
+      "turn_id": 4,
+      "query": "个人顺路旅游能放进学校差旅报销里吗？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            5,
+            2
+          ],
+          "gold_evidence": "个人顺路旅游是否能纳入学校差旅报销一般由公务行程、私人行程、费用归属和个人自理范围等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_057",
+      "user_id": "u005",
+      "turn_id": 5,
+      "query": "学校差旅中航班延误产生的改签费怎么处理？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            6,
+            2,
+            1
+          ],
+          "gold_evidence": "航班延误产生的改签费处理一般由延误证明、改签退票凭证、公务必要性、费用合理性和学校审核要求等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_058",
+      "user_id": "u005",
+      "turn_id": 6,
+      "query": "帮我安排从上海到济南的两天出差。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_059",
+      "user_id": "u005",
+      "turn_id": 7,
+      "query": "济南明天有说要下雨吗？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_060",
+      "user_id": "u005",
+      "turn_id": 8,
+      "query": "我之前说的那几个规定，有针对济南说什么吗，就是济南有啥规定？",
+      "gold": {
+        "required_agents": [
+          4,
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_061",
+      "user_id": "u005",
+      "turn_id": 9,
+      "query": "济南西站到高新区怎么走？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_062",
+      "user_id": "u005",
+      "turn_id": 10,
+      "query": "帮我做一个从上海去南昌参加项目验收的行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2,
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_063",
+      "user_id": "u005",
+      "turn_id": 11,
+      "query": "南昌西站附近晚饭有什么选择？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_064",
+      "user_id": "u005",
+      "turn_id": 12,
+      "query": "把我最近说的几个城市，这三天的天气状况发给我？",
+      "gold": {
+        "required_agents": [
+          4,
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_065",
+      "user_id": "u006",
+      "turn_id": 1,
+      "query": "交通要直达，后续尽量给我直达的方案。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_066",
+      "user_id": "u006",
+      "turn_id": 2,
+      "query": "酒店尽量选有早餐的。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_067",
+      "user_id": "u006",
+      "turn_id": 3,
+      "query": "学校科研项目住宿费包干是什么意思？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            1,
+            2
+          ],
+          "gold_evidence": "科研项目住宿费包干一般由包干对象、出差天数、固定补助标准、审批要求和据实报销区别等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_068",
+      "user_id": "u006",
+      "turn_id": 4,
+      "query": "学校住宿费上浮需要什么条件和审批？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            1,
+            2
+          ],
+          "gold_evidence": "学校住宿费上浮一般由超标准原因、适用经费类型、上浮比例、申请材料和审批流程等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_069",
+      "user_id": "u006",
+      "turn_id": 5,
+      "query": "学校外埠差旅报销一般需要哪些交通票据？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 2,
+          "gold_evidence": "外埠差旅交通票据一般由火车票、机票行程单、汽车票、订单记录、改签退票凭证和支付记录等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_070",
+      "user_id": "u006",
+      "turn_id": 6,
+      "query": "帮我规划一趟从广州到珠海的当天往返。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_071",
+      "user_id": "u006",
+      "turn_id": 7,
+      "query": "珠海下雨的话，有什么室内旅游项目嘛？",
+      "gold": {
+        "required_agents": [
+          6,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_072",
+      "user_id": "u006",
+      "turn_id": 8,
+      "query": "我之前是不是去安排过广州去北京的行程了？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_073",
+      "user_id": "u006",
+      "turn_id": 9,
+      "query": "广州南站到大学城需要多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_074",
+      "user_id": "u006",
+      "turn_id": 10,
+      "query": "我下周去天津做调研，帮我安排两天路线。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_075",
+      "user_id": "u006",
+      "turn_id": 11,
+      "query": "天津站附近有什么适合上午见面的地点？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_076",
+      "user_id": "u006",
+      "turn_id": 12,
+      "query": "我上次发的那个去天津的行程，有没有什么在北京中转半天的出行方式",
+      "gold": {
+        "required_agents": [
+          4,
+          6,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_077",
+      "user_id": "u007",
+      "turn_id": 1,
+      "query": "我需要住宿地点在地铁口附近的酒店。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_078",
+      "user_id": "u007",
+      "turn_id": 2,
+      "query": "我不能接受早上出行，上午不要安排出行。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_079",
+      "user_id": "u007",
+      "turn_id": 3,
+      "query": "学校会议不安排住宿时，综合定额怎么处理？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            3,
+            2
+          ],
+          "gold_evidence": "会议不安排住宿时综合定额一般由会议费总额、住宿费扣除规则、伙食费扣除规则和费用调剂限制等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_080",
+      "user_id": "u007",
+      "turn_id": 4,
+      "query": "学校邀请专家参会的交通费能在会议费里报吗？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            3,
+            2
+          ],
+          "gold_evidence": "邀请专家参会交通费能否报销一般由专家身份、邀请原因、费用承担方、会议费范围和差旅费渠道等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_081",
+      "user_id": "u007",
+      "turn_id": 5,
+      "query": "帮我安排从上海到长沙参加一天交流的行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_082",
+      "user_id": "u007",
+      "turn_id": 6,
+      "query": "长沙明天最高气温多少？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_083",
+      "user_id": "u007",
+      "turn_id": 7,
+      "query": "我之前有去过长沙吗？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_084",
+      "user_id": "u007",
+      "turn_id": 8,
+      "query": "长沙南站到岳麓区大概要多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_085",
+      "user_id": "u007",
+      "turn_id": 9,
+      "query": "下周三还要从上海去福州开会，帮我规划三天安排。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_086",
+      "user_id": "u007",
+      "turn_id": 10,
+      "query": "福州附近是不是哪里有什么蓝月亮现象，是湖里的微生物发光导致的，那是哪，我第一天晚上准备去那，重新规划一下行程？",
+      "gold": {
+        "required_agents": [
+          6,
+          2,
+          1
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_087",
+      "user_id": "u007",
+      "turn_id": 11,
+      "query": "所以帮我总结一下福州这次的行程。",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_088",
+      "user_id": "u007",
+      "turn_id": 12,
+      "query": "福州站到三坊七巷附近需要多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_089",
+      "user_id": "u008",
+      "turn_id": 1,
+      "query": "酒店需要郊区那种人少的地方的，记得给我选高铁类。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_090",
+      "user_id": "u008",
+      "turn_id": 2,
+      "query": "算了，卧铺我也能接受。",
+      "gold": {
+        "required_agents": [
+          3
+        ],
+        "preference": {
+          "eval": true
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_091",
+      "user_id": "u008",
+      "turn_id": 3,
+      "query": "学校出差实际发生住宿但没有住宿发票，还能报哪些费用？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": [
+            5,
+            2
+          ],
+          "gold_evidence": "出差住宿没有发票时可报销范围一般由住宿事实证明、住宿费限制、交通费限制、伙食补助和市内交通费处理规则等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_092",
+      "user_id": "u008",
+      "turn_id": 4,
+      "query": "学校外出证件遗失或者票据丢了怎么处理？",
+      "gold": {
+        "required_agents": [
+          5
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": true,
+          "gold_cluster": 6,
+          "gold_evidence": "出差途中证件遗失或票据丢失处理一般由补办证明、挂失记录、票据补开、订单记录、支付记录和情况说明等组成。",
+          "similarity_threshold": 0.7,
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "id": "case_094",
+      "user_id": "u008",
+      "turn_id": 6,
+      "query": "昆明这周末天气怎么样？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_093",
+      "user_id": "u008",
+      "turn_id": 5,
+      "query": "帮我规划从上海去昆明参加两天研讨的行程。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_095",
+      "user_id": "u008",
+      "turn_id": 7,
+      "query": "我以前有没有去过云南？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_096",
+      "user_id": "u008",
+      "turn_id": 8,
+      "query": "昆明长水机场到市中心怎么走？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_097",
+      "user_id": "u008",
+      "turn_id": 9,
+      "query": "我下个月15号从上海去郑州一天，帮我安排时间。",
+      "gold": {
+        "required_agents": [
+          1,
+          2
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_098",
+      "user_id": "u008",
+      "turn_id": 10,
+      "query": "郑州东站到高新区通勤多久？",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_099",
+      "user_id": "u008",
+      "turn_id": 11,
+      "query": "所以说我最近的马上要出行的是哪次，具体规划是哪个？",
+      "gold": {
+        "required_agents": [
+          4
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    },
+    {
+      "id": "case_100",
+      "user_id": "u008",
+      "turn_id": 12,
+      "query": "查一下郑州明天是否限行。",
+      "gold": {
+        "required_agents": [
+          6
+        ],
+        "preference": {
+          "eval": false
+        },
+        "rag": {
+          "eval": false
+        }
+      }
+    }
+  ]
+}

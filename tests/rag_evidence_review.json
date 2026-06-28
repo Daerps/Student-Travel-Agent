@@ -1,0 +1,245 @@
+{
+  "name": "rag_query_review",
+  "purpose": "LLM-generated semantic retrieval statements for the 20 RAG evaluation samples.",
+  "notes": [
+    "review_search_query 表示面向 RAG 知识库检索的语义查询陈述。",
+    "本文件由 tests/auto_label_rag_queries.py 根据 eval_dataset_100.json 中 rag.eval=true 的原始 query 自动生成。",
+    "生成规则要求保留业务场景和费用/材料/审批/能否报销等限定信息，展开制度正文中可能出现的语义要点，避免疑问句、短标题和固定泛化模板。"
+  ],
+  "items": [
+    {
+      "id": "case_004",
+      "user_id": "u001",
+      "turn_id": 4,
+      "query": "马上去北京，两个人，住宿费能给报多少啊？",
+      "gold_cluster": 1,
+      "review_search_query": "住宿费报销标准涉及北京地区差旅住宿费限额、两人同行住宿费计算、职级对应标准和报销上限规则等内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_005",
+      "user_id": "u001",
+      "turn_id": 5,
+      "query": "住宿费报销需要准备哪些材料？",
+      "gold_cluster": 2,
+      "review_search_query": "住宿费报销材料涉及住宿发票、酒店水单、住宿明细、住宿日期、天数、房间数和金额信息等内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_006",
+      "user_id": "u001",
+      "turn_id": 6,
+      "query": "我这是会议啊，应该能报销，学校会议报销啥制度？",
+      "gold_cluster": [
+        2,
+        3
+      ],
+      "review_search_query": "需要查询学校会议费管理细则中关于会议认定条件、报销标准、审批流程、报销材料清单及不予报销情形的规定。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_017",
+      "user_id": "u002",
+      "turn_id": 4,
+      "query": "学校国内差旅的伙食补助费怎么算？",
+      "gold_cluster": [
+        1,
+        2
+      ],
+      "review_search_query": "国内差旅伙食补助费计算涉及自然天数、出差地伙食补助标准、途中午餐补助情形以及自理用餐等费用核定规则。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_018",
+      "user_id": "u002",
+      "turn_id": 5,
+      "query": "按学校文件的说法，我出行的话的，市内交通费标准是什么？",
+      "gold_cluster": 1,
+      "review_search_query": "市内交通费标准涉及出差出行期间的公共交通、出租车等交通工具的费用限额与报销规定",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_019",
+      "user_id": "u002",
+      "turn_id": 6,
+      "query": "学校报销系统里差旅报销大概怎么提交？",
+      "gold_cluster": 2,
+      "review_search_query": "差旅报销系统提交流程涉及报销单填报、审批节点流转、相关材料上传、发票验真、预算占用和提交后状态查询等常见环节。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_030",
+      "user_id": "u003",
+      "turn_id": 4,
+      "query": "我在申请会议，会议学校是能报销是吗",
+      "gold_cluster": [
+        3,
+        2
+      ],
+      "review_search_query": "会议费报销条件涉及会议事由、审批流程、预算列支、会议类型和合规性要求等关键内容。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_031",
+      "user_id": "u003",
+      "turn_id": 5,
+      "query": "会议费哪些情况不能报销？",
+      "gold_cluster": [
+        3,
+        2
+      ],
+      "review_search_query": "会议费不予报销情形涉及超标准支出、超范围支出、与会议无关消费、宴请娱乐和旅游参观等限制",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_043",
+      "user_id": "u004",
+      "turn_id": 4,
+      "query": "出国参加会议的时候，学校有啥规定吗？",
+      "gold_cluster": 4,
+      "review_search_query": "因公出国参加会议的相关规定涉及因公出国审批流程、差旅费报销标准、会议费综合定额、住宿费限额以及报销材料要求等事项",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_044",
+      "user_id": "u004",
+      "turn_id": 5,
+      "query": "需要什么审批材料吗？",
+      "gold_cluster": 4,
+      "review_search_query": "审批材料涉及出差审批单、会议审批表、发票清单、费用明细、领导签批和报销申请单等必要文件内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_055",
+      "user_id": "u005",
+      "turn_id": 3,
+      "query": "哪些差旅相关费用不能报？",
+      "gold_cluster": 5,
+      "review_search_query": "差旅费不予报销情形涉及因私绕道旅游、个人消费、非公务活动支出、超标准住宿交通、礼品娱乐等范围及限制内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_056",
+      "user_id": "u005",
+      "turn_id": 4,
+      "query": "个人顺路旅游能放进学校差旅报销里吗？",
+      "gold_cluster": [
+        5,
+        2
+      ],
+      "review_search_query": "差旅费报销限制涉及因私顺路旅游、与公务无关支出、个人自理费用和不予报销情形。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_057",
+      "user_id": "u005",
+      "turn_id": 5,
+      "query": "学校差旅中航班延误产生的改签费怎么处理？",
+      "gold_cluster": [
+        6,
+        2,
+        1
+      ],
+      "review_search_query": "差旅费管理细则中因航班延误产生的改签费处理需要查询改签费报销条件、审批材料、因公出差限制以及不予报销情形等内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_067",
+      "user_id": "u006",
+      "turn_id": 3,
+      "query": "学校科研项目住宿费包干是什么意思？",
+      "gold_cluster": [
+        1,
+        2
+      ],
+      "review_search_query": "学校科研项目住宿费包干制的含义涉及差旅住宿费包干标准、适用范围、包干结算方式和与实报实销差异等内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_068",
+      "user_id": "u006",
+      "turn_id": 4,
+      "query": "学校住宿费上浮需要什么条件和审批？",
+      "gold_cluster": [
+        1,
+        2
+      ],
+      "review_search_query": "住宿费上浮条件与审批要求涉及职务级别、住宿地点、旺季浮动、事前审批流程、审批权限和补充说明材料等规定。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_069",
+      "user_id": "u006",
+      "turn_id": 5,
+      "query": "学校外埠差旅报销一般需要哪些交通票据？",
+      "gold_cluster": 2,
+      "review_search_query": "外埠差旅报销交通票据要求涉及城市间交通费票据如火车票、飞机票、长途汽车票，以及外地市内交通票据如出租车票、公交地铁票，并对应提供原始凭证、乘车日期、起止地点和实际出行人等信息。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_079",
+      "user_id": "u007",
+      "turn_id": 3,
+      "query": "学校会议不安排住宿时，综合定额怎么处理？",
+      "gold_cluster": [
+        3,
+        2
+      ],
+      "review_search_query": "会议费综合定额在不安排住宿的情况下涉及住宿费扣减规则、伙食费调整依据、综合定额重新核定方法以及费用调剂与执行标准等内容。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_080",
+      "user_id": "u007",
+      "turn_id": 4,
+      "query": "学校邀请专家参会的交通费能在会议费里报吗？",
+      "gold_cluster": [
+        3,
+        2
+      ],
+      "review_search_query": "会议费报销范围涉及特邀专家城市间交通费、会议代表交通费列支渠道、差旅费与会议费区分、对应报销材料要求以及会议费管理细则中的相关条款内容",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_091",
+      "user_id": "u008",
+      "turn_id": 3,
+      "query": "学校出差实际发生住宿但没有住宿发票，还能报哪些费用？",
+      "gold_cluster": [
+        5,
+        2
+      ],
+      "review_search_query": "住宿费报销缺失住宿发票情形涉及住宿费不予报销、城市间交通费、伙食补助费、市内交通费、差旅报销材料要求及可报销费用范围等查询要点。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    },
+    {
+      "id": "case_092",
+      "user_id": "u008",
+      "turn_id": 4,
+      "query": "学校外出证件遗失或者票据丢了怎么处理？",
+      "gold_cluster": 6,
+      "review_search_query": "出差票据遗失处理涉及遗失情况说明、替代凭证审批、证件丢失补办流程以及相关报销材料补充要求等内容。",
+      "similarity_threshold": 0.7,
+      "top_k": 3
+    }
+  ]
+}
